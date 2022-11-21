@@ -1,10 +1,14 @@
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MouseInputListener;
 
 public class BrazilBeatsUI {
 	private JFrame frame;
@@ -38,6 +42,10 @@ public class BrazilBeatsUI {
 		// Create Frame
 		frame = new JFrame("Brazil Beats Premium");
 
+		// setting frame with card layout so we can swap between panes for 
+		// different actions (i.e. see large album image and player)
+		frame.getContentPane().setLayout(new CardLayout()); 
+
 		// Create main panel
 		panel = new JPanel(new GridBagLayout());
 		panel.setPreferredSize(defaultRes);
@@ -48,7 +56,6 @@ public class BrazilBeatsUI {
 		Container libraryView = createLibraryViewContainer();
 		// Playback Bar
 		Container playbackBar = createPlaybackOptionsContainer();
-	
 
 		// Parent containers to panel
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -68,6 +75,27 @@ public class BrazilBeatsUI {
 		gbc.insets = INSET_GAP;
 		gbc.fill = GridBagConstraints.NONE;
 		navPanel.add(songPreview, gbc);
+
+		// add the mouseListener so we can add the pane switching
+		songPreview.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("SWITCH PANES");
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+
+			@Override
+			public void mouseExited(MouseEvent e) {}
+		});
 
 		// Navigation Menu
 		Container navigationMenu = createNavigationContainer();
@@ -113,7 +141,6 @@ public class BrazilBeatsUI {
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		panel.add(playbackPanel, gbc);
-
 
 
 		// Set and open frame
@@ -395,5 +422,4 @@ public class BrazilBeatsUI {
 			e.printStackTrace();
 		}
 	}
-
 }
