@@ -25,7 +25,7 @@ public class BrazilBeatsUI {
 
 	private Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	private Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
-	private Font headerFont = new Font("Arial Bold", Font.BOLD, 32);
+	private Font headerFont = new Font("Arial Bold", Font.BOLD, 28);
 	private Dimension defaultRes = new Dimension(1400, 800);
 	
 	static final int IMG_RES_MAX = 256;
@@ -345,7 +345,7 @@ public class BrazilBeatsUI {
 		brazilContainer.setLayout(colLayout);
 		gbc.insets = INSET_GAP;
 		
-		JLabel brazilBeatsLabel = new JLabel("Brazil Beats Visualizer");
+		JLabel brazilBeatsLabel = new JLabel("Beats Visualizer");
 		brazilBeatsLabel.setFont(headerFont);
 		brazilBeatsLabel.setForeground(detailColor);
 		gbc.gridy = 0;
