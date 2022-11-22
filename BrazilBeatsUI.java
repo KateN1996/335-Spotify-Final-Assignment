@@ -68,6 +68,7 @@ class HomeUI extends JPanel{
 
 	HomeUI(JFrame frame) {
 		// Create main 
+		window = frame;
 		panel = new JPanel(new GridBagLayout());
 		panel.setPreferredSize(defaultRes);
 		panel.setBackground(appColor);
@@ -102,8 +103,8 @@ class HomeUI extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout) (frame.getContentPane().getLayout());
-                cl.show(frame.getContentPane(), "2");
+				CardLayout cl = (CardLayout) (window.getContentPane().getLayout());
+                cl.show(window.getContentPane(), "2");
 			}
 
 			@Override
