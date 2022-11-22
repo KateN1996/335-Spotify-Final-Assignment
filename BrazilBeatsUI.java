@@ -25,9 +25,6 @@ public class BrazilBeatsUI {
 		frame.getContentPane().add(home, "1");
 		frame.getContentPane().add(panel2, "2");
 
-		CardLayout cl = (CardLayout) (frame.getContentPane().getLayout());
-        cl.show(frame.getContentPane(), "1");
-
         // Set and open frame
 		frame.setSize(defaultRes);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +32,8 @@ public class BrazilBeatsUI {
 		frame.setLocationRelativeTo(null); // Centers frame on screen
 		frame.setVisible(true); // Opens frame
 
+		CardLayout cl = (CardLayout) (frame.getContentPane().getLayout());
+        cl.show(frame.getContentPane(), "1");
 	}
 }
 
