@@ -7,11 +7,36 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MouseInputListener;
 
 public class BrazilBeatsUI {
-	private JFrame frame;
+	private JPanel contentPane;
+	private HomeUI home; 
+	//private PlayerUI player;
+	private MyPanel2 panel2;
+	private Dimension defaultRes = new Dimension(1400, 800);
+
+	BrazilBeatsUI() {
+		JFrame frame = new JFrame("Brazil Beats Premium");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        contentPane = new JPanel();
+		contentPane.setPreferredSize(defaultRes);
+        contentPane.setBorder(
+            BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new CardLayout());
+        home = new HomeUI(contentPane);
+        panel2 = new MyPanel2(contentPane);
+        contentPane.add(home, "Home"); 
+        contentPane.add(panel2, "Panel 2");
+        frame.setContentPane(contentPane);
+        frame.pack();   
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+
+	}
+}
+
+class HomeUI extends JPanel{
 	private JPanel panel;
 
 	private JLabel albumImagePreview;
@@ -38,16 +63,10 @@ public class BrazilBeatsUI {
 	static final int SPACINGY = 10;
 	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
 
-	BrazilBeatsUI() {
-		// Create Frame
-		frame = new JFrame("Brazil Beats Premium");
-
-		// setting frame with card layout so we can swap between panes for 
-		// different actions (i.e. see large album image and player)
-		frame.getContentPane().setLayout(new CardLayout()); 
-
+	HomeUI(JPanel contentPane) {
 		// Create main panel
-		panel = new JPanel(new GridBagLayout());
+		panel = contentPane;
+		panel.setLayout(new GridBagLayout());
 		panel.setPreferredSize(defaultRes);
 		panel.setBackground(appColor);
 		panel.setFocusable(true);
@@ -81,7 +100,8 @@ public class BrazilBeatsUI {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("SWITCH PANES");
+				CardLayout cardLayout = (CardLayout) contentPane.getLayout();
+                cardLayout.next(contentPane);
 			}
 
 			@Override
@@ -142,16 +162,8 @@ public class BrazilBeatsUI {
 		gbc.gridy = 1;
 		panel.add(playbackPanel, gbc);
 
-
-		// Set and open frame
-		frame.setSize(defaultRes);
-		frame.add(panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack(); // Packs all components to fit on screen
-		frame.setLocationRelativeTo(null); // Centers frame on screen
-		frame.setVisible(true); // Opens frame
-
 	}
+
 
 	/**
 	 * Creates the graphics container with navigation buttons and playlist tab.
@@ -422,4 +434,26 @@ public class BrazilBeatsUI {
 			e.printStackTrace();
 		}
 	}
+}
+
+class MyPanel2 extends JPanel 
+{
+
+    private JButton jcomp1;
+    private JPanel contentPane;
+
+    public MyPanel2(JPanel panel)  {   
+        contentPane = panel;
+
+        setOpaque(true);
+        setBackground(Color.GREEN.darker().darker());
+
+        //construct components
+        jcomp1 = new JButton ("Back");
+	}
+
+    @Override
+    public Dimension getPreferredSize() {
+        return (new Dimension(500, 500));
+    }
 }
