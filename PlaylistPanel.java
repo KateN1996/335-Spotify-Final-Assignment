@@ -49,16 +49,16 @@ public class PlaylistPanel extends JPanel {
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.WEST;
 		
-		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		JLabel name = new JLabel(playlistName);
 		gbc.gridy = 0;
+		gbc.gridx = 0;
 	
 		name.setText(playlistName);
 		name.setForeground(detailColor);
 		name.setFont(captionFont);
-		playlistContainer.add(name);
-
+		playlistContainer.add(name, gbc);
 
 		JList<String> lst = new JList<String>(playlist); 
 
