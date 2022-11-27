@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -7,40 +6,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MouseInputListener;
 
 public class BrazilBeatsUI {
-	private HomeUI home; 
-	//private PlayerUI player;
-	private MyPanel2 panel2;
-	private Dimension defaultRes = new Dimension(1400, 800);
-
-	BrazilBeatsUI() {
-		JFrame frame = new JFrame("Brazil Beats Premium");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		home = new HomeUI(frame);
-        panel2 = new MyPanel2();
-
-		frame.getContentPane().setLayout(new CardLayout());
-		frame.getContentPane().add(home, "1");
-		frame.getContentPane().add(panel2, "2");
-
-		CardLayout cl = (CardLayout) (frame.getContentPane().getLayout());
-        cl.show(frame.getContentPane(), "1");
-
-        // Set and open frame
-		frame.setSize(defaultRes);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack(); // Packs all components to fit on screen
-		frame.setLocationRelativeTo(null); // Centers frame on screen
-		frame.setVisible(true); // Opens frame
-
-	}
-}
-
-class HomeUI extends JPanel{
+	private JFrame frame;
 	private JPanel panel;
-	private JFrame window;
 
 	private JLabel albumImagePreview;
 	private JLabel songTitlePreview;
@@ -66,9 +37,15 @@ class HomeUI extends JPanel{
 	static final int SPACINGY = 10;
 	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
 
-	HomeUI(JFrame frame) {
-		// Create main 
-		window = frame;
+	BrazilBeatsUI() {
+		// Create Frame
+		frame = new JFrame("Brazil Beats Premium");
+
+		// setting frame with card layout so we can swap between panes for 
+		// different actions (i.e. see large album image and player)
+		frame.getContentPane().setLayout(new CardLayout()); 
+
+		// Create main panel
 		panel = new JPanel(new GridBagLayout());
 		panel.setPreferredSize(defaultRes);
 		panel.setBackground(appColor);
@@ -103,8 +80,7 @@ class HomeUI extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout) (window.getContentPane().getLayout());
-                cl.show(window.getContentPane(), "2");
+				System.out.println("SWITCH PANES");
 			}
 
 			@Override
@@ -165,8 +141,16 @@ class HomeUI extends JPanel{
 		gbc.gridy = 1;
 		panel.add(playbackPanel, gbc);
 
-	}
 
+		// Set and open frame
+		frame.setSize(defaultRes);
+		frame.add(panel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack(); // Packs all components to fit on screen
+		frame.setLocationRelativeTo(null); // Centers frame on screen
+		frame.setVisible(true); // Opens frame
+
+	}
 
 	/**
 	 * Creates the graphics container with navigation buttons and playlist tab.
@@ -437,26 +421,4 @@ class HomeUI extends JPanel{
 			e.printStackTrace();
 		}
 	}
-}
-
-class MyPanel2 extends JPanel 
-{
-
-    private JButton jcomp1;
-    private JPanel contentPane;
-
-    public MyPanel2()  {   
-        contentPane = new JPanel();
-
-        setOpaque(true);
-        setBackground(Color.GREEN.darker().darker());
-
-        //construct components
-        jcomp1 = new JButton ("Back");
-	}
-
-    @Override
-    public Dimension getPreferredSize() {
-        return (new Dimension(500, 500));
-    }
 }
