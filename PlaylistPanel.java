@@ -18,6 +18,9 @@ public class PlaylistPanel extends JPanel {
 	private Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
 	private Dimension defaultRes = new Dimension(1400, 800); 
 
+	private Color appColor = new Color(50, 55, 50);			// Light Brazil Green
+	private Color borderColor = new Color(30, 33, 30);		// Dark Brazil Green
+	private Color detailColor = new Color(230, 220, 100);	// Light Brazil Yellow
 
     static final int IMG_RES_MAX = 256;
 
@@ -25,65 +28,52 @@ public class PlaylistPanel extends JPanel {
 	static final int SPACINGY = 10;
     static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
 
-
-    private JLabel albumCoverPreview;
-    private JLabel songTitlePreview;
-	private JLabel albumTitlePreview;
-	private JLabel artistTitlePreview;
-
-    private Image albumCover;
-    private Color backgroundColor;
-    private Color textColor = new Color(255, 255, 255);
-
-    PlaylistPanel(Image albumImage) {
+	// once we have it setup make this be a list of songs, so we can access the song
+	// and stuff from here? i.e. make this the playlist itself
+    PlaylistPanel(String playlistName, String[] playlist) {
 
         // Create main panel
 		super(new GridBagLayout());
 		this.setPreferredSize(defaultRes);
 		this.setFocusable(true);
+		this.setBackground(appColor);
 
-
-        // get the album image and the dominant color
-        albumCover = albumImage;
-		BufferedImage img = toBufferedImage(albumImage);
-		backgroundColor = getBackgroundColor(img);
-
-
-        // setup the containers for the cover and text
-        Container songContainer = new Container();
+        Container playlistContainer = new Container();
 		GridBagLayout colLayout = new GridBagLayout();
 
-		songContainer.setLayout(colLayout);
+		playlistContainer.setLayout(colLayout);
+		playlistContainer.setMinimumSize(defaultRes);
+		playlistContainer.setSize(defaultRes);
+
         GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.WEST;
+		
+		gbc.fill = GridBagConstraints.VERTICAL;
 
-		// Create components
-		albumCoverPreview = new JLabel("");
-		gbc.gridx = 0;
+		JLabel name = new JLabel(playlistName);
+		gbc.gridy = 0;
+	
+		name.setText(playlistName);
+		name.setForeground(detailColor);
+		name.setFont(captionFont);
+		playlistContainer.add(name);
+
+
+		JList<String> lst = new JList<String>(playlist); 
+
+		//lst.setVisibleRowCount(5); why this is not working, I'll never know
+		lst.setBackground(borderColor); 
+		lst.setForeground(detailColor);
+		lst.setFont(captionFont);
+		JScrollPane playlistScroll = new JScrollPane();
+		playlistScroll.setViewportView(lst);
+		lst.setLayoutOrientation(JList.VERTICAL);
+		
 		gbc.gridy = 1;
-		gbc.weightx = 1;
-        songContainer.add(albumCoverPreview, gbc);
+		
+		playlistContainer.add(lst, gbc);
 
-        // need to center them hmm
-        songTitlePreview = new JLabel("");
-		songTitlePreview.setFont(mainFont);
-		songTitlePreview.setForeground(textColor);
-		gbc.gridy = 2;
-		songContainer.add(songTitlePreview, gbc);
-
-		albumTitlePreview = new JLabel("");
-		albumTitlePreview.setFont(captionFont);
-		albumTitlePreview.setForeground(textColor);
-		gbc.gridy = 3;
-		songContainer.add(albumTitlePreview, gbc);
-
-		artistTitlePreview = new JLabel("");
-		artistTitlePreview.setFont(captionFont);
-		artistTitlePreview.setForeground(textColor);
-		gbc.gridy = 4;
-		songContainer.add(artistTitlePreview, gbc);
-
-		this.add(songContainer);
+		this.add(playlistContainer);
     }
 }

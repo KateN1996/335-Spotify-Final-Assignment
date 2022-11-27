@@ -1,20 +1,22 @@
 import javax.swing.*;  
 import java.awt.*;
-import java.io.File;
-import javax.imageio.ImageIO;
 public class Main {  
-	static final Dimension defaultRes = new Dimension(1400, 800);
+
+    static final Dimension defaultRes = new Dimension(1400, 800);
 	
 	static final int IMG_RES_MAX = 256;
 	
 	static final int SPACINGX = 5;
 	static final int SPACINGY = 10;
-	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
+
     public static void main(String[] args) {  
+
         JFrame frame = new JFrame("Brazil Beats Premium");
 
-        
-        JPanel panel = new PlaylistPanel();
+		String[] lst = {"Set on You", "Come and Get your Love", "Country Roads (Take me Home)", 
+						"Material Girl", "Exagerado", "Highway to Hell", "Friday", "Merry go Round of life",
+					    "Hooked on a feeling", "Minecraft Theme Song"};
+        JPanel panel = new PlaylistPanel("Random Music", lst);
         // Set and open frame
 		frame.setSize(defaultRes);
 		frame.add(panel);
