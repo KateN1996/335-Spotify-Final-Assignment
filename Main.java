@@ -1,11 +1,34 @@
 import javax.swing.*;  
+import java.awt.*;
+import java.io.File;
+import javax.imageio.ImageIO;
 public class Main {  
+	static final Dimension defaultRes = new Dimension(1400, 800);
+	
+	static final int IMG_RES_MAX = 256;
+	
+	static final int SPACINGX = 5;
+	static final int SPACINGY = 10;
+	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
     public static void main(String[] args) {  
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run()
-            {
-                new BrazilBeatsUI();
-            }
-        });
+        JFrame frame = new JFrame("Brazil Beats Premium");
+
+        File albumImageFile = new File("Mmfood.jpg");
+		Image albumImage = null;
+		try {
+			albumImage = ImageIO.read(albumImageFile);
+			albumImage = albumImage.getScaledInstance(IMG_RES_MAX, IMG_RES_MAX, Image.SCALE_DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        JPanel panel = new PlayerPanel(albumImage);
+        // Set and open frame
+		frame.setSize(defaultRes);
+		frame.add(panel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack(); // Packs all components to fit on screen
+		frame.setLocationRelativeTo(null); // Centers frame on screen
+		frame.setVisible(true); // Opens frame
     }  
 }  
