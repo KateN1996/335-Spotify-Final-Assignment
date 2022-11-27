@@ -13,16 +13,8 @@ public class Main {
     public static void main(String[] args) {  
         JFrame frame = new JFrame("Brazil Beats Premium");
 
-        File albumImageFile = new File("Mmfood.jpg");
-		Image albumImage = null;
-		try {
-			albumImage = ImageIO.read(albumImageFile);
-			albumImage = albumImage.getScaledInstance(IMG_RES_MAX, IMG_RES_MAX, Image.SCALE_DEFAULT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        JPanel panel = new PlayerPanel(albumImage);
+        
+        JPanel panel = new PlaylistPanel();
         // Set and open frame
 		frame.setSize(defaultRes);
 		frame.add(panel);
