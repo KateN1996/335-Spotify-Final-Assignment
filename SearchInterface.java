@@ -20,7 +20,10 @@ public class SearchInterface {
 	public ArrayList<SearchResult> search(String searchText){
 		ArrayList<SearchResult> searchResults = new ArrayList<SearchResult>();
 		for (SourceInterface source : sources) {
-			searchResults.addAll(source.search(searchText));
+			ArrayList<SearchResult> results = source.search(searchText);
+			if (results != null) {				
+				searchResults.addAll(results);
+			}
 		}
 		return searchResults;
 	}
@@ -35,3 +38,6 @@ public class SearchInterface {
 		return searchResult.getSource().getSong(searchResult.getSongTitle());
 	}
 }
+
+
+
