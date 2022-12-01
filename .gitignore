@@ -1,2 +1,13 @@
 /Main.class
 /BrazilBeatsUI.class
+/PlaylistPanel.class
+/SearchInterface.class
+/SearchResult.class
+/Song.class
+/SongCache.class
+/SourceInterface.class
+/SourceInterface_Local.class
+/SourceInterface_SoundCloud.class
+/SourceInterface_Spotify.class
+/SourceInterface_YouTube.class
+/testAPI.class
