@@ -2,7 +2,6 @@ import java.awt.*;
 
 import java.io.File;
 
-
 import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 
 public class PlayerPanel extends JPanel{   
 	private Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
