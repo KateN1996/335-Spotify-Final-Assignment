@@ -18,3 +18,10 @@
 /SourceInterface_YouTube.class
 /User.class
 /testAPI.class
+/PlaybackOptionsUI.class
+/NavigationMenuUI.class
+/BeatsVisualizerUI.class
+/SongPreviewUI.class
+/PlaybackOptionsUI$playbackButtonListener.class
+/NavigationMenuUI$1.class
+/SongPreviewUI$1.class
