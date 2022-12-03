@@ -11,9 +11,6 @@ public class Song {
 	private String coverPath;
 	private String metaPath;
 	
-	// unique user data
-	private int playCount;
-	
 	public Song() {
 		
 	}
