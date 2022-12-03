@@ -31,7 +31,17 @@ public class BrazilBeatsUI{
 	static final int SPACINGX = 5;
 	static final int SPACINGY = 10;
 	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
+	
+	private JPanel navPanel;
+	private JPanel beatsPanel;
+	private JPanel playbackPanel;
 
+	private Container songPreview;
+	private Container navigationMenu;
+	private Container brazilBeatsView;
+	private Container viewContainer;
+	
+	private GridBagConstraints gbc;
 	BrazilBeatsUI() {
 
 	}
@@ -52,12 +62,25 @@ public class BrazilBeatsUI{
 
 
 		// Parent containers to panel
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 
-		// Playback Bar
-		Container playbackBar = new PlaybackOptionsUI();
+
+		// TODO: Fix middle panel
+		/*
+		viewContainer = new Container();
+		gbc.anchor = GridBagConstraints.CENTER;
+		viewContainer.add(new JButton("aaaaa"),gbc);
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		panel.add(viewContainer, gbc);
+		//
+		 * 
+		 */
 		
-		JPanel navPanel = new JPanel(new GridBagLayout());
+		
+		navPanel = new JPanel(new GridBagLayout());
 		
 		navPanel.setBackground(borderColor);
 		gbc.fill = GridBagConstraints.VERTICAL;
@@ -69,20 +92,20 @@ public class BrazilBeatsUI{
 		panel.add(navPanel, gbc);
 
 		// Current Song Preview and info
-		Container songPreview = new SongPreviewUI();
+		songPreview = new SongPreviewUI();
 		gbc.insets = INSET_GAP;
 		gbc.fill = GridBagConstraints.NONE;
 		navPanel.add(songPreview, gbc);
 
 		// Navigation Menu
-		Container navigationMenu = new NavigationMenuUI();
+		navigationMenu = new NavigationMenuUI();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 
 		navPanel.add(navigationMenu, gbc);
 
-		JPanel beatsPanel = new JPanel(new GridBagLayout());
+		beatsPanel = new JPanel(new GridBagLayout());
 		beatsPanel.setBackground(borderColor);
 		gbc.insets = new Insets(0,0,0,0);
 		gbc.fill = GridBagConstraints.VERTICAL;
@@ -94,7 +117,7 @@ public class BrazilBeatsUI{
 		panel.add(beatsPanel, gbc);
 		
 		// BRAZIL BEATS DANCING CHARACTER CORNER!!!!! LETS GOOOOOOOO!!!!!
-		Container brazilBeatsView = new BeatsVisualizerUI();
+		brazilBeatsView = new BeatsVisualizerUI();
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
@@ -103,12 +126,10 @@ public class BrazilBeatsUI{
 		gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
 		beatsPanel.add(brazilBeatsView, gbc);
 		
-		// gbc.anchor = GridBagConstraints.NORTH;
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		// panel.add(libraryView, gbc);
-
-		JPanel playbackPanel = new JPanel();
+	
+		// Playback Bar
+		Container playbackBar = new PlaybackOptionsUI();
+		playbackPanel = new JPanel();
 		playbackPanel.setBackground(barColor);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -129,7 +150,14 @@ public class BrazilBeatsUI{
 	}
 	
 	public void switchMainViewPane(String pane) {
+		// TODO: FIx this 
 		System.out.println("Switching to " + pane);
+		if (pane == "Song View") {
+			gbc.anchor = GridBagConstraints.NORTH;
+			gbc.gridx = 1;
+			gbc.gridy = 1;
+			panel.add(new SongPreviewUI(), gbc);
+		}
 		//TODO: Use string to create new UI panel for library tab
 	}
 }
