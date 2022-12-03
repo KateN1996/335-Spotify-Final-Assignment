@@ -25,3 +25,5 @@
 /PlaybackOptionsUI$playbackButtonListener.class
 /NavigationMenuUI$1.class
 /SongPreviewUI$1.class
+/SongPlayer.class
+/PlaybackOptionsUI$playbackBarListener.class

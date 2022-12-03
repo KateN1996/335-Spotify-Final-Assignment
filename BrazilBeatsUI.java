@@ -13,11 +13,13 @@ public class BrazilBeatsUI{
 	private JFrame frame;
 	private JPanel panel;
 
+	// TODO: Create method for automatic colors which uses average color. Have a min val for average color and have update color methods for all ui.
+	
 	protected static Color appColor = new Color(50, 55, 50);			// Light Brazil Green
-	protected static Color borderColor = new Color(30, 33, 30);		// Dark Brazil Green
+	protected static Color borderColor = new Color(30, 33, 30);			// Dark Brazil Green
 	protected static Color barColor = new Color(40, 44, 40);			// Medium Brazil Green
-	protected static Color accentColor = new Color(30, 80, 30);		// Saturated Brazil Green
-	protected static Color detailColor = new Color(230, 220, 100);	// Light Brazil Yellow
+	protected static Color accentColor = new Color(30, 80, 30);			// Saturated Brazil Green
+	protected static Color detailColor = new Color(230, 220, 100);		// Light Brazil Yellow
 
 	protected static Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	protected static Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
@@ -117,7 +119,6 @@ public class BrazilBeatsUI{
 		gbc.gridy = 1;
 		panel.add(playbackPanel, gbc);
 
-
 		// Set and open frame
 		frame.setSize(defaultRes);
 		frame.add(panel);
@@ -129,5 +130,6 @@ public class BrazilBeatsUI{
 	
 	public void switchMainViewPane(String pane) {
 		System.out.println("Switching to " + pane);
+		//TODO: Use string to create new UI panel for library tab
 	}
 }
