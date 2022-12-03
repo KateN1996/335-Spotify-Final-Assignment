@@ -1,43 +1,31 @@
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 // organizes all data sources and provides a single source search interface
 public class SearchInterface {
 
-	private ArrayList<SourceInterface> sources;
-	
-	
+	private HashMap<String,String> songNameToPathMap;
 	
 	public SearchInterface() {
-		sources = new ArrayList<SourceInterface>();		
-		sources.add(new SourceInterface_Local());
-		sources.add(new SourceInterface_SoundCloud());
-		sources.add(new SourceInterface_Spotify());
-		sources.add(new SourceInterface_YouTube());
-	}
-	
-	
-	
-	public ArrayList<SearchResult> search(String searchText){
-		ArrayList<SearchResult> searchResults = new ArrayList<SearchResult>();
-		for (SourceInterface source : sources) {
-			ArrayList<SearchResult> results = source.search(searchText);
-			if (results != null) {				
-				searchResults.addAll(results);
-			}
+		songNameToPathMap = new HashMap<String,String>();
+		
+		File f = new File("C:\\example");
+		File[] matchingFiles = f.listFiles(new FilenameFilter() {
+		    public boolean accept(File dir, String name) {
+		        return name.startsWith("temp") && name.endsWith("txt");
+		    }
+		});
+		
+		for () {
+			
 		}
-		return searchResults;
 	}
 	
 	
 	
-	public Song getSong(String songTitle, SourceInterface source) {
-		return source.getSong(songTitle);
+	public ArrayList<Song> search(String searchText){
+		
 	}
-	
-	public Song getSong(SearchResult searchResult) {
-		return searchResult.getSource().getSong(searchResult.getSongTitle());
-	}
+
 }
-
-
-
