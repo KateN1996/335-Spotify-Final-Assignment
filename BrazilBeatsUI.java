@@ -6,9 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MouseInputListener;
-
 public class BrazilBeatsUI {
 	private JFrame frame;
 	private JPanel panel;
@@ -40,10 +37,6 @@ public class BrazilBeatsUI {
 	BrazilBeatsUI() {
 		// Create Frame
 		frame = new JFrame("Brazil Beats Premium");
-
-		// setting frame with card layout so we can swap between panes for 
-		// different actions (i.e. see large album image and player)
-		frame.getContentPane().setLayout(new CardLayout()); 
 
 		// Create main panel
 		panel = new JPanel(new GridBagLayout());
