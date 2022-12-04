@@ -1,5 +1,8 @@
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 /**
  * @author Kate Nixon
  * 
@@ -23,13 +26,20 @@ import java.util.List;
 public class Playlist {
 	private String name;
 	private List <Song> contents = new ArrayList<Song>();
+	private ImageIcon image;
+	private Song curSong;
 	
 	/**
 	 * Constructs a new Playlist object with just the name of the playlist
 	 * @param name
 	 */
-	public Playlist(String name) {
+	public Playlist(String name, String image) {
 		this.name = name;
+		if(image.equals("")) {
+			image = "blank.png";
+		}
+		this.image = new ImageIcon(image);
+		curSong = null;
 	}
 	/**
 	 * Constructs a new Playlist object with both a string representing
@@ -41,6 +51,17 @@ public class Playlist {
 	public Playlist(String name, List<Song>contents) {
 		this.name = name;
 		this.contents = contents;
+	}
+	
+	public ImageIcon getImage() {
+		return image;
+	}
+	
+	public void setImage(String image) {
+		if(image.equals("")) {
+			image = "blank.png";
+		}
+		this.image = new ImageIcon(image);
 	}
 	/**
 	 * Getter that returns the name of the play list
@@ -73,5 +94,22 @@ public class Playlist {
 	 */
 	public void removeSong(Song song) {
 		contents.remove(song);
+	}
+	
+	public Song getSong(String name) {
+		for(Song s : contents) {
+			if(s.getTitle().equalsIgnoreCase(name)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	public void setCurSong(String name) {
+		curSong = this.getSong(name);
+	}
+	
+	public Song getCurSong() {
+		return curSong;
 	}
 }
