@@ -60,6 +60,7 @@ public class PlaybackOptionsUI extends Container{
 		curSong = song;
 	}
 	
+	
 	public void setUp() {
 		gui = MusicPlayer.gui;
 		GridBagLayout rowLayout = new GridBagLayout();
