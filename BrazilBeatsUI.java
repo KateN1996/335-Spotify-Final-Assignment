@@ -130,12 +130,14 @@ public class BrazilBeatsUI{
 		
 	
 		// Playback Bar
-		Container playbackBar = new PlaybackOptionsUI();
+		Runnable playbackBar = new PlaybackOptionsUI();
+		Thread playbackThread = new Thread(playbackBar);
+		playbackThread.start();
 		playbackPanel = new JPanel();
 		playbackPanel.setBackground(barColor);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		playbackPanel.add(playbackBar, gbc);
+		playbackPanel.add((Container)playbackBar, gbc);
 
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
@@ -164,19 +166,32 @@ public class BrazilBeatsUI{
 				newPane = new SongPreviewUI();
 				break;
 				
+			case "Your Library":
+				///newPane = new LibraryPaneUI();
+				break;
+				
+			case "Search Page":
+				///newPane = new SearchPaneUI();
+				break;
+				
+			case "Playlists Page":
+				//newPane = new PlaylistsPaneUI();
+				break;
+				
 				default:
+					System.out.println("Switching to " + pane);
 					return;
 		}
-		
+			
+			System.out.println("Switching to " + pane);
 			viewContainer.removeAll();
 			gbc.anchor = GridBagConstraints.CENTER;
 			gbc.weightx = 1;
 			gbc.weighty = 1;
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			viewContainer.add(newPane, gbc);
+			//viewContainer.add(newPane, gbc);
 			frame.validate();
 		}
-		//TODO: Use string to create new UI panel for library tab
 	}
 

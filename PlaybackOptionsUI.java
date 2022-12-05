@@ -7,8 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
-public class PlaybackOptionsUI extends Container{
+public class PlaybackOptionsUI extends Container implements Runnable{
 	private BrazilBeatsUI gui;
 	/**
 	 * 
@@ -39,6 +42,8 @@ public class PlaybackOptionsUI extends Container{
 	
 	private int curSongTime;
 	private int curSongLength;
+	
+	private SongPlayer songPlayer;
 
 	/**
 	 * Creates the playback options menu on the bottom of the screen with the
@@ -50,6 +55,7 @@ public class PlaybackOptionsUI extends Container{
 	 */
 	PlaybackOptionsUI() {
 		gui = Main.gui;
+		songPlayer = Main.songPlayer;
 		GridBagLayout rowLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(rowLayout);
@@ -149,11 +155,8 @@ public class PlaybackOptionsUI extends Container{
 	
 	private void updatePlaybackBar() {
 		//TODO: Get current song info and update
-		
-		//int songLength = currentSong.length;
-		int songLength = 192;
-		//int curTime = currentSong.currentTime;
-		int curTime = curSongTime;
+		int songLength = (int)(songPlayer.getCurrentSongLength() / 1000000f);
+		int curTime = (int) (songPlayer.getCurrentTimeMicroseconds() / 1000000f);
 		playbackBar.setValue(curTime);	
 		playbackBar.setMaximum(songLength); // Max set to max length of song
 		String currentTime = (curTime/ 60 + ":" + (new DecimalFormat("00").format(curTime % 60)));
@@ -219,23 +222,35 @@ public class PlaybackOptionsUI extends Container{
 				System.out.println("Shuffling");
 				break;
 			case "Previous":
-				// TODO: Call backend Rewind, to restart/play previous
+				try {
+					songPlayer.restartCurrentSong();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
+					e2.printStackTrace();
+				}
+		
 				System.out.println("Restarting /playing previous");
 				updatePlayPause(false);
 				break;
+		
 			case "Play":
-				// TODO: Call backend Play
+				try {
+					songPlayer.resume();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					e1.printStackTrace();
+				}
 				System.out.println("Playing song");
 				updatePlayPause(false);
 				break;
+			
 			case "Pause":
-				// TODO: Call backend Pause
+				songPlayer.pause();
 				System.out.println("Pausing song");
 				updatePlayPause(true);
 				break;
+			
 			case "Next":
-				// TODO: Call backend Skip, to play next song
 				System.out.println("Skipping song");
+				// TODO: fast forward to next
 				updatePlayPause(false);
 				break;
 			case "Save to Library":
@@ -244,6 +259,14 @@ public class PlaybackOptionsUI extends Container{
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			updatePlaybackBar();
+		}
+		
 	}
 }
 	

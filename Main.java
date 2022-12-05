@@ -15,6 +15,18 @@ public class Main {
     	
     	new SearchInterface();
     	songPlayer = new SongPlayer();
+    	
+    	
+    	// AUTOPLAY FOR TESTING
+    	try {
+			songPlayer.play(new Song("test"));
+			songPlayer.pause();
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
     	playlistManager = new PlaylistManager();
     	
     	/*
