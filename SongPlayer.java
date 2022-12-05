@@ -42,6 +42,7 @@ public class SongPlayer {
 	 * plays the given Song
 	 */
 	public void play(Song song) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		System.out.println("Play");
 		if (song == null) {
 			return;
 		}
@@ -139,6 +140,7 @@ public class SongPlayer {
 			return;
 		}	
 		closeCurrentSong();
+		currentFrame = 0L;
 		resetAudioStream();
 		currentClip.setMicrosecondPosition(0);
 		currentClip.start();
@@ -170,7 +172,7 @@ public class SongPlayer {
         currentAudioInputStream = AudioSystem.getAudioInputStream(new File(currentSong.audioPath).getAbsoluteFile());
         currentClip.open(currentAudioInputStream);
         currentClip.loop(1);
-        currentFrame = 0L;
+        //currentFrame = 0L;
     }
     
     

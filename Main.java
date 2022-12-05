@@ -70,5 +70,5 @@ public class Main {
     	
     	gui = new BrazilBeatsUI();
     	gui.initializeComponents();
-    }  
-}  
+    }
+}
