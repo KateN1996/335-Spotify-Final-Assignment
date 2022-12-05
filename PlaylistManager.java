@@ -98,7 +98,7 @@ public class PlaylistManager {
 	 */
 	private boolean playlistExists(String title) {
 		if (title.equals(library.title)) {
-			
+			return true;
 		}
 		for (Playlist playlist : playlists) {
 			if (playlist.title.equals(title)) {

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 
@@ -13,6 +12,8 @@ public class SongQueue {
 	private Playlist currentPlaylist;
 	private Integer currentPlaylistIndex;
 	private ArrayList<Song> userQueue;
+	private ArrayList<Song> historyQueue;
+	private Song lastPolledSong;
 	
 	// shuffle state for the current playList
 	private boolean shuffle;
@@ -27,6 +28,7 @@ public class SongQueue {
 		currentPlaylistIndex = 0;
 		userQueue = new ArrayList<Song>();
 		shuffle = shuffleState;
+		lastPolledSong = null;
 	}
 	
 	
@@ -48,6 +50,10 @@ public class SongQueue {
 		// user queue
 		if (this.userQueue.size() > 0) {
 			Song song = this.userQueue.remove(0);
+			if (lastPolledSong != null) {				
+				this.historyQueue.add(0, lastPolledSong);
+				lastPolledSong = song;
+			}
 			return song;
 		}
 		
@@ -71,7 +77,9 @@ public class SongQueue {
 			}
 			
 			// returning song at new index
-			return this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
+			Song song = this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
+			lastPolledSong = song;
+			return song;
 		}
 		
 		// no user queue or playlist selected
@@ -84,7 +92,7 @@ public class SongQueue {
 	 * 
 	 */
 	public void addSong(Song song) {
-		this.userQueue.add(song);
+		this.userQueue.add(song);		
 	}
 	
 	
@@ -96,4 +104,21 @@ public class SongQueue {
 		this.currentPlaylist = playlist;
 	}
 	
+	
+	
+	/*
+	 * 
+	 */
+	public Song getPreviousSong() {
+		if (this.historyQueue.size() == 0) {
+			return null;
+		}
+		if (this.lastPolledSong != null) {			
+			this.addSong(lastPolledSong);
+			lastPolledSong = this.historyQueue.get(0);
+		}
+		return this.historyQueue.get(0);
+	}
 }
+
+

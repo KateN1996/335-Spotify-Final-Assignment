@@ -54,7 +54,7 @@ public class Song {
 			this.artist = metaData.get("artist");
 		}
 		else {
-			this.artist = "UNKOWN";
+			this.artist = "UNKNOWN";
 		}
 		
 		// setting album from metaData
@@ -62,7 +62,7 @@ public class Song {
 			this.album = metaData.get("album");
 		}
 		else {
-			this.album = "UNKOWN";
+			this.album = "UNKNOWN";
 		}
 
 	}

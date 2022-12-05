@@ -17,6 +17,7 @@ public class Main {
     	songPlayer = new SongPlayer();
     	
     	
+    	
     	// AUTOPLAY FOR TESTING
     	try {
 			songPlayer.play(new Song("test"));
@@ -25,6 +26,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
     	
     	
     	playlistManager = new PlaylistManager();

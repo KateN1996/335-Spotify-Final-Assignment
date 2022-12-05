@@ -62,7 +62,7 @@ public class SongPlayer {
 		newClip.open(newInputStream);
 		
 		// setting loop quantity
-		newClip.loop(1);
+		newClip.loop(0);
 		
 		// closing old song and playing new song
 		closeCurrentSong();
@@ -179,7 +179,7 @@ public class SongPlayer {
     private void resetAudioStream() throws UnsupportedAudioFileException, IOException,  LineUnavailableException {
         currentAudioInputStream = AudioSystem.getAudioInputStream(new File(currentSong.audioPath).getAbsoluteFile());
         currentClip.open(currentAudioInputStream);
-        currentClip.loop(1);
+        currentClip.loop(0);
         currentGainControl = (FloatControl) currentClip.getControl(FloatControl.Type.MASTER_GAIN);
         currentGainControl.setValue(currentGain);
     }
