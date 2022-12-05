@@ -119,14 +119,16 @@ public class BrazilBeatsUI{
 		panel.add(beatsPanel, gbc);
 		
 		// BRAZIL BEATS DANCING CHARACTER CORNER!!!!! LETS GOOOOOOOO!!!!!
-		brazilBeatsView = new BeatsVisualizerUI();
+		Runnable brazilBeatsView = new BeatsVisualizerUI();
+		Thread visualizerThread = new Thread(brazilBeatsView);
+		visualizerThread.start();
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
-		beatsPanel.add(brazilBeatsView, gbc);
+		beatsPanel.add((Container)brazilBeatsView, gbc);
 		
 	
 		// Playback Bar

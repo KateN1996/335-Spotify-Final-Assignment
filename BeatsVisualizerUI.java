@@ -10,12 +10,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
-public class BeatsVisualizerUI extends Container{
+public class BeatsVisualizerUI extends Container implements Runnable{
 	private BrazilBeatsUI gui;
 	private static final long serialVersionUID = 1L;
 	private JLabel beatsDanceView;
+	private float lastAmp;
+	private float threshold = 0.4f;
 
 	BeatsVisualizerUI() {
+		lastAmp = 0.5f;
 		gui = Main.gui;
 		GridBagLayout colLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -48,5 +51,19 @@ public class BeatsVisualizerUI extends Container{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while (true) {
+			float currAmp = Main.songPlayer.getCurrentAmplitude();
+			System.out.println("Checking Amps: Last -> " + lastAmp + " Curr ->" + currAmp);
+			if (currAmp - threshold <= lastAmp || currAmp + threshold >= lastAmp) {
+				// Advance frame
+				System.out.println("ADVANCE FRAME!!!!");
+			}
+		}
+		
 	}
 }
