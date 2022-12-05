@@ -71,7 +71,7 @@ public class BrazilBeatsUI{
 
 
 		viewContainer = new JPanel();
-		//viewContainer.setBackground(appColor);
+		viewContainer.setBackground(appColor);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -201,7 +201,7 @@ public class BrazilBeatsUI{
 			gbc.gridy = 0;
 			viewContainer.add(newPane, gbc);
 			frame.validate();
-			frame.pack();
+			//frame.pack();
 			
 		}
 

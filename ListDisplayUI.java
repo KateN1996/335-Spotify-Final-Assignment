@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -32,7 +33,7 @@ public class ListDisplayUI extends Container {
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JLabel name = new JLabel(playlist.title.substring(0, playlist.title.length() - 5));
+		JLabel name = new JLabel(playlist.title);//.substring(0, playlist.title.length() - 5));
 		gbc.weightx = 1f;
 		gbc.weighty = 1f;
 		gbc.gridy = 0;
@@ -41,7 +42,7 @@ public class ListDisplayUI extends Container {
 		name.setFont(BrazilBeatsUI.headerFont);
 		this.add(name, gbc);
 
-		Object[][] tableData = new Object[][] {};
+		Object[][] tableData = new Object[playlist.getSize()][columnNames.length];
 		for (int i = 0; i < playlist.getSize(); i++) {
 
 			Song curSong = playlist.getSongAtIndex(i);
@@ -56,11 +57,12 @@ public class ListDisplayUI extends Container {
 		}
 
 		table = new JTable(tableData, columnNames);
-		table.setMinimumSize(BrazilBeatsUI.defaultRes);
-		//table.getColumnModel().getColumn(0).setCellRenderer(new Renderer(playlist.getSongAtIndex(0)));
 
+		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		
 		gbc.gridy = 1;
-		this.add(table, gbc);
+		this.add(scrollPane, gbc);
 
 	}
 

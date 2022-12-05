@@ -42,7 +42,6 @@ public class SongPreviewUI extends Container{
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.WEST;
 		// Create components
-		// TESTING ALBUM COVER -- HARDCODED ----
 		albumImagePreview = new JLabel("");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
