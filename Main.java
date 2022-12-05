@@ -16,7 +16,7 @@ public class Main {
     	new SearchInterface();
     	songPlayer = new SongPlayer();
     	
-    	
+    	System.out.println(Main.songPlayer);
     	
     	// AUTOPLAY FOR TESTING
     	try {

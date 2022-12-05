@@ -30,7 +30,7 @@ public class Playlist {
 		
 		File file = new File(playlistPath);
 		
-		System.out.println(file.getAbsolutePath());
+		//System.out.println(file.getAbsolutePath());
 		
 		if (!file.exists()) {
 			try {
@@ -137,6 +137,22 @@ public class Playlist {
 	 */
 	public Song getSongAtIndex(Integer index) {
 		return this.songs.get(index);
+	}
+	
+	
+	
+	/*
+	 * 
+	 */
+	public Integer getIndexOfSong(Song song) {
+		Integer index = 0;
+		for (Song plSong : songs) {
+			if (plSong == song) {
+				return index;
+			}
+			index += 1;
+		}
+		return null;
 	}
 }
 

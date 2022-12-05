@@ -56,13 +56,17 @@ public class BeatsVisualizerUI extends Container implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println(Main.songPlayer);
 		while (true) {
+			
+			/*
 			float currAmp = Main.songPlayer.getCurrentAmplitude();
 			System.out.println("Checking Amps: Last -> " + lastAmp + " Curr ->" + currAmp);
 			if (currAmp - threshold <= lastAmp || currAmp + threshold >= lastAmp) {
 				// Advance frame
 				System.out.println("ADVANCE FRAME!!!!");
 			}
+			*/
 		}
 		
 	}
