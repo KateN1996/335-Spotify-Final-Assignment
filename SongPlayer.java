@@ -18,6 +18,7 @@ public class SongPlayer {
 	
 	
 	// current play data
+	private File currentFile;
 	private Song currentSong;
     private Clip currentClip;
     private Long currentFrame;
@@ -32,6 +33,7 @@ public class SongPlayer {
 	 * constructor
 	 */
 	public SongPlayer() {
+		currentFile = null;
 		currentSong = null;
 		currentClip = null;
 		currentFrame = 0L;
@@ -55,9 +57,9 @@ public class SongPlayer {
 			return;
 		}
 
-		
 		// building new song clip
-		AudioInputStream newInputStream = AudioSystem.getAudioInputStream(new File(song.audioPath).getAbsoluteFile());
+		currentFile = new File(song.audioPath).getAbsoluteFile();
+		AudioInputStream newInputStream = AudioSystem.getAudioInputStream(currentFile);
 		Clip newClip = AudioSystem.getClip();
 		newClip.open(newInputStream);
 		
@@ -73,14 +75,13 @@ public class SongPlayer {
 		newGainControl.setValue(currentGain);
 		
 		newClip.start();
-				
+		
 		// updating global references
 		this.currentSong = song;
 		this.currentAudioInputStream = newInputStream;
 		this.currentClip = newClip;
 		this.currentGainControl = newGainControl;
-		
-		
+				
 		// REMOVE LATER
 		this.incrementGain(-20);
 	}
@@ -91,6 +92,7 @@ public class SongPlayer {
 	 * pauses the currently playing song
 	 */
 	public void pause() {
+				
 		if (currentSong == null) {
 			return;
 		}
@@ -134,6 +136,7 @@ public class SongPlayer {
         {
 			closeCurrentSong();
             resetAudioStream();
+            currentClip.stop();
             currentFrame = time;
             currentClip.setMicrosecondPosition(time);
             currentClip.start();
@@ -235,6 +238,32 @@ public class SongPlayer {
     	this.currentGain += increment;
     	this.currentGainControl.setValue(this.currentGain);
     }
+    
+    
+    
+    /*
+     * 
+     */
+    /*
+    public int getSampleInt(int sampleNumber) {
+
+        if (sampleNumber < 0 || sampleNumber >= data.length / sampleSize) {
+            throw new IllegalArgumentException(
+                    "sample number can't be < 0 or >= data.length/"
+                            + sampleSize);
+        }
+
+        byte[] sampleBytes = new byte[4]; //4byte = int
+
+        for (int i = 0; i < sampleSize; i++) {
+            sampleBytes[i] = data[sampleNumber * sampleSize * channelsNum + i];
+        }
+
+        int sample = ByteBuffer.wrap(sampleBytes)
+                .order(ByteOrder.LITTLE_ENDIAN).getInt();
+        return sample;
+    }
+    */
 }
 
 
