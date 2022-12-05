@@ -1,4 +1,5 @@
 *.mp3
+*.wav
 /BrazilBeatsUI$1.class
 /BrazilBeatsUI.class
 /Main.class
@@ -27,3 +28,6 @@
 /SongPreviewUI$1.class
 /SongPlayer.class
 /PlaybackOptionsUI$playbackBarListener.class
+/LevenshteinDistance.class
+/StringComparator.class
+/SongTitleComparator.class
