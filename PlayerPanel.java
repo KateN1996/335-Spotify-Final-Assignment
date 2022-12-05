@@ -35,7 +35,7 @@ public class PlayerPanel extends JPanel{
 
     PlayerPanel(Image albumImage) {
 
-        // Create main panel
+        // Create main panel 
 		super(new GridBagLayout());
 		this.setPreferredSize(defaultRes);
 		this.setFocusable(true);

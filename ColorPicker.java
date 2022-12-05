@@ -51,7 +51,7 @@ public class ColorPicker {
     }
 
     /**
-     * Gets Color Array from integer map
+     *  Gets Color Array from integer map
      */
     private int[] getColorArray(Map<Integer, Integer> map) {
         // setup a list of each key value pair in the map so we can sort it
