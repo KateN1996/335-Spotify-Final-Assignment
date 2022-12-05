@@ -7,7 +7,6 @@ public class SongQueue {
 		currentPlaylist = null;
 	}
 	
-	 
 	
 	
 }
