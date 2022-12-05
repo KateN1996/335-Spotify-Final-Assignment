@@ -79,6 +79,10 @@ public class SongPlayer {
 		this.currentAudioInputStream = newInputStream;
 		this.currentClip = newClip;
 		this.currentGainControl = newGainControl;
+		
+		
+		// REMOVE LATER
+		this.incrementGain(-20);
 	}
 	
 	
