@@ -9,12 +9,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Main {  
 	public static BrazilBeatsUI gui;
+	public static SongPlayer songPlayer;
+	public static PlaylistManager playlistManager;
     public static void main(String[] args) {  
     	
-    	
-    	
     	new SearchInterface();
+    	songPlayer = new SongPlayer();
+    	playlistManager = new PlaylistManager();
     	
+    	/*
     	SongPlayer sp = new SongPlayer();
     	Song song = SearchInterface.search("MF").get(0);
     	
@@ -32,10 +35,9 @@ public class Main {
     	
     	
     	
-    	PlaylistManager pm = new PlaylistManager();
-    	pm.createPlaylist("testPlaylist");
-    	pm.getPlaylist("testPlaylist").addSong(song);
-    	
+    	playlistManager.createPlaylist("testPlaylist");
+    	playlistManager.getPlaylist("testPlaylist").addSong(song);
+    	*/
     	
     	
     	/*
