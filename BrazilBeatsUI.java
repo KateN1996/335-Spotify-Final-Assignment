@@ -41,6 +41,7 @@ public class BrazilBeatsUI{
 	private Container brazilBeatsView;
 	private Container viewContainer;
 	
+	
 	private GridBagConstraints gbc;
 	BrazilBeatsUI() {
 
@@ -65,20 +66,19 @@ public class BrazilBeatsUI{
 		gbc = new GridBagConstraints();
 
 
-		// TODO: Fix middle panel
-		/*
-		viewContainer = new Container();
-		gbc.anchor = GridBagConstraints.CENTER;
-		viewContainer.add(new JButton("aaaaa"),gbc);
+		viewContainer = new JPanel();
+		viewContainer.setBackground(appColor);
 		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.gridheight = 2;
+		gbc.gridwidth = 1;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.VERTICAL;
 		panel.add(viewContainer, gbc);
-		//
-		 * 
-		 */
-		
+	
 		
 		navPanel = new JPanel(new GridBagLayout());
 		
@@ -87,8 +87,9 @@ public class BrazilBeatsUI{
 		gbc.anchor = GridBagConstraints.SOUTHWEST;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
+		gbc.gridheight = 2;
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		panel.add(navPanel, gbc);
 
 		// Current Song Preview and info
@@ -110,10 +111,11 @@ public class BrazilBeatsUI{
 		gbc.insets = new Insets(0,0,0,0);
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.anchor = GridBagConstraints.SOUTHEAST;
+		gbc.gridheight = 2;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.gridx = 2;
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		panel.add(beatsPanel, gbc);
 		
 		// BRAZIL BEATS DANCING CHARACTER CORNER!!!!! LETS GOOOOOOOO!!!!!
@@ -138,6 +140,9 @@ public class BrazilBeatsUI{
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 3;
+
 		panel.add(playbackPanel, gbc);
 
 		// Set and open frame
@@ -151,13 +156,27 @@ public class BrazilBeatsUI{
 	
 	public void switchMainViewPane(String pane) {
 		// TODO: FIx this 
-		System.out.println("Switching to " + pane);
-		if (pane == "Song View") {
-			gbc.anchor = GridBagConstraints.NORTH;
-			gbc.gridx = 1;
-			gbc.gridy = 1;
-			panel.add(new SongPreviewUI(), gbc);
+		Container newPane;
+		
+		switch(pane) {
+			case "Song View":
+				System.out.println("Switching to " + pane);
+				newPane = new SongPreviewUI();
+				break;
+				
+				default:
+					return;
+		}
+		
+			viewContainer.removeAll();
+			gbc.anchor = GridBagConstraints.CENTER;
+			gbc.weightx = 1;
+			gbc.weighty = 1;
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			viewContainer.add(newPane, gbc);
+			frame.validate();
 		}
 		//TODO: Use string to create new UI panel for library tab
 	}
-}
+
