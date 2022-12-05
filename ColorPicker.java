@@ -1,3 +1,11 @@
+/**
+ * 
+ * This class is used to grab the average color out of a given image, the 
+ * interface allows only the getColor method to be used outside. 
+ * 
+ * Author: Kevin Nisterenko
+ */
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
