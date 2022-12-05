@@ -23,7 +23,7 @@ public class SearchInterface {
 		songs = new ArrayList<Song>();
 		
 		// getting list of song files
-		String wavPath = "/wavs";
+		String wavPath = "./wavs";
 		File wavFolder = new File(wavPath);
 		File[] wavFiles = wavFolder.listFiles();
 		
