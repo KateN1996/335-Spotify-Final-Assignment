@@ -39,6 +39,7 @@ public class Main {
     	
     	
     	
+    	
     	//MusicPlayer spotify = new MusicPlayer();
     	
     	gui = new BrazilBeatsUI();
