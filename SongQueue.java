@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 
 
@@ -56,19 +57,20 @@ public class SongQueue {
 				return null;
 			}
 			
+			// random index in current playlist
 			if (this.shuffle) {
-				currentPlaylistIndex = Random
+				currentPlaylistIndex = new Random().nextInt(this.currentPlaylist.getSize());
 			}
 			
-			
-			
-			else if (currentPlaylistIndex >= this.currentPlaylist.getSize()) {
+			// next index in playlist
+			else if (currentPlaylistIndex >= this.currentPlaylist.getSize() - 1) {
 				currentPlaylistIndex = 0;
 			}
 			else {
 				currentPlaylistIndex += 1;
 			}
 			
+			// returning song at new index
 			return this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
 		}
 		
