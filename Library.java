@@ -1,10 +1,21 @@
 
-public class Library extends Playlist{
 
-	public Library(String playlistTitle) {
-		super(playlistTitle);
+
+/*
+ * 
+ */
+public class Library extends Playlist{
+	
+	/*
+	 * 
+	 */
+	public Library() {
+		super("library");
 	}
 		
+	/*
+	 * 
+	 */
 	@Override 
 	public void deletePlaylist() {
 		return;

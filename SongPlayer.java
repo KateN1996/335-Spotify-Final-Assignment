@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-  
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,7 +22,6 @@ public class SongPlayer {
     private Long currentFrame;
     private AudioInputStream currentAudioInputStream;
     private boolean paused;
-	private ArrayList<Song> songQueue;
 
     
 	
@@ -36,7 +34,6 @@ public class SongPlayer {
 		currentFrame = 0L;
 		currentAudioInputStream = null;
 		paused = false;		
-		songQueue = new ArrayList<Song>();
 	}
 	
 	

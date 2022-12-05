@@ -11,10 +11,14 @@ public class Main {
 	public static BrazilBeatsUI gui;
     public static void main(String[] args) {  
     	
+    	
+    	
     	new SearchInterface();
     	
     	SongPlayer sp = new SongPlayer();
     	Song song = SearchInterface.search("MF").get(0);
+    	
+    	
     	
     	try {	
     		sp.play(song);
@@ -26,9 +30,13 @@ public class Main {
 			e.printStackTrace();
 		}
     	
+    	
+    	
     	PlaylistManager pm = new PlaylistManager();
     	pm.createPlaylist("testPlaylist");
     	pm.getPlaylist("testPlaylist").addSong(song);
+    	
+    	
     	
     	/*
     	for (Song song : SearchInterface.getAllSongs()) {
@@ -45,10 +53,6 @@ public class Main {
     	*/
     	
     	
-    	
-    	
-    	
-    	//MusicPlayer spotify = new MusicPlayer();
     	
     	gui = new BrazilBeatsUI();
     	gui.initializeComponents();
