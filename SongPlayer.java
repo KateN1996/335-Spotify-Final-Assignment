@@ -23,7 +23,8 @@ public class SongPlayer {
     private Long currentFrame;
     private AudioInputStream currentAudioInputStream;
     private boolean paused;
-    private FloatControl gainControl;
+    private FloatControl currentGainControl;
+    private Float currentGain;
 
     
 	
@@ -35,7 +36,8 @@ public class SongPlayer {
 		currentClip = null;
 		currentFrame = 0L;
 		currentAudioInputStream = null;
-		paused = false;		
+		paused = false;
+		currentGain = null;
 	}
 	
 	
@@ -44,7 +46,6 @@ public class SongPlayer {
 	 * plays the given Song
 	 */
 	public void play(Song song) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		System.out.println("Play");
 		if (song == null) {
 			return;
 		}
@@ -62,19 +63,22 @@ public class SongPlayer {
 		
 		// setting loop quantity
 		newClip.loop(1);
-		//newClip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 		// closing old song and playing new song
 		closeCurrentSong();
 		FloatControl newGainControl = (FloatControl) newClip.getControl(FloatControl.Type.MASTER_GAIN);
+		if (currentGain == null) {
+			currentGain = newGainControl.getMaximum();
+		}
+		newGainControl.setValue(currentGain);
 		
 		newClip.start();
-		
+				
 		// updating global references
 		this.currentSong = song;
 		this.currentAudioInputStream = newInputStream;
 		this.currentClip = newClip;
-		this.gainControl = newGainControl;
+		this.currentGainControl = newGainControl;
 	}
 	
 	
@@ -83,7 +87,6 @@ public class SongPlayer {
 	 * pauses the currently playing song
 	 */
 	public void pause() {
-		System.out.println("Pause");
 		if (currentSong == null) {
 			return;
 		}
@@ -101,7 +104,6 @@ public class SongPlayer {
 	 * resumes the currently paused song
 	 */
 	public void resume() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		System.out.println("Resume");
 		if (currentSong == null) {
 			return;
 		}
@@ -121,7 +123,6 @@ public class SongPlayer {
 	 * sets the current time of the song in microseconds
 	 */
 	public void setTime(Long time) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		System.out.println("SetTime");
 		if (currentSong == null) {
 			return;
 		}
@@ -141,7 +142,6 @@ public class SongPlayer {
 	 * 
 	 */
 	public void restartCurrentSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		System.out.println("ResetSong");
 		if (currentSong == null) {
 			return;
 		}	
@@ -158,7 +158,6 @@ public class SongPlayer {
 	 * 
 	 */
 	private void closeCurrentSong() {
-		System.out.println("Closed");
 		if (currentSong == null) {
 			return;
 		}
@@ -174,11 +173,11 @@ public class SongPlayer {
      *  Method to reset audio stream
      */
     private void resetAudioStream() throws UnsupportedAudioFileException, IOException,  LineUnavailableException {
-    	System.out.println("Reset Stream");
         currentAudioInputStream = AudioSystem.getAudioInputStream(new File(currentSong.audioPath).getAbsoluteFile());
         currentClip.open(currentAudioInputStream);
         currentClip.loop(1);
-        //currentFrame = 0L;
+        currentGainControl = (FloatControl) currentClip.getControl(FloatControl.Type.MASTER_GAIN);
+        currentGainControl.setValue(currentGain);
     }
     
     
@@ -223,6 +222,15 @@ public class SongPlayer {
     	return this.currentSong;
     }
 	
+    
+    
+    /*
+     * 
+     */
+    public void incrementGain(float increment) {
+    	this.currentGain += increment;
+    	this.currentGainControl.setValue(this.currentGain);
+    }
 }
 
 
