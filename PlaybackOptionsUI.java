@@ -24,6 +24,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isPaused = false;
@@ -40,8 +41,6 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 	
 	private int playbackBarSize = 400;
 	
-	private int curSongTime;
-	private int curSongLength;
 	
 	private SongPlayer songPlayer;
 
@@ -154,7 +153,6 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 	}
 	
 	private void updatePlaybackBar() {
-		//TODO: Get current song info and update
 		int songLength = (int)(songPlayer.getCurrentSongLength() / 1000000f);
 		int curTime = (int) (songPlayer.getCurrentTimeMicroseconds() / 1000000f);
 		playbackBar.setValue(curTime);	
@@ -169,19 +167,25 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			float selectionX = e.getPoint().x;
-			float selectionPercentage = selectionX / (float)playbackBarSize;
+			double selectionX = e.getPoint().x;
+			
+			double selectionPercentage = selectionX / playbackBarSize;
+			
+			double selectedTimeMicroseconds = selectionPercentage * songPlayer.getCurrentSongLength();
 			
 			int playbackBarMax = playbackBar.getMaximum();
-			//float selectedTimeSeconds = (float) (Math.round((playbackBarMax * selectionPercentage) * 100.0) / 100.0);
-			float selectedTimeSeconds = (playbackBarMax * selectionPercentage);
-			curSongTime = (int) selectedTimeSeconds;
-			
+			double selectedTimeSeconds = (playbackBarMax * selectionPercentage);
 			playbackBar.setValue((int)selectedTimeSeconds);
-			updatePlaybackBar();
-
 			
-			// TODO: Play selected time
+			try {
+				songPlayer.setTime((long)selectedTimeMicroseconds);
+				updatePlayPause(false);
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			updatePlaybackBar();
 			
 		}
 
