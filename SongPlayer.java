@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -22,6 +23,7 @@ public class SongPlayer {
     private Long currentFrame;
     private AudioInputStream currentAudioInputStream;
     private boolean paused;
+    private FloatControl gainControl;
 
     
 	
@@ -51,6 +53,7 @@ public class SongPlayer {
 			restartCurrentSong();
 			return;
 		}
+
 		
 		// building new song clip
 		AudioInputStream newInputStream = AudioSystem.getAudioInputStream(new File(song.audioPath).getAbsoluteFile());
@@ -63,6 +66,12 @@ public class SongPlayer {
 		
 		// closing old song and playing new song
 		closeCurrentSong();
+		FloatControl newFloatControl = (FloatControl) newClip.getControl(FloatControl.Type.MASTER_GAIN);
+		
+		gainControl;
+	    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+		
 		newClip.start();
 		
 		// updating global references

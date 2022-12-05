@@ -27,7 +27,7 @@ public class Song {
 		
 		this.title = title;
 		this.audioPath = "./wavs/" + title + ".wav";
-		this.coverPath = "./cover/" + title + ".jpg";
+		this.coverPath = "./covers/" + title + ".jpg";
 		this.metaPath = "./metaData/" + title + ".txt";
 		
 		// reading metaData

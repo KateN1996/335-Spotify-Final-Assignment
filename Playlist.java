@@ -121,6 +121,23 @@ public class Playlist {
 		}
 	}
 	
+	
+	
+	/*
+	 * 
+	 */
+	public Integer getSize() {
+		return this.songs.size();
+	}
+	
+	
+	
+	/*
+	 * 
+	 */
+	public Song getSongAtIndex(Integer index) {
+		return this.songs.get(index);
+	}
 }
 
 
