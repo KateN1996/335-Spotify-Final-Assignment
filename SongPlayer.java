@@ -199,6 +199,15 @@ public class SongPlayer {
     public float getCurrentAmplitude() {
     	return currentClip.getLevel();
     }
+    
+    
+    
+    /*
+     * 
+     */
+    public Song getCurrentSong() {
+    	return this.currentSong;
+    }
 	
 }
 
