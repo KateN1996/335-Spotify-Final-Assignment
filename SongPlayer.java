@@ -26,7 +26,7 @@ public class SongPlayer {
     
 	
 	/*
-	 * cosntructor
+	 * constructor
 	 */
 	public SongPlayer() {
 		currentSong = null;
@@ -76,6 +76,7 @@ public class SongPlayer {
 	 * pauses the currently playing song
 	 */
 	public void pause() {
+		System.out.println("Pause");
 		if (currentSong == null) {
 			return;
 		}
@@ -93,6 +94,7 @@ public class SongPlayer {
 	 * resumes the currently paused song
 	 */
 	public void resume() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		System.out.println("Resume");
 		if (currentSong == null) {
 			return;
 		}
@@ -112,6 +114,7 @@ public class SongPlayer {
 	 * sets the current time of the song in microseconds
 	 */
 	public void setTime(Long time) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		System.out.println("SetTime");
 		if (currentSong == null) {
 			return;
 		}
@@ -131,6 +134,7 @@ public class SongPlayer {
 	 * 
 	 */
 	public void restartCurrentSong() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		System.out.println("ResetSong");
 		if (currentSong == null) {
 			return;
 		}	
@@ -146,6 +150,7 @@ public class SongPlayer {
 	 * 
 	 */
 	private void closeCurrentSong() {
+		System.out.println("Closed");
 		if (currentSong == null) {
 			return;
 		}
@@ -161,6 +166,7 @@ public class SongPlayer {
      *  Method to reset audio stream
      */
     private void resetAudioStream() throws UnsupportedAudioFileException, IOException,  LineUnavailableException {
+    	System.out.println("Reset Stream");
         currentAudioInputStream = AudioSystem.getAudioInputStream(new File(currentSong.audioPath).getAbsoluteFile());
         currentClip.open(currentAudioInputStream);
         currentClip.loop(1);
