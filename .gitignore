@@ -34,3 +34,5 @@
 /PlaylistManager.class
 /SongQueue.class
 /Library.class
+/ListDisplayUI.class
+/ListDisplayUI$Renderer.class

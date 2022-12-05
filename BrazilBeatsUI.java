@@ -27,6 +27,7 @@ public class BrazilBeatsUI{
 	protected static Dimension defaultRes = new Dimension(1400, 800);
 	
 	static final int IMG_RES_MAX = 256;
+	static final int IMG_RES_MIN = 64;
 	
 	static final int SPACINGX = 5;
 	static final int SPACINGY = 10;
@@ -41,10 +42,13 @@ public class BrazilBeatsUI{
 	private Container brazilBeatsView;
 	private Container viewContainer;
 	
+	private PlaylistManager playlistManager;
+	private SongPlayer songPlayer;
 	
 	private GridBagConstraints gbc;
 	BrazilBeatsUI() {
-
+		playlistManager = Main.playlistManager;
+		songPlayer = Main.songPlayer;
 	}
 	
 	public void initializeComponents() {
@@ -67,7 +71,7 @@ public class BrazilBeatsUI{
 
 
 		viewContainer = new JPanel();
-		viewContainer.setBackground(appColor);
+		//viewContainer.setBackground(appColor);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -164,25 +168,28 @@ public class BrazilBeatsUI{
 		
 		switch(pane) {
 			case "Song View":
-				System.out.println("Switching to " + pane);
 				newPane = new SongPreviewUI();
 				break;
 				
 			case "Your Library":
 				///newPane = new LibraryPaneUI();
+				newPane = null;
 				break;
 				
 			case "Search Page":
 				///newPane = new SearchPaneUI();
+				newPane = null;
 				break;
 				
 			case "Playlists Page":
 				//newPane = new PlaylistsPaneUI();
+				newPane = new ListDisplayUI(playlistManager.getPlaylists().get(0));
 				break;
 				
 				default:
-					System.out.println("Switching to " + pane);
+					newPane = null;
 					return;
+					
 		}
 			
 			System.out.println("Switching to " + pane);
@@ -192,8 +199,11 @@ public class BrazilBeatsUI{
 			gbc.weighty = 1;
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			//viewContainer.add(newPane, gbc);
+			viewContainer.add(newPane, gbc);
 			frame.validate();
+			frame.pack();
+			
 		}
+
 	}
 

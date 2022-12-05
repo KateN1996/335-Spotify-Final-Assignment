@@ -16,6 +16,8 @@ public class SongPreviewUI extends Container{
 	/**
 	 * 
 	 */
+	private SongPlayer songPlayer;
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel albumImagePreview;
 	private JLabel songTitlePreview;
@@ -30,6 +32,8 @@ public class SongPreviewUI extends Container{
 	 */
 	SongPreviewUI() {
 		gui = Main.gui;
+		songPlayer = Main.songPlayer;
+		
 		GridBagLayout colLayout = new GridBagLayout();
 
 		this.setLayout(colLayout);
@@ -86,8 +90,13 @@ public class SongPreviewUI extends Container{
 	 * Updates the song preview view to match current song's Album art, title, album
 	 * name, and artist name
 	 */
-	private void updateSongPreview() {
-		File albumImageFile = new File("Mmfood.jpg");
+	public void updateSongPreview() {
+		Song currentSong = songPlayer.getCurrentSong();
+		
+		
+		File albumImageFile = new File(currentSong.coverPath);
+		
+		
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
@@ -95,9 +104,9 @@ public class SongPreviewUI extends Container{
 			ImageIcon albumIcon = new ImageIcon(albumImage);
 
 			albumImagePreview.setIcon(albumIcon);
-			songTitlePreview.setText("Rapp Snitch Knishes"); // Match song name
-			albumTitlePreview.setText("MM...FOOD"); // Match album name
-			artistTitlePreview.setText("MF DOOM"); // Match artist name
+			songTitlePreview.setText(currentSong.title); // Match song name
+			albumTitlePreview.setText(currentSong.album); // Match album name
+			artistTitlePreview.setText(currentSong.artist); // Match artist name
 
 		} catch (IOException e) {
 			e.printStackTrace();
