@@ -3,6 +3,11 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
+
+/*
+ * 
+ */
 public class Song {
 	
 	// song info
@@ -15,7 +20,9 @@ public class Song {
 	public final String coverPath;
 	public final String metaPath;
 	
-	// constructor
+	/*
+	 *  constructor
+	 */
 	public Song(String title) {
 		
 		this.title = title;

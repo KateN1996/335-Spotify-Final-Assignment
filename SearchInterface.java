@@ -2,7 +2,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// organizes all data and provides a single search interface for the user/UI
+
+
+/*
+ *  organizes all data and provides a single search interface for the user/UI
+ */
 public class SearchInterface {
 
 	// all available songs on the current system

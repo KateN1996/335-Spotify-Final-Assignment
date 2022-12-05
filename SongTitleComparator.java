@@ -80,52 +80,6 @@ public abstract class SongTitleComparator {
 	    return (s1Len - editDistance) / (double) s1Len;
 	}
 
-	
-	
-	
-	/*
-	public static void printDistance(String s1, String s2) {
-	    System.out.println(s1 + " & " + s2 + " | SIMILARITY PERCENTAGE : " + computeSimilarityPercentage(s1,s2));
-	}
 
-
-
-	public static void main(String[] args) {
-		
-	    printDistance("", "");
-	    printDistance("1234567890", "1");
-	    printDistance("1234567890", "12");
-	    printDistance("1234567890", "123");
-	    printDistance("1234567890", "1234");
-	    printDistance("1234567890", "12345");
-	    printDistance("1234567890", "123456");
-	    printDistance("1234567890", "1234567");
-	    printDistance("1234567890", "12345678");
-	    printDistance("1234567890", "123456789");
-	    printDistance("1234567890", "1234567890");
-	    printDistance("1234567890", "1234567980");
 	
-	    printDistance("47/2010", "472010");
-	    printDistance("47/2010", "472011");
-	
-	    printDistance("47/2010", "AB.CDEF");
-	    printDistance("47/2010", "4B.CDEFG");
-	    printDistance("47/2010", "AB.CDEFG");
-	
-	    printDistance("The quick fox jumped", "The fox jumped");
-	    printDistance("The quick fox jumped", "The fox");
-	    printDistance("The quick fox jumped",
-	            "The quick fox jumped off the balcany");
-	    printDistance("kitten", "sitting");
-	    printDistance("rosettacode", "raisethysword");
-	    printDistance(new StringBuilder("rosettacode").reverse().toString(),
-	            new StringBuilder("raisethysword").reverse().toString());
-	    for (int i = 1; i < args.length; i += 2) {
-	        printDistance(args[i - 1], args[i]);
-	    }
-	    
-	 }
-	*/
-
-
 }

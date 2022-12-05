@@ -31,3 +31,6 @@
 /LevenshteinDistance.class
 /StringComparator.class
 /SongTitleComparator.class
+/PlaylistManager.class
+/SongQueue.class
+/Library.class

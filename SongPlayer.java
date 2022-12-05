@@ -10,6 +10,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 
+/*
+ * 
+ */
 public class SongPlayer {
 
 	
@@ -189,6 +192,15 @@ public class SongPlayer {
     		return 0;
     	}
     	return currentClip.getMicrosecondLength();
+    }
+    
+    
+    
+    /*
+     * returns the float amplitude in range 0,1
+     */
+    public float getCurrentAmplitude() {
+    	return currentClip.getLevel();
     }
 	
 }

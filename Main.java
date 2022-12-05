@@ -3,17 +3,21 @@ import java.io.IOException;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+
+/*
+ * 
+ */
 public class Main {  
 	public static BrazilBeatsUI gui;
     public static void main(String[] args) {  
     	
     	new SearchInterface();
-    	SongPlayer sp = new SongPlayer();
     	
-    	try {
-			
-    		sp.play(SearchInterface.search("MF").get(0));
-			
+    	SongPlayer sp = new SongPlayer();
+    	Song song = SearchInterface.search("MF").get(0);
+    	
+    	try {	
+    		sp.play(song);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -21,6 +25,10 @@ public class Main {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
+    	
+    	PlaylistManager pm = new PlaylistManager();
+    	pm.createPlaylist("testPlaylist");
+    	pm.getPlaylist("testPlaylist").addSong(song);
     	
     	/*
     	for (Song song : SearchInterface.getAllSongs()) {
