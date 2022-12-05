@@ -1,3 +1,10 @@
+/**
+ * 
+ * Beat Visualizer class for GIF/motion changing
+ * 
+ * Author: Kevin Nisterenko
+ */
+
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -38,6 +45,10 @@ public class BeatsVisualizerUI extends Container implements Runnable{
 		
 	}
 	
+	
+	/**
+	 * Set Image/GIF
+	 */
 	private void updateBeatsView() {
 		File danceImageFile = new File("brazilDance.jpg");
 		Image danceImage;
@@ -54,19 +65,25 @@ public class BeatsVisualizerUI extends Container implements Runnable{
 	}
 
 	@Override
+	
+	/**
+	 * Runnable, always checks the current amplitude of the song, if it falls 
+	 * in between the range of threshold, it should advance the gif to the next 
+	 * frame. 
+	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		System.out.println(Main.songPlayer);
 		while (true) {
 			
-			/*
+			
 			float currAmp = Main.songPlayer.getCurrentAmplitude();
 			System.out.println("Checking Amps: Last -> " + lastAmp + " Curr ->" + currAmp);
 			if (currAmp - threshold <= lastAmp || currAmp + threshold >= lastAmp) {
 				// Advance frame
 				System.out.println("ADVANCE FRAME!!!!");
 			}
-			*/
+			lastAmp = currAmp;
 		}
 		
 	}

@@ -1,3 +1,9 @@
+/**
+ * Panel for the album cover/big player view. 
+ * 
+ * Author: Kevin Nisterenko
+ */
+
 import java.awt.*;
 
 import java.io.File;
