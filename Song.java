@@ -1,3 +1,12 @@
+import java.awt.Image;
+import java.nio.file.Paths;
+
+import javax.swing.ImageIcon;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 /**
  * @author Kate Nixon
  
@@ -24,16 +33,29 @@ public class Song {
 	private String title;
 	private String artist;
 	private int timesPlayed;
+	private String path;
+	private MediaPlayer player;
+	private ImageIcon image;
 	/**
 	 * Constructs a new instance of the Song class
 	 * with the specified song title and artist
 	 * @param title
 	 * @param artist
 	 */
-	public Song(String title, String artist) {
+	public Song(String title, String artist, String path, String image) {
 		this.title = title;
 		this.artist = artist;
-		timesPlayed = 0;
+		this.path = path;
+		timesPlayed = 0; //spotify wrapped? >:)
+		this.player = new MediaPlayer(new Media(Paths.get(path).toUri().toString()));
+		if(image.equals("")) {
+			image = "blank.png";
+		}
+		this.image = new ImageIcon(image);
+	}
+	
+	public MediaPlayer getPlayer() {
+		return player;
 	}
 	/**
 	 * Returns the title of the song, which is a String
@@ -56,10 +78,41 @@ public class Song {
 	public int getTimesPlayed() {
 		return timesPlayed;
 	}
+	
+	public ImageIcon getImage() {
+		return image;
+	}
+	
+	public void setImage(String image) {
+		if(image.equals("")) {
+			image = "blank.png";
+		}
+		this.image = new ImageIcon(image);
+	}
+	
+	public String getCurTime() {
+		Duration current = player.getCurrentTime();
+		Duration total = player.getCycleDuration();
+		double amount = current.toSeconds() /total.toSeconds();
+		int curTime = (int)(amount * 172);
+		int curMin = (int)current.toMinutes();
+		int curSec = (int)(current.toSeconds() - curMin *60);
+		return String.format("%d:%02d", curMin, curSec);
+	}
+	
 	/**
-	 * play song somehow
+	 * play song
 	 */
-	public void play() {
+	public MediaPlayer play() {
+		player.play();
+		return player;
+	}
+	
+	/**
+	 * play song
+	 */
+	public void pause() {
+		player.pause();
 	}
 	
 	/**
