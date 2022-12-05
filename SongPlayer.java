@@ -66,11 +66,7 @@ public class SongPlayer {
 		
 		// closing old song and playing new song
 		closeCurrentSong();
-		FloatControl newFloatControl = (FloatControl) newClip.getControl(FloatControl.Type.MASTER_GAIN);
-		
-		gainControl;
-	    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-	gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+		FloatControl newGainControl = (FloatControl) newClip.getControl(FloatControl.Type.MASTER_GAIN);
 		
 		newClip.start();
 		
@@ -78,6 +74,7 @@ public class SongPlayer {
 		this.currentSong = song;
 		this.currentAudioInputStream = newInputStream;
 		this.currentClip = newClip;
+		this.gainControl = newGainControl;
 	}
 	
 	
