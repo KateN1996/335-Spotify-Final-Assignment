@@ -157,7 +157,7 @@ public class SearchPanelUI extends Container {
 		gbc.gridx = 1;
 		playlistSelectionContainer.add(playlistSelection, gbc);
 		
-		gui.validateFrame();
+		//gui.validateFrame();
 	}
 	
 	/**
@@ -170,7 +170,6 @@ public class SearchPanelUI extends Container {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String subject = searchField.getText();
-			System.out.println(subject);
 			if (subject == null) {
 				return;
 			}
@@ -190,7 +189,6 @@ public class SearchPanelUI extends Container {
 			}
 			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
 			curPlaylist.addSong(songPlayer.getCurrentSong());
-			System.out.println(curPlaylist.getSongs());
 			gui.validateFrame();
 		}
 		

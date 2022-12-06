@@ -23,16 +23,18 @@ public class PlayerPanel extends JPanel{
 	private JLabel albumTitlePreview;
 	private JLabel artistTitlePreview;
 	private Song currentSong;
+	private SongPlayer songPlayer;
 
     private Color textColor = new Color(255, 255, 255);
     private Color backgroundColor;
 
-    PlayerPanel(Song curSong) {
+    PlayerPanel() {
         // Create main panel 
 		super(new GridBagLayout());
+		songPlayer = Main.songPlayer;
 		this.setPreferredSize(new Dimension(BrazilBeatsUI.IMG_RES_MAX *2, BrazilBeatsUI.IMG_RES_MAX *2));
 
-		currentSong = curSong;
+		currentSong = songPlayer.getCurrentSong();
 
         // setup the containers for the cover and text
         Container songContainer = new Container();
@@ -80,6 +82,9 @@ public class PlayerPanel extends JPanel{
 	 * name, and artist name
 	 */
 	public void updateSongPreview() {
+		System.out.println("updating player panel");
+		currentSong = songPlayer.getCurrentSong();
+		
 		File albumImageFile = new File(currentSong.coverPath);
 		Image albumImage;
 		try {

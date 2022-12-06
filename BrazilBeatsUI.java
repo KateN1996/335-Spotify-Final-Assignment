@@ -190,7 +190,7 @@ public class BrazilBeatsUI {
 		switch (pane) {
 		// Add a song display to the main view
 		case "Song View":
-			playerViewPanel = new PlayerPanel(songPlayer.getCurrentSong());
+			playerViewPanel = new PlayerPanel();
 			newPane = playerViewPanel;
 			break;
 
@@ -289,8 +289,10 @@ public class BrazilBeatsUI {
 		}
 		
 		((NavigationMenuUI)navigationMenu).updatePlaylistsList();
-		//brazilBeatsView;
-		//viewContainer;
+			
+		if (searchPanel != null) {
+			((SearchPanelUI)searchPanel).updateFields();
+		}
 		
 		frame.validate();
 	}
