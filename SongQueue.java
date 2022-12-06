@@ -51,7 +51,8 @@ public class SongQueue {
 		
 		currSong = this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
 		
-		System.out.println(this.currentPlaylist.title);
+		//System.out.println(this.currentPlaylist.title);
+		System.out.println(this.currSong.title);
 		
 		return currSong;
 		

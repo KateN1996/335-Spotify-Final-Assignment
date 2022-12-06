@@ -58,6 +58,10 @@ public class SongPlayer {
 			restartCurrentSong();
 			return;
 		}
+		
+		this.currentSong = song;
+		
+		closeCurrentSong();
 
 		// building new song clip
 		currentFile = new File(song.audioPath).getAbsoluteFile();
@@ -69,7 +73,7 @@ public class SongPlayer {
 		newClip.loop(0);
 		
 		// closing old song and playing new song
-		closeCurrentSong();
+		
 		FloatControl newGainControl = (FloatControl) newClip.getControl(FloatControl.Type.MASTER_GAIN);
 		if (currentGain == null) {
 			currentGain = newGainControl.getMaximum();
@@ -79,7 +83,7 @@ public class SongPlayer {
 		newClip.start();
 		
 		// updating global references
-		this.currentSong = song;
+		
 		this.currentAudioInputStream = newInputStream;
 		this.currentClip = newClip;
 		this.currentGainControl = newGainControl;
@@ -166,6 +170,9 @@ public class SongPlayer {
 	 */
 	private void closeCurrentSong() {
 		if (currentSong == null) {
+			return;
+		}
+		if (currentClip == null) {
 			return;
 		}
 		paused = false;
