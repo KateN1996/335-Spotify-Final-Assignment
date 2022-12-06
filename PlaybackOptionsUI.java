@@ -19,25 +19,28 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 /**
- * This is the UI container containing all the playback controls for the current song. It has a playback bar with working time stamps
- * and a progress bar that updates in real-time with its own thread. There are buttons used for playback controls including shuffle, 
- * restart/play previous, play and pause, play next song, and save song to library. The playback bar also allows the user to select the
- * exact time in the song by clicking anywhere on the progress bar. There is a volume slider at the bottom as well.
+ * This is the UI container containing all the playback controls for the current
+ * song. It has a playback bar with working time stamps and a progress bar that
+ * updates in real-time with its own thread. There are buttons used for playback
+ * controls including shuffle, restart/play previous, play and pause, play next
+ * song, and save song to library. The playback bar also allows the user to
+ * select the exact time in the song by clicking anywhere on the progress bar.
+ * There is a volume slider at the bottom as well.
  * 
  * @author Kyle Walker
  *
  */
-public class PlaybackOptionsUI extends Container implements Runnable{
+public class PlaybackOptionsUI extends Container implements Runnable {
 	private BrazilBeatsUI gui;
 	private static final long serialVersionUID = 1L;
-	
+
 	// Graphics components
 	// Playback bar and timestamps
 	private JProgressBar playbackBar;
 	private int playbackBarSize = 400;
 	private JLabel timeStampCurrent;
 	private JLabel timeStampEnd;
-	
+
 	// playback options buttons
 	private JButton playPauseButton;
 	private boolean isPaused = false;
@@ -45,21 +48,21 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 	private JButton restartButton;
 	private JButton skipButton;
 	private JButton saveButton;
-	
+
 	// Ref to songplayer
 	private SongPlayer songPlayer;
 
 	/**
 	 * Creates the playback options menu on the bottom of the screen with the
-	 * playback timeBar and all playback buttons. Each button is wired to
-	 * methods which complete their respective functions, and the bar updates
-	 * to match the song's timing.
+	 * playback timeBar and all playback buttons. Each button is wired to methods
+	 * which complete their respective functions, and the bar updates to match the
+	 * song's timing.
 	 * 
 	 */
 	PlaybackOptionsUI() {
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
-		
+
 		// Gridbag layout of components
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -67,7 +70,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.anchor = GridBagConstraints.SOUTH;
 
 		// Current song time stamp label
-		timeStampCurrent = new JLabel("0:00");	
+		timeStampCurrent = new JLabel("0:00");
 		timeStampCurrent.setFont(BrazilBeatsUI.captionFont);
 		timeStampCurrent.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridx = 0;
@@ -77,7 +80,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		// Playback bar (progress bar)
 		playbackBar = new JProgressBar(SwingConstants.HORIZONTAL);
 		playbackBar.setPreferredSize(new Dimension(playbackBarSize, 12));
-		playbackBar.setMaximum(172);								// Max set to max length of song
+		playbackBar.setMaximum(172); // Max set to max length of song
 		playbackBar.setValue(48);
 		playbackBar.setBackground(BrazilBeatsUI.borderColor);
 		playbackBar.setForeground(BrazilBeatsUI.detailColor);
@@ -153,15 +156,17 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		this.add(buttonContainer, gbc);
-		
+
 		// Add volume slider below buttons
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		this.add(new VolumeSlider(), gbc);
 	}
-	
+
 	/**
-	 * Updates the state of the play/pause button. Uses tooltip name change to change functionality
+	 * Updates the state of the play/pause button. Uses tooltip name change to
+	 * change functionality
+	 * 
 	 * @param toggle isPaused: is the button paused(true) or playing(false)
 	 */
 	private void updatePlayPause(boolean toggle) {
@@ -174,91 +179,123 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 			playPauseButton.setToolTipText("Pause");
 		}
 	}
-	
+
+	/**
+	 * Updates the playback bar to reflect the state of the song. Shows the song's
+	 * current time, length, and current position within the progress bar.
+	 */
 	private void updatePlaybackBar() {
-		int songLength = (int)(songPlayer.getCurrentSongLength() / 1000000f);
+		// Convert song times to seconds
+		int songLength = (int) (songPlayer.getCurrentSongLength() / 1000000f);
 		int curTime = (int) (songPlayer.getCurrentTimeMicroseconds() / 1000000f);
-		playbackBar.setValue(curTime);	
+		playbackBar.setValue(curTime);
 		playbackBar.setMaximum(songLength); // Max set to max length of song
-		String currentTime = (curTime/ 60 + ":" + (new DecimalFormat("00").format(curTime % 60)));
+		// Change timestamp text to timestamp format (min:secs)
+		String currentTime = (curTime / 60 + ":" + (new DecimalFormat("00").format(curTime % 60)));
 		String endTime = (songLength / 60 + ":" + (new DecimalFormat("00").format((songLength % 60))));
-		timeStampCurrent.setText(currentTime); // current time
-		timeStampEnd.setText(endTime); // current time
+		timeStampCurrent.setText(currentTime);
+		timeStampEnd.setText(endTime);
 	}
-	
-	class playbackBarListener implements MouseListener{
-		
+
+	/**
+	 * Mouse listener attached to playbackBar which allows users to select song time
+	 * by clicking along the bar. Finds the percentage of the bar and applies that
+	 * to the time of the song at that percentage.
+	 * 
+	 * @author Kyle Walker
+	 *
+	 */
+	class playbackBarListener implements MouseListener {
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			double selectionX = e.getPoint().x;
-			
+
 			double selectionPercentage = selectionX / playbackBarSize;
-			
+
 			double selectedTimeMicroseconds = selectionPercentage * songPlayer.getCurrentSongLength();
-			
+
 			int playbackBarMax = playbackBar.getMaximum();
 			double selectedTimeSeconds = (playbackBarMax * selectionPercentage);
-			playbackBar.setValue((int)selectedTimeSeconds);
-			
+			playbackBar.setValue((int) selectedTimeSeconds);
+
 			try {
-				songPlayer.setTime((long)selectedTimeMicroseconds);
+				songPlayer.setTime((long) selectedTimeMicroseconds);
 				updatePlayPause(false);
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			updatePlaybackBar();
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
+		// Changes the color of the bar when the mouse hovers over it to indicate
+		// interactivity.
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			playbackBar.setForeground(BrazilBeatsUI.accentColor);
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			playbackBar.setForeground(BrazilBeatsUI.detailColor);
-			
+
 		}
-		
+
 	}
-	
+
+	/**
+	 * Listens to interactions with the playback buttons and calls methods on the
+	 * song player depending on their current function (stores in tooltip);
+	 * 
+	 * @author Kyle Walker
+	 *
+	 */
 	class playbackButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton pressedButton = (JButton) (e.getSource());
+
+			// Context of button is stored in tooltip name (allows play and pause toggle by
+			// just switching names)
 			String context = pressedButton.getToolTipText();
+
 			switch (context) {
+
+			// Shuffle the current queue
 			case "Shuffle":
 				// TODO: Call backend Shuffle
 				System.out.println("Shuffling");
 				break;
+
+			// Restarts the current song
 			case "Previous":
 				try {
 					songPlayer.restartCurrentSong();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
 					e2.printStackTrace();
 				}
-		
 				System.out.println("Restarting /playing previous");
+				// Forces the pause button to enter playing mode
 				updatePlayPause(false);
 				break;
-		
+
+			// Play / resume current song
 			case "Play":
 				try {
 					songPlayer.resume();
@@ -266,20 +303,26 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 					e1.printStackTrace();
 				}
 				System.out.println("Playing song");
+				// Forces paused button to play mode
 				updatePlayPause(false);
 				break;
-			
+
+			// Pauses current song
 			case "Pause":
 				songPlayer.pause();
 				System.out.println("Pausing song");
+				// Forces play button to paused state
 				updatePlayPause(true);
 				break;
-			
+
+			// Plays next song in queue
 			case "Next":
 				System.out.println("Skipping song");
 				// TODO: fast forward to next
 				updatePlayPause(false);
 				break;
+				
+			// Saves current song to library playlist
 			case "Save to Library":
 				// TODO: Call backend Save song
 				System.out.println("Saved Song to library");
@@ -288,14 +331,13 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		}
 	}
 
+
 	@Override
 	public void run() {
 		while (true) {
+			// Updates playback bar in realtime on its own thread to always reflect changes in song player
 			updatePlaybackBar();
 		}
-		
+
 	}
 }
-	
-	
-	

@@ -28,8 +28,6 @@ public class PlayerPanel extends JPanel{
     private Color backgroundColor;
 
     PlayerPanel(Song curSong) {
-    	
-    	
         // Create main panel 
 		super(new GridBagLayout());
 		this.setPreferredSize(new Dimension(BrazilBeatsUI.IMG_RES_MAX *2, BrazilBeatsUI.IMG_RES_MAX *2));

@@ -12,18 +12,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
+ * UI contater used for showing the preview of the current song and all of its
+ * relvant metadata such as song title, artist, album cover and album name. Also
+ * allows the user to enter the player view when they click on this container,
+ * displaying all info larger on the center of the UI.
  * 
  * @author Kyle Walker
  *
  */
 public class SongPreviewUI extends Container {
+	// References
 	private BrazilBeatsUI gui;
-	/**
-	 * 
-	 */
 	private SongPlayer songPlayer;
-
 	private static final long serialVersionUID = 1L;
+
+	// Labels for view
 	private JLabel albumImagePreview;
 	private JLabel songTitlePreview;
 	private JLabel albumTitlePreview;
@@ -31,47 +34,49 @@ public class SongPreviewUI extends Container {
 
 	/**
 	 * Creates the container with all components used for displaying Current song
-	 * info and album art. Will later have a method used for updating graphics to
-	 * always match current song playing.
-	 * 
-	 * @return
+	 * info and album art.
 	 */
 	SongPreviewUI() {
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
 
-		GridBagLayout colLayout = new GridBagLayout();
-
-		this.setLayout(colLayout);
+		this.setLayout(new GridBagLayout());
+		this.setFocusable(true);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.WEST;
+
 		// Create components
+		// Album image icon
 		albumImagePreview = new JLabel("");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.weightx = 1;
 		this.add(albumImagePreview, gbc);
 
+		// Song title label
 		songTitlePreview = new JLabel("");
 		songTitlePreview.setFont(BrazilBeatsUI.mainFont);
 		songTitlePreview.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridy = 2;
 		this.add(songTitlePreview, gbc);
 
+		// Album title label
 		albumTitlePreview = new JLabel("");
 		albumTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		albumTitlePreview.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridy = 3;
 		this.add(albumTitlePreview, gbc);
 
+		// Artist label
 		artistTitlePreview = new JLabel("");
 		artistTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		artistTitlePreview.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridy = 4;
 		this.add(artistTitlePreview, gbc);
-		// add the mouseListener so we can add the pane switching
+
+		// mouseListener so we can switch panes
 		this.addMouseListener(new MouseListener() { // Mouse listener to switch to Playlist view when pressed
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -94,9 +99,7 @@ public class SongPreviewUI extends Container {
 			public void mouseExited(MouseEvent e) {
 			}
 		});
-
 		updateSongPreview();
-
 	}
 
 	/**
@@ -111,6 +114,7 @@ public class SongPreviewUI extends Container {
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
+			// 256 x 256 image by default
 			albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX,
 					Image.SCALE_DEFAULT);
 			ImageIcon albumIcon = new ImageIcon(albumImage);
