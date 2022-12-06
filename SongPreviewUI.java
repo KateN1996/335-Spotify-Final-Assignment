@@ -120,6 +120,7 @@ public class SongPreviewUI extends Container {
 			ImageIcon albumIcon = new ImageIcon(albumImage);
 
 			albumImagePreview.setIcon(albumIcon);
+			
 			String songName = currentSong.title;
 			if (songName.length() > 28) {
 				songName = songName.substring(0, 28) + "...";

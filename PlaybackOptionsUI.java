@@ -111,7 +111,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		shuffleButton.setFont(BrazilBeatsUI.mainFont);
 		shuffleButton.setToolTipText("Shuffle");
 		shuffleButton.addActionListener(new playbackButtonListener());
-		buttonContainer.add(shuffleButton);
+		//buttonContainer.add(shuffleButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
 		// Restart song button
@@ -151,7 +151,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		saveButton.setFont(BrazilBeatsUI.mainFont);
 		saveButton.setToolTipText("Save to Library");
 		saveButton.addActionListener(new playbackButtonListener());
-		buttonContainer.add(saveButton);
+		//buttonContainer.add(saveButton);
 
 		gbc.gridx = 1;
 		gbc.gridy = 1;
