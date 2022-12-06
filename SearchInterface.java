@@ -70,7 +70,7 @@ public class SearchInterface {
 	 */
 	private static ArrayList<Song> searchByAttributes(String searchText, boolean titleSearch, boolean artistSearch, boolean albumSearch){
 		// filtering songs by match percentage and similarity floor value
-		Double simFloor = 0.1;
+		//Double simFloor = 0.1;
 		HashMap<Song, Double> songMatchMap = new HashMap<Song, Double>();
 		for (Song song : songs) {
 			ArrayList<Double> matchPers = new ArrayList<Double>();
@@ -84,9 +84,12 @@ public class SearchInterface {
 				matchPers.add(StringComparator.computeSimilarityPercentage(song.album, searchText));
 			}
 			Double matchPer = Collections.max(matchPers);
+			songMatchMap.put(song, matchPer);
+			/*
 			if (matchPer >= simFloor) {				
 				songMatchMap.put(song, matchPer);
 			}
+			*/
 		}
 		
 		// sorting by match percentage
