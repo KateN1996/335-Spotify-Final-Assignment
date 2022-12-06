@@ -133,7 +133,7 @@ public class SongQueue {
 		int idx = this.currentPlaylist.getIndexOfSong(song);
 		ArrayList<Song> playlist = this.currentPlaylist.getSongs();
 		int qIdx = 0;
-		
+		this.userQueue.clear();
 		// build the queue starting from the current song
 		for (int i = idx; i < this.currentPlaylist.getSize(); i++) {
 			this.userQueue.set(qIdx, playlist.get(i));
