@@ -3,15 +3,21 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -32,13 +38,18 @@ public class ListDisplayUI extends Container {
 	// Columns
 	private String[] columnNames = { "#", "Song Title", "Album", "Artist" };
 	private static final long serialVersionUID = 1L;
-
+	private SongPlayer songPlayer;
+	private BrazilBeatsUI gui;
+	
 	/**
 	 * Creates a new playlist table display Container.
 	 * 
 	 * @param playlist Playlist that will be displayed within the table
 	 */
 	ListDisplayUI(Playlist playlist) {
+		songPlayer = Main.songPlayer;
+		gui = Main.gui;
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
@@ -72,15 +83,20 @@ public class ListDisplayUI extends Container {
 
 		table = new JTable(tableData, columnNames);
 		
-		DefaultTableModel tableModel = new DefaultTableModel() {
+		
+		
+		DefaultTableModel tableModel = new DefaultTableModel(tableData, columnNames) {
 		    @Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
 		       return false;
 		    }
+		  
 		};
 
 		table.setModel(tableModel);
+		table.setRowSelectionAllowed (true);
+		table.addMouseListener(new rowSelectionListener());
 		
 		
 		table.setBackground(BrazilBeatsUI.barColor);
@@ -94,33 +110,47 @@ public class ListDisplayUI extends Container {
 
 	}
 	
-	
+	class rowSelectionListener implements MouseListener{
 
-	class Renderer extends DefaultTableCellRenderer {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		Renderer(Song curSong) {
-			super();
-			JLabel curSongLabel = new JLabel(curSong.title);
-			curSongLabel.setFont(BrazilBeatsUI.mainFont);
-			curSongLabel.setForeground(BrazilBeatsUI.detailColor);
-			File albumImageFile = new File(curSong.coverPath);
-			Image albumImage;
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+			String selectedSong = (String) table.getValueAt(table.getSelectedRow(), 1);
 			try {
-				albumImage = ImageIO.read(albumImageFile);
-				albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MIN, BrazilBeatsUI.IMG_RES_MIN,
-						Image.SCALE_DEFAULT);
-				ImageIcon albumIcon = new ImageIcon(albumImage);
-				curSongLabel.setIcon(albumIcon);
-			} catch (IOException e) {
-				e.printStackTrace();
+				songPlayer.play(SearchInterface.getSong(selectedSong));
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			gui.validateFrame();
 		}
 
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+		
 	}
 
 }

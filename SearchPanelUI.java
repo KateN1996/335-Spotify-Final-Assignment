@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -18,6 +19,9 @@ public class SearchPanelUI extends Container {
 	private JTextField searchField;
 	private Playlist searchResults;
 	private PlaylistManager playlistManager;
+	private JComboBox playlistSelection;
+	
+	private SongPlayer songPlayer;
 	
 	private ListDisplayUI currentSearchResultsTable;
 	private BrazilBeatsUI gui;
@@ -27,15 +31,17 @@ public class SearchPanelUI extends Container {
 		//searchInterface = Main.searchInterface;
 		playlistManager = Main.playlistManager;
 		gui = Main.gui;
+		songPlayer = Main.songPlayer;
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		
 		searchField = new JTextField();
 		
-		JLabel searchTitle = new JLabel("Search for Songs");
+		JLabel searchTitle = new JLabel("Search");
 		searchTitle.setFont(BrazilBeatsUI.headerFont);
 		searchTitle.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridx = 0;
@@ -43,6 +49,7 @@ public class SearchPanelUI extends Container {
 		gbc.weightx =1;
 		gbc.weighty = 1;
 		this.add(searchTitle, gbc);
+		
 		gbc.gridy = 1;
 		
 		this.add(searchField, gbc);
@@ -54,8 +61,26 @@ public class SearchPanelUI extends Container {
 		findButton.setBackground(BrazilBeatsUI.accentColor);
 		findButton.addActionListener(new SearchListener());
 		this.add(findButton, gbc);
+		
+		gbc.gridy = 4;
+		JButton addToPlaylistButton = new JButton("Add to Playlist: ");
+		addToPlaylistButton.setFont(BrazilBeatsUI.captionFont);
+		addToPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
+		addToPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
+		addToPlaylistButton.addActionListener(new addToPlaylistListener());
+		this.add(addToPlaylistButton, gbc);
 	
 		
+		String[] playlistNames = new String[playlistManager.getPlaylists().size()];
+		int i = 0;
+		for (Playlist p : playlistManager.getPlaylists()) {
+			playlistNames[i] = p.title;
+			i++;
+		}
+		playlistSelection = new JComboBox(playlistNames);
+		
+		gbc.gridy = 5;
+		this.add(playlistSelection);
 	}
 	
 	
@@ -82,5 +107,20 @@ public class SearchPanelUI extends Container {
 			searchResults = playlistManager.getSearchResults();
 			updateResults();
 		}
+	}
+	
+	class addToPlaylistListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String playlistName = (String) playlistSelection.getSelectedItem();
+			if (playlistName == null) {
+				return;
+			}
+			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
+			curPlaylist.addSong(songPlayer.getCurrentSong());
+			System.out.println(curPlaylist.getSongs());
+		}
+		
 	}
 }

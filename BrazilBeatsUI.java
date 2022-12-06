@@ -26,7 +26,7 @@ public class BrazilBeatsUI {
 	protected static Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	protected static Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
 	protected static Font headerFont = new Font("Arial Bold", Font.BOLD, 28);
-	protected static Dimension defaultRes = new Dimension(1400, 700);
+	protected static Dimension defaultRes = new Dimension(1600, 800);
 
 	// App dimensions
 	static final int IMG_RES_MAX = 256;
@@ -202,13 +202,6 @@ public class BrazilBeatsUI {
 			newPane = new SearchPanelUI();
 			break;
 
-		// Switch to Playlist view
-		case "Playlists Page":
-			// newPane = new PlaylistsPaneUI();
-			// TODO: get actual playlist
-			newPane = new ListDisplayUI(playlistManager.getPlaylists().get(0));
-			break;
-
 		default:
 			newPane = null;
 			break;
@@ -218,6 +211,24 @@ public class BrazilBeatsUI {
 		}
 
 		System.out.println("Switching to " + pane);
+		// Removes previous component from view
+		viewContainer.removeAll();
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridheight = 2;
+		viewContainer.add(newPane, gbc);
+		frame.validate();
+		frame.pack();
+	}
+	
+	public void switchMainViewPane(Container panel) {
+		
+		Container newPane;
+		newPane = panel;
+
 		// Removes previous component from view
 		viewContainer.removeAll();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -268,6 +279,7 @@ public class BrazilBeatsUI {
 	}
 	
 	public void validateFrame() {
+		((SongPreviewUI) songPreview).updateSongPreview();
 		frame.validate();
 	}
 

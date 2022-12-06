@@ -337,6 +337,12 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		while (true) {
 			// Updates playback bar in realtime on its own thread to always reflect changes in song player
 			updatePlaybackBar();
+			if (songPlayer.getCurrentClip().isRunning() && isPaused) {
+				updatePlayPause(false);
+			}
+			else if (!songPlayer.getCurrentClip().isRunning() && !isPaused) {
+				updatePlayPause(true);
+			}
 		}
 
 	}

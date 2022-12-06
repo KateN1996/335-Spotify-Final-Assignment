@@ -50,3 +50,7 @@
 /SearchPanelUI$SearchListener.class
 /SearchResults.class
 /ListDisplayUI$1.class
+/ListDisplayUI$rowSelectionListener.class
+/SearchPanelUI$addToPlaylistListener.class
+/NavigationMenuUI$newPlaylistButtonListener.class
+/NavigationMenuUI$playlistSelectionListener.class

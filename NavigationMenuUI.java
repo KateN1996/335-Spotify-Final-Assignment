@@ -105,7 +105,8 @@ public class NavigationMenuUI extends Container {
 		playlistScroll.add(playlistsList, gbc);
 		playlistScroll.setViewportView(playlistsList);
 		playlistsList.setLayoutOrientation(JList.VERTICAL);
-		// JList<Playlist> playlistsList = new JList<Playlist>();
+		playlistsList.addMouseListener(new playlistSelectionListener());
+		
 		gbc.gridy = 3;
 		this.add(playlistScroll, gbc);
 		
@@ -118,7 +119,7 @@ public class NavigationMenuUI extends Container {
 		newPlaylistButton.setFont(BrazilBeatsUI.captionFont);
 		newPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
 		newPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
-		newPlaylistButton.addActionListener(new newPlaylistListener());
+		newPlaylistButton.addActionListener(new newPlaylistButtonListener());
 		this.add(newPlaylistButton, gbc);
 	}
 	
@@ -138,7 +139,45 @@ public class NavigationMenuUI extends Container {
 	}
 	
 	
-	class newPlaylistListener implements ActionListener{
+	class playlistSelectionListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			System.out.println(playlistsList.getSelectedValue());
+			Playlist curPlaylist = playlistManager.getPlaylist(playlistsList.getSelectedValue());
+			gui.switchMainViewPane(new ListDisplayUI(curPlaylist));
+			
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
+	class newPlaylistButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
