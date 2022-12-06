@@ -5,8 +5,10 @@ import java.util.HashMap;
 
 
 
-/*
+/**
  *  organizes all data and provides a single search interface for the user/UI
+ *  
+ *  @author Ryan Pecha
  */
 public class SearchInterface {
 

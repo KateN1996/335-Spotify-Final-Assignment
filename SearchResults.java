@@ -1,8 +1,8 @@
 
-
-
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class SearchResults extends Playlist{
 	

@@ -8,12 +8,14 @@ import java.util.Scanner;
 
 
 
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class Playlist {
 
-	//
+	// Playlist attributes
 	public final String title;
 	private String playlistPath;
 	private ArrayList<Song> songs;
@@ -159,19 +161,27 @@ public class Playlist {
 	
 	
 	
-	
+	/*
+	 * 
+	 */
 	public ArrayList<Song> getSongsSortedByTitle(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
 		Collections.sort(sortedSongs, (o1, o2) -> (o1.getTitle().compareTo(o2.getTitle())));
 		return sortedSongs;
 	}
 	
+	/*
+	 * 
+	 */
 	public ArrayList<Song> getSongsSortedByAlbum(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
 		Collections.sort(sortedSongs, (o1, o2) -> (o1.getAlbum().compareTo(o2.getAlbum())));
 		return sortedSongs;
 	}
-
+	
+	/*
+	 * 
+	 */
 	public ArrayList<Song> getSongsSortedByArtist(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
 		Collections.sort(sortedSongs, (o1, o2) -> (o1.getArtist().compareTo(o2.getArtist())));
@@ -180,6 +190,9 @@ public class Playlist {
 	
 	
 	
+	/*
+	 * 
+	 */
 	public void setSongs(ArrayList<Song> songs) {
 		this.songs.clear();
 		this.songs = songs;

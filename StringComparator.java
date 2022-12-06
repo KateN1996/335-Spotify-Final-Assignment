@@ -1,8 +1,10 @@
 
 
 
-/*
- * abstract class used to compare song titles
+/**
+ * abstract class used to compare strings
+ * 
+ * @author Ryan Pecha
  */
 public abstract class StringComparator {
 

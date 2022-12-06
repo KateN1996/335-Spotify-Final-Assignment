@@ -3,12 +3,14 @@ import java.util.ArrayList;
 
 
 
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class PlaylistManager {
 	
-	//
+	// Manager fields
 	private ArrayList<Playlist> playlists;
 	private SearchResults searchResults;
 	

@@ -4,8 +4,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class Main {  
 	public static BrazilBeatsUI gui;

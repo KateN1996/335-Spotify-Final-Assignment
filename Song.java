@@ -5,8 +5,10 @@ import java.util.Scanner;
 
 
 
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class Song {
 	
@@ -58,14 +60,23 @@ public class Song {
 
 	}
 	
+	/*
+	 * 
+	 */
 	public String getTitle() {
 		return this.title;
 	}
 	
+	/*
+	 * 
+	 */
 	public String getArtist() {
 		return this.artist;
 	}
 	
+	/*
+	 * 
+	 */
 	public String getAlbum() {
 		return this.album;
 	}

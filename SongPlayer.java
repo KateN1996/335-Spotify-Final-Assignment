@@ -10,8 +10,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 
-/*
+/**
  * 
+ * 
+ * @author Ryan Pecha
  */
 public class SongPlayer {
 
