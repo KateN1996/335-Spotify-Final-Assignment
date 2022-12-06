@@ -13,7 +13,7 @@ public class SongQueue {
 	private Playlist currentPlaylist;
 	private Integer currentPlaylistIndex;
 	//private ArrayList<Song> userQueue;
-	//private Song currSong; 
+	private Song currSong; 
 
 	
 	
@@ -24,7 +24,7 @@ public class SongQueue {
 		currentPlaylist = null;
 		currentPlaylistIndex = 0;
 		//userQueue = new ArrayList<Song>();
-		//currSong = null;
+		currSong = null;
 	}
 	
 	
@@ -34,8 +34,12 @@ public class SongQueue {
 	 */
 	public Song dequeue() {
 		
-		if (currentPlaylist.getSize() <= 0) {
+		if (currentPlaylist == null) {
 			return null;
+		}
+		
+		if (currentPlaylist.getSize() <= 0) {
+			return currSong;
 		}
 		
 		this.currentPlaylistIndex += 1;
@@ -45,7 +49,11 @@ public class SongQueue {
 			this.currentPlaylistIndex = 0;
 		}
 		
-		return this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
+		currSong = this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
+		
+		System.out.println(this.currentPlaylist.title);
+		
+		return currSong;
 		
 		
 		/*
