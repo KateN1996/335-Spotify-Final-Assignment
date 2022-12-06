@@ -96,27 +96,8 @@ public class NavigationMenuUI extends Container {
 			}
 		});
 		
-
-		// TODO: Change this to actual playlist object array
-
-		/*
-		String[] examplePlaylists = new String[] { "Drake playlist", "Logic isn't that bad", "6ix9ine hidden gems",
-				"YEAT's greatest hits", "Wolfgang Amadeus Mozart", "Dababy sleep playlist 2" };
-				*/
-
-		ArrayList<Playlist> allPlaylists = playlistManager.getPlaylists();
-
-		String[] playlistData = new String[allPlaylists.size()];
-
-		// Store all playlist names into list
-		for (int i = 0; i < allPlaylists.size(); i++) {
-			playlistData[i] = allPlaylists.get(i).title;
-		}
-		playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
-		// playlistsList.setListData(playlistData);
-		playlistsList.setListData(playlistData);
-
 		// Display playlists on interactable list
+		updatePlaylistsList();
 		playlistsList.setBackground(BrazilBeatsUI.borderColor);
 		playlistsList.setForeground(BrazilBeatsUI.detailColor);
 		playlistsList.setFont(BrazilBeatsUI.captionFont);
@@ -142,6 +123,21 @@ public class NavigationMenuUI extends Container {
 	}
 	
 	
+	public void updatePlaylistsList() {
+		ArrayList<Playlist> allPlaylists = playlistManager.getPlaylists();
+
+		String[] playlistData = new String[allPlaylists.size()];
+
+		// Store all playlist names into list
+		for (int i = 0; i < allPlaylists.size(); i++) {
+			playlistData[i] = allPlaylists.get(i).title;
+		}
+		playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
+		// playlistsList.setListData(playlistData);
+		playlistsList.setListData(playlistData);
+	}
+	
+	
 	class newPlaylistListener implements ActionListener{
 
 		@Override
@@ -151,6 +147,7 @@ public class NavigationMenuUI extends Container {
 				return;
 			}
 			playlistManager.createPlaylist(playlistName);
+			updatePlaylistsList();
 		}
 		
 	}
