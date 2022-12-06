@@ -95,9 +95,9 @@ public class VolumeSlider extends JPanel implements Runnable{
 	
 	private void updatevolumeChanger() {
 		volumeChanger.setValue(curVolume);	
-		volumeChanger.setMaximum(100); // Max set to max length of song
-		String currentTime = (curVolume/ 60 + ":" + (new DecimalFormat("00").format(curVolume % 60)));
-		volumeStampCurrent.setText(currentTime); // current time
+		volumeChanger.setMaximum(100); // Max set to max volume of song
+		String currentVolume = (curVolume + "");
+		volumeStampCurrent.setText(currentVolume); // current volume
 	}
 	
 	class volumeChangerListener implements MouseListener{
