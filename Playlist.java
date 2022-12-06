@@ -178,6 +178,12 @@ public class Playlist {
 		return sortedSongs;
 	}
 	
+	
+	
+	public void setSongs(ArrayList<Song> songs) {
+		this.songs.clear();
+		this.songs = songs;
+	}
 }
 
 

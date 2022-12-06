@@ -104,6 +104,9 @@ public class SearchInterface {
 			songMatchMap.remove(curMatchSong);
 		}
 		
+		// updating search results
+		Main.playlistManager.getSearchResults().setSongs(results);
+		
 		// returning sorted song array
 		return results;
 	}
