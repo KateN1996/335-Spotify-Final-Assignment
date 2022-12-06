@@ -120,7 +120,11 @@ public class SongPreviewUI extends Container {
 			ImageIcon albumIcon = new ImageIcon(albumImage);
 
 			albumImagePreview.setIcon(albumIcon);
-			songTitlePreview.setText(currentSong.title); // Match song name
+			String songName = currentSong.title;
+			if (songName.length() > 28) {
+				songName = songName.substring(0, 28) + "...";
+			}
+			songTitlePreview.setText(songName); // Match song name
 			albumTitlePreview.setText(currentSong.album); // Match album name
 			artistTitlePreview.setText(currentSong.artist); // Match artist name
 
