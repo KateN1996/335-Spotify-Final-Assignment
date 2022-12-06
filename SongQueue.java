@@ -104,6 +104,7 @@ public class SongQueue {
 	 */
 	public void setCurrentPlaylist(Playlist playlist) {
 		this.currentPlaylist = playlist;
+		setQueue(currSong);
 	}
 	
 	
