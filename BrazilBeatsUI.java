@@ -30,7 +30,7 @@ public class BrazilBeatsUI {
 	protected static Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	protected static Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
 	protected static Font headerFont = new Font("Arial Bold", Font.BOLD, 28);
-	protected static Dimension defaultRes = new Dimension(1400, 800);
+	protected static Dimension defaultRes = new Dimension(1400, 700);
 
 	static final int IMG_RES_MAX = 256;
 	static final int IMG_RES_MIN = 64;
@@ -203,7 +203,6 @@ public class BrazilBeatsUI {
 		System.out.println("Switching to " + pane);
 		viewContainer.removeAll();
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.gridx = 0;
@@ -211,7 +210,7 @@ public class BrazilBeatsUI {
 		gbc.gridheight = 2;
 		viewContainer.add(newPane, gbc);
 		frame.validate();
-		// frame.pack();
+		frame.pack();
 
 	}
 	

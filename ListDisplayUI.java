@@ -37,7 +37,7 @@ public class ListDisplayUI extends Container {
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+		//gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		JLabel name = new JLabel(playlist.title);//.substring(0, playlist.title.length() - 5));
 		gbc.weightx = 1f;

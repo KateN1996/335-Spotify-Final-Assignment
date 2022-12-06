@@ -16,18 +16,19 @@ import javax.swing.JLabel;
  * @author Kyle Walker
  *
  */
-public class SongPreviewUI extends Container{
+public class SongPreviewUI extends Container {
 	private BrazilBeatsUI gui;
 	/**
 	 * 
 	 */
 	private SongPlayer songPlayer;
-	
+
 	private static final long serialVersionUID = 1L;
 	private JLabel albumImagePreview;
 	private JLabel songTitlePreview;
 	private JLabel albumTitlePreview;
 	private JLabel artistTitlePreview;
+
 	/**
 	 * Creates the container with all components used for displaying Current song
 	 * info and album art. Will later have a method used for updating graphics to
@@ -38,7 +39,7 @@ public class SongPreviewUI extends Container{
 	SongPreviewUI() {
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
-		
+
 		GridBagLayout colLayout = new GridBagLayout();
 
 		this.setLayout(colLayout);
@@ -76,35 +77,42 @@ public class SongPreviewUI extends Container{
 			public void mouseClicked(MouseEvent e) {
 				gui.switchMainViewPane("Song View");
 			}
+
 			@Override
-			public void mousePressed(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseReleased(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseEntered(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseExited(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {
+			}
 		});
 
 		updateSongPreview();
 
 	}
-	
+
 	/**
 	 * Updates the song preview view to match current song's Album art, title, album
 	 * name, and artist name
 	 */
 	public void updateSongPreview() {
 		Song currentSong = songPlayer.getCurrentSong();
-		
-		
+
 		File albumImageFile = new File(currentSong.coverPath);
-		
-		
+
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
-			albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT);
+			albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX,
+					Image.SCALE_DEFAULT);
 			ImageIcon albumIcon = new ImageIcon(albumImage);
 
 			albumImagePreview.setIcon(albumIcon);

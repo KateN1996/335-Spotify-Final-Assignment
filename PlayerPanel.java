@@ -32,7 +32,7 @@ public class PlayerPanel extends JPanel{
     	
         // Create main panel 
 		super(new GridBagLayout());
-		this.setPreferredSize(BrazilBeatsUI.defaultRes);
+		this.setPreferredSize(new Dimension(BrazilBeatsUI.IMG_RES_MAX *2, BrazilBeatsUI.IMG_RES_MAX *2));
 		this.setFocusable(true);
 
 
@@ -45,12 +45,12 @@ public class PlayerPanel extends JPanel{
 		songContainer.setLayout(colLayout);
         GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
-		gbc.anchor = GridBagConstraints.WEST;
+		gbc.anchor = GridBagConstraints.CENTER;
 
 		// Create components
 		albumCoverPreview = new JLabel("");
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		gbc.weightx = 1;
         songContainer.add(albumCoverPreview, gbc);
 
@@ -58,19 +58,19 @@ public class PlayerPanel extends JPanel{
         songTitlePreview = new JLabel("");
 		songTitlePreview.setFont(BrazilBeatsUI.mainFont);
 		songTitlePreview.setForeground(textColor);
-		gbc.gridy = 2;
+		gbc.gridy = 1;
 		songContainer.add(songTitlePreview, gbc);
 
 		albumTitlePreview = new JLabel("");
 		albumTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		albumTitlePreview.setForeground(textColor);
-		gbc.gridy = 3;
+		gbc.gridy = 2;
 		songContainer.add(albumTitlePreview, gbc);
 
 		artistTitlePreview = new JLabel("");
 		artistTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		artistTitlePreview.setForeground(textColor);
-		gbc.gridy = 4;
+		gbc.gridy = 3;
 		songContainer.add(artistTitlePreview, gbc);
 
 
@@ -90,7 +90,7 @@ public class PlayerPanel extends JPanel{
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
-			albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT);
+			albumImage = albumImage.getScaledInstance((int)(BrazilBeatsUI.IMG_RES_MAX*1.4), (int)(BrazilBeatsUI.IMG_RES_MAX*1.4), Image.SCALE_DEFAULT);
 		       // get the album image and the dominant color
 			ColorPicker bgColorPicker = new ColorPicker(albumImage);
 			backgroundColor = (bgColorPicker.getColor());
