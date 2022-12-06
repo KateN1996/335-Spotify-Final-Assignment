@@ -1,10 +1,4 @@
 
-/**
- * 
- * Beat Visualizer class for GIF/motion changing
- * 
- * Author: Kevin Nisterenko
- */
 
 import java.awt.Container;
 import java.awt.GridBagConstraints;
@@ -30,7 +24,6 @@ import javax.sound.sampled.TargetDataLine;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
 /**
  * 
  * @author Kyle Walker
@@ -51,10 +44,8 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	private int sampleRate;
 	private int channels;
 	private byte[] buffer;
-	
-	
-	private Clip currentClip;
 
+	private Clip currentClip;
 
 	BeatsVisualizerUI() {
 		lastAmp = 0.5f;
@@ -75,17 +66,13 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		updateBeatsView();
 		this.add(beatsDanceView, gbc);
 
-		
 		// Initialize audio compnents
 		songPlayer = Main.songPlayer;
 
 		updateAudioData();
-		
-		
-		
 
 	}
-	
+
 	private void updateAudioData() {
 		currentClip = songPlayer.getCurrentClip();
 		audioInput = songPlayer.getAudioInputStream();
@@ -103,30 +90,28 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 			e.printStackTrace();
 		}
 	}
-    /**
-     * Returns sample (amplitude value). Note that in case of stereo samples
-     * go one after another. I.e. 0 - first sample of left channel, 1 - first
-     * sample of the right channel, 2 - second sample of the left channel, 3 -
-     * second sample of the rigth channel, etc.
-     */
-    public int getSampleInt(int sampleNumber) {
 
-        if (sampleNumber < 0 || sampleNumber >= buffer.length / sampleSize) {
-            throw new IllegalArgumentException(
-                    "sample number can't be < 0 or >= data.length/"
-                            + sampleSize);
-        }
+	/**
+	 * Returns sample (amplitude value). Note that in case of stereo samples go one
+	 * after another. I.e. 0 - first sample of left channel, 1 - first sample of the
+	 * right channel, 2 - second sample of the left channel, 3 - second sample of
+	 * the rigth channel, etc.
+	 */
+	public int getSampleInt(int sampleNumber) {
 
-        byte[] sampleBytes = new byte[32]; //4byte = int
+		if (sampleNumber < 0 || sampleNumber >= buffer.length / sampleSize) {
+			throw new IllegalArgumentException("sample number can't be < 0 or >= data.length/" + sampleSize);
+		}
 
-        for (int i = 0; i < sampleSize; i++) {
-            sampleBytes[i] = buffer[sampleNumber * sampleSize * channels + i];
-        }
+		byte[] sampleBytes = new byte[32]; // 4byte = int
 
-        int sample = ByteBuffer.wrap(sampleBytes)
-                .order(ByteOrder.LITTLE_ENDIAN).getInt();
-        return sample;
-    }
+		for (int i = 0; i < sampleSize; i++) {
+			sampleBytes[i] = buffer[sampleNumber * sampleSize * channels + i];
+		}
+
+		int sample = ByteBuffer.wrap(sampleBytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
+		return sample;
+	}
 
 	/**
 	 * Set Image/GIF
@@ -147,8 +132,6 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		}
 	}
 
-    
-    
 	@Override
 
 	/**
@@ -157,72 +140,71 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	 */
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 		while (true) {
 			TargetDataLine line;
 			int byteBufferSize = 2048;
 			try {
-	            line = AudioSystem.getTargetDataLine(audioFormat);
-	            line.open(audioFormat, byteBufferSize);
-	        } catch(LineUnavailableException e) {
-	            System.err.println(e);
-	            return;
-	        }
-			
+				line = AudioSystem.getTargetDataLine(audioFormat);
+				line.open(audioFormat, byteBufferSize);
+			} catch (LineUnavailableException e) {
+				System.err.println(e);
+				return;
+			}
+
 			byte[] buf = new byte[byteBufferSize];
-			float[] samples = new float[byteBufferSize /2];
+			float[] samples = new float[byteBufferSize / 2];
 			float lastPeak = 0f;
 
+			for (int b; (b = line.read(buf, 0, buf.length)) > -1;) {
 
-	        for(int b; (b = line.read(buf, 0, buf.length)) > -1;) {
+				// convert bytes to samples here
+				for (int i = 0, s = 0; i < b;) {
+					int sample = 0;
 
-	            // convert bytes to samples here
-	            for(int i = 0, s = 0; i < b;) {
-	                int sample = 0;
+					sample |= buf[i++] & 0xFF; // (reverse these two lines
+					sample |= buf[i++] << 8; // if the format is big endian)
 
-	                sample |= buf[i++] & 0xFF; // (reverse these two lines
-	                sample |= buf[i++] << 8;   //  if the format is big endian)
+					// normalize to range of +/-1.0f
+					samples[s++] = sample / 32768f;
+				}
 
-	                // normalize to range of +/-1.0f
-	                samples[s++] = sample / 32768f;
-	            }
+				float rms = 0f;
+				float peak = 0f;
+				for (float sample : samples) {
 
-	            float rms = 0f;
-	            float peak = 0f;
-	            for(float sample : samples) {
+					float abs = Math.abs(sample);
+					if (abs > peak) {
+						peak = abs;
+					}
 
-	                float abs = Math.abs(sample);
-	                if(abs > peak) {
-	                    peak = abs;
-	                }
+					rms += sample * sample;
+				}
 
-	                rms += sample * sample;
-	            }
+				rms = (float) Math.sqrt(rms / samples.length);
 
-	            rms = (float)Math.sqrt(rms / samples.length);
+				if (lastPeak > peak) {
+					peak = lastPeak * 0.875f;
+				}
 
-	            if(lastPeak > peak) {
-	                peak = lastPeak * 0.875f;
-	            }
+				//System.out.println("lastPeak: " + lastPeak + " peak: " + peak + " rms: " + rms);
 
-	            System.out.println("lastPeak: " + lastPeak + " peak: " + peak + " rms: " + rms);
-	            
-	            lastPeak = peak;
+				lastPeak = peak;
+
+			}
 
 		}
-		
-        }
-    }
-			
-		// while (true) {
+	}
 
-		/*
-		 * float currAmp = buffer[0]; //float currAmp =
-		 * Main.songPlayer.getCurrentAmplitude();
-		 * System.out.println("Checking Amps: Last -> " + lastAmp + " Curr ->" +
-		 * currAmp); if (currAmp - threshold <= lastAmp || currAmp + threshold >=
-		 * lastAmp) { // Advance frame System.out.println("ADVANCE FRAME!!!!"); }
-		 * lastAmp = currAmp;
-		 */
-	
+	// while (true) {
+
+	/*
+	 * float currAmp = buffer[0]; //float currAmp =
+	 * Main.songPlayer.getCurrentAmplitude();
+	 * System.out.println("Checking Amps: Last -> " + lastAmp + " Curr ->" +
+	 * currAmp); if (currAmp - threshold <= lastAmp || currAmp + threshold >=
+	 * lastAmp) { // Advance frame System.out.println("ADVANCE FRAME!!!!"); }
+	 * lastAmp = currAmp;
+	 */
+
 }

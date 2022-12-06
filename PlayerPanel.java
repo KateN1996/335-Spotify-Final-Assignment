@@ -18,39 +18,25 @@ import javax.swing.*;
 
 
 public class PlayerPanel extends JPanel{   
-	private Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
-	private Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
-	private Dimension defaultRes = new Dimension(1400, 800); 
-
-
-    static final int IMG_RES_MAX = 256;
-
-    static final int SPACINGX = 5;
-	static final int SPACINGY = 10;
-    static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
-
-
     private JLabel albumCoverPreview;
     private JLabel songTitlePreview;
 	private JLabel albumTitlePreview;
 	private JLabel artistTitlePreview;
+	private Song currentSong;
 
-    private Image albumCover;
-    private Color backgroundColor;
     private Color textColor = new Color(255, 255, 255);
+    private Color backgroundColor;
 
-    PlayerPanel(Image albumImage) {
-
+    PlayerPanel(Song curSong) {
+    	
+    	
         // Create main panel 
 		super(new GridBagLayout());
-		this.setPreferredSize(defaultRes);
+		this.setPreferredSize(BrazilBeatsUI.defaultRes);
 		this.setFocusable(true);
 
 
-        // get the album image and the dominant color
-        albumCover = albumImage;
-		ColorPicker bgColorPicker = new ColorPicker(albumCover);
-		backgroundColor = bgColorPicker.getColor();
+		currentSong = curSong;
 
         // setup the containers for the cover and text
         Container songContainer = new Container();
@@ -58,7 +44,7 @@ public class PlayerPanel extends JPanel{
 
 		songContainer.setLayout(colLayout);
         GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = INSET_GAP;
+		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.WEST;
 
 		// Create components
@@ -70,19 +56,19 @@ public class PlayerPanel extends JPanel{
 
         // need to center them hmm
         songTitlePreview = new JLabel("");
-		songTitlePreview.setFont(mainFont);
+		songTitlePreview.setFont(BrazilBeatsUI.mainFont);
 		songTitlePreview.setForeground(textColor);
 		gbc.gridy = 2;
 		songContainer.add(songTitlePreview, gbc);
 
 		albumTitlePreview = new JLabel("");
-		albumTitlePreview.setFont(captionFont);
+		albumTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		albumTitlePreview.setForeground(textColor);
 		gbc.gridy = 3;
 		songContainer.add(albumTitlePreview, gbc);
 
 		artistTitlePreview = new JLabel("");
-		artistTitlePreview.setFont(captionFont);
+		artistTitlePreview.setFont(BrazilBeatsUI.captionFont);
 		artistTitlePreview.setForeground(textColor);
 		gbc.gridy = 4;
 		songContainer.add(artistTitlePreview, gbc);
@@ -98,21 +84,26 @@ public class PlayerPanel extends JPanel{
 	 * name, and artist name
 	 */
 	private void updateSongPreview() {
-		File albumImageFile = new File("Mmfood.jpg");
+		File albumImageFile = new File(currentSong.coverPath);
+		
+ 
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
-			albumImage = albumImage.getScaledInstance(IMG_RES_MAX, IMG_RES_MAX, Image.SCALE_DEFAULT);
+			albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT);
+		       // get the album image and the dominant color
+			ColorPicker bgColorPicker = new ColorPicker(albumImage);
+			backgroundColor = (bgColorPicker.getColor());
+			ImageIcon albumIcon = new ImageIcon(albumImage);
+		    albumCoverPreview.setIcon(albumIcon);
+			
         } catch (Exception e) {
             e.printStackTrace();
         }
-        albumCover = albumCover.getScaledInstance(IMG_RES_MAX*2, IMG_RES_MAX*2, Image.SCALE_DEFAULT);
-        ImageIcon albumIcon = new ImageIcon(albumCover);
-
-        albumCoverPreview.setIcon(albumIcon);
-        songTitlePreview.setText("Rapp Snitch Knishes"); // Match song names
-        albumTitlePreview.setText("MM...FOOD"); // Match album name
-        artistTitlePreview.setText("MF DOOM"); // Match artist name
+       
+        songTitlePreview.setText(currentSong.title); // Match song names
+        albumTitlePreview.setText(currentSong.album); // Match album name
+        artistTitlePreview.setText(currentSong.artist); // Match artist name
     }
 
 	/**
