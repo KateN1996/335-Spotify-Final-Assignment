@@ -1,7 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
 
-/**
+/**This class is the main UI which holds the JFrame and all of the different UI components. It has the
+ * static variables used across all UI components such as app colors and fonts. It serves as the main 
+ * display for users to interact with and perform control in the app. It contains panels for navigation,
+ * current song display, playback options, main view, and the visualizer panel.
  * 
  * @author Kyle Walker
  *
@@ -10,41 +13,48 @@ public class BrazilBeatsUI {
 	private JFrame frame;
 	private JPanel panel;
 
-	// TODO: Create method for automatic colors which uses average color. Have a min
-	// val for average color and have update color methods for all ui.
-
+	// App colors
 	protected static Color appColor = new Color(50, 55, 50); // Light Brazil Green
 	protected static Color borderColor = new Color(30, 33, 30); // Dark Brazil Green
 	protected static Color barColor = new Color(40, 44, 40); // Medium Brazil Green
 	protected static Color accentColor = new Color(30, 80, 30); // Saturated Brazil Green
 	protected static Color detailColor = new Color(230, 220, 100); // Light Brazil Yellow
 
+	// App fonts
 	protected static Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	protected static Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
 	protected static Font headerFont = new Font("Arial Bold", Font.BOLD, 28);
 	protected static Dimension defaultRes = new Dimension(1400, 700);
 
+	// App dimensions
 	static final int IMG_RES_MAX = 256;
 	static final int IMG_RES_MIN = 64;
 
+	// Component spacing
 	static final int SPACINGX = 5;
 	static final int SPACINGY = 10;
 	static final Insets INSET_GAP = new Insets(SPACINGX, SPACINGY, SPACINGX, SPACINGY);
 
+	// Graphics components
+	// Panels
 	private JPanel navPanel;
 	private JPanel beatsPanel;
 	private JPanel playbackPanel;
-
+	
+	// UI Container classes
 	private Container songPreview;
 	private Container navigationMenu;
 	private Container brazilBeatsView;
 	private Container viewContainer;
 
+	// References to music player
 	private PlaylistManager playlistManager;
 	private SongPlayer songPlayer;
 
+	// Layout constraints
 	private GridBagConstraints gbc;
 
+	// Constructs 
 	BrazilBeatsUI() {
 		playlistManager = Main.playlistManager;
 		songPlayer = Main.songPlayer;
