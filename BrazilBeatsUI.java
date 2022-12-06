@@ -199,8 +199,7 @@ public class BrazilBeatsUI {
 
 		// Switch to Search bar
 		case "Search Page":
-			/// newPane = new SearchPaneUI();
-			newPane = null;
+			newPane = new SearchPanelUI();
 			break;
 
 		// Switch to Playlist view

@@ -46,3 +46,5 @@
 /VolumeSlider$playbackButtonListener.class
 /VolumeSlider$volumeChangerListener.class
 /NavigationMenuUI$newPlaylistListener.class
+/SearchPanelUI.class
+/SearchPanelUI$SearchListener.class

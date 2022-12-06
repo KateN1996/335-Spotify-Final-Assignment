@@ -11,9 +11,10 @@ public class Main {
 	public static BrazilBeatsUI gui;
 	public static SongPlayer songPlayer;
 	public static PlaylistManager playlistManager;
+	public static SearchInterface searchInterface;
     public static void main(String[] args) {  
     	
-    	new SearchInterface();
+    	searchInterface = new SearchInterface();
     	songPlayer = new SongPlayer();
     	    	
     	// AUTOPLAY FOR TESTING
