@@ -66,7 +66,7 @@ public class VolumeSlider extends Container implements Runnable{
 		gbc.anchor = GridBagConstraints.SOUTH;
 
 		// Current song time stamp label
-		volumeStampCurrent = new JLabel("0");	
+		volumeStampCurrent = new JLabel("<))");	
 		volumeStampCurrent.setFont(BrazilBeatsUI.captionFont);
 		volumeStampCurrent.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridx = 0;
@@ -76,10 +76,11 @@ public class VolumeSlider extends Container implements Runnable{
 		// Playback bar
 		volumeChanger = new JProgressBar(SwingConstants.HORIZONTAL);
 		volumeChanger.setPreferredSize(new Dimension(volumeChangerSize, 12));
-		volumeChanger.setMaximum(100);								// Max set to max length of song
+		volumeChanger.setMaximum(100);								
 		volumeChanger.setValue(50);
 		volumeChanger.setBackground(BrazilBeatsUI.borderColor);
 		volumeChanger.setForeground(BrazilBeatsUI.detailColor);
+		volumeChanger.setStringPainted(true);
 		volumeChanger.addMouseListener(new volumeChangerListener());
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
@@ -92,9 +93,7 @@ public class VolumeSlider extends Container implements Runnable{
 	
 	private void updatevolumeChanger() {
 		volumeChanger.setValue(curVolume);	
-		volumeChanger.setMaximum(100); // Max set to max volume of song
-		String currentVolume = (curVolume + "");
-		volumeStampCurrent.setText(currentVolume); // current volume
+		volumeChanger.setMaximum(100); 
 	}
 	
 	class volumeChangerListener implements MouseListener{

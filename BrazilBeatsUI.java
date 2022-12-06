@@ -131,13 +131,7 @@ public class BrazilBeatsUI {
 		gbc.gridy = 0;
 		//gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
 		beatsPanel.add((Container) brazilBeatsView, gbc);
-		
-		/*
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		gbc.anchor = GridBagConstraints.SOUTHEAST;
-		panel.add(new VolumeSlider());
-		*/
+	
 
 		// Playback Bar
 		Runnable playbackBar = new PlaybackOptionsUI();
