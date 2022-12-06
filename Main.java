@@ -26,13 +26,12 @@ public class Main {
 			songPlayer.play(newSong);
 			songPlayer.pause();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  
     	
     	
-    	songQueue = new SongQueue(false);
+    	songQueue = new SongQueue();
     	gui = new BrazilBeatsUI();
     	gui.initializeComponents();
     	
