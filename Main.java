@@ -14,9 +14,9 @@ public class Main {
 	public static SearchInterface searchInterface;
     public static void main(String[] args) {  
     	
-    	playlistManager = new PlaylistManager();
     	searchInterface = new SearchInterface();
     	songPlayer = new SongPlayer();
+    	playlistManager = new PlaylistManager();
     	    	
     	// AUTOPLAY FOR TESTING
     	try {
