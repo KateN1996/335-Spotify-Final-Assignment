@@ -20,12 +20,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 /**
- * This is the UI container containing all the playback controls for the current song. It has a playback bar with working time stamps
- * and a progress bar that updates in real-time with its own thread. There are buttons used for playback controls including shuffle, 
- * restart/play previous, play and pause, play next song, and save song to library. The playback bar also allows the user to select the
- * exact time in the song by clicking anywhere on the progress bar.
- * 
- * @author Kyle Walker
  *
  */
 public class VolumeSlider extends JPanel implements Runnable{
@@ -36,13 +30,11 @@ public class VolumeSlider extends JPanel implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private boolean isPaused = false;
-	
 	private JProgressBar volumeChanger;
 	private JLabel volumeStampCurrent;
 	
 	private int volumeChangerSize = 400;
-	private int vol; 
+	private int curVolume; 
 	
 	
 	private SongPlayer songPlayer;
@@ -66,7 +58,7 @@ public class VolumeSlider extends JPanel implements Runnable{
 		
 		this.setBackground(gui.appColor);
 		
-		vol = 50;
+		curVolume = 50;
 
 		// Gridbag layout of components
 		GridBagLayout rowLayout = new GridBagLayout();
@@ -117,8 +109,12 @@ public class VolumeSlider extends JPanel implements Runnable{
 			double selectionPercentage = selectionX / volumeChangerSize;
 						
 			int volumeChangerMax = volumeChanger.getMaximum();
-			double selectedTimeSeconds = (volumeChangerMax * selectionPercentage);
-			volumeChanger.setValue((int)selectedTimeSeconds);
+			double selectedVolume = (volumeChangerMax * selectionPercentage);
+			volumeChanger.setValue((int)selectedVolume);
+			
+			// this should change curVolume, so then when the update method is called,
+			// it always has the up to date volume
+			curVolume = (int) selectedVolume;
 			
 			try {
 				// set the volume in songPlayer
