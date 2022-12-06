@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -62,20 +63,27 @@ public class SearchInterface {
 	
 	
 	
+	
 	/*
 	 * returns a list of songs with similar attributes
 	 * to searchtext and sorts by match percentage
 	 */
-	public static ArrayList<Song> search(String searchText){
-				
+	private static ArrayList<Song> searchByAttributes(String searchText, boolean titleSearch, boolean artistSearch, boolean albumSearch){
 		// filtering songs by match percentage and similarity floor value
 		Double simFloor = 0.1;
 		HashMap<Song, Double> songMatchMap = new HashMap<Song, Double>();
 		for (Song song : songs) {
-			Double titleMP = SongTitleComparator.computeSimilarityPercentage(song.title, searchText);
-			Double albumMP = SongTitleComparator.computeSimilarityPercentage(song.artist, searchText);
-			Double artistMP = SongTitleComparator.computeSimilarityPercentage(song.album, searchText);
-			Double matchPer = Math.max(Math.max(titleMP,albumMP),artistMP);
+			ArrayList<Double> matchPers = new ArrayList<Double>();
+			if (titleSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.title, searchText));
+			}
+			if (artistSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.artist, searchText));
+			}
+			if (albumSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.album, searchText));
+			}
+			Double matchPer = Collections.max(matchPers);
 			if (matchPer >= simFloor) {				
 				songMatchMap.put(song, matchPer);
 			}
@@ -98,9 +106,44 @@ public class SearchInterface {
 		
 		// returning sorted song array
 		return results;
-		
 	}
 	
+	
+	
+	/*
+	 * returns a list of songs with similar attributes
+	 * to searchtext and sorts by match percentage
+	 */
+	public static ArrayList<Song> searchByAll(String searchText){	
+		return searchByAttributes(searchText, true, true, true);
+	}
+	
+	
+	
+	/*
+	 * 
+	 */
+	public static ArrayList<Song> searchByTitle(String searchText){
+		return searchByAttributes(searchText, true, false, false);
+	}
+
+	
+	
+	/*
+	 * 
+	 */
+	public static ArrayList<Song> searchByArtist(String searchText){
+		return searchByAttributes(searchText, false, true, false);
+	}
+
+	
+	
+	/*
+	 * 
+	 */
+	public static ArrayList<Song> searchByAlbum(String searchText){
+		return searchByAttributes(searchText, false, false, true);
+	}
 	
 	
 }

@@ -27,8 +27,11 @@ public class Song {
 		
 		this.title = title;
 		this.audioPath = "./wavs/" + title + ".wav";
-		this.coverPath = "./covers/" + title + ".jpg";
 		this.metaPath = "./metaData/" + title + ".txt";
+		
+		//System.out.println(this.audioPath);
+		
+		//this.coverPath = "./covers/" + title + ".jpg";
 		
 		// reading metaData
 		HashMap<String,String> metaData = new HashMap<String,String>();
@@ -49,21 +52,9 @@ public class Song {
 			e.printStackTrace();
 		}
 		
-		// setting artist from metaData
-		if (metaData.containsKey("artist")) {
-			this.artist = metaData.get("artist");
-		}
-		else {
-			this.artist = "UNKNOWN";
-		}
-		
-		// setting album from metaData
-		if (metaData.containsKey("album")) {
-			this.album = metaData.get("album");
-		}
-		else {
-			this.album = "UNKNOWN";
-		}
+		this.artist = metaData.get("artist");
+		this.album = metaData.get("album");
+		this.coverPath = "./covers/" + this.album + ".jpg";
 
 	}
 	
