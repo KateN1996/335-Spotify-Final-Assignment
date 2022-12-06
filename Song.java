@@ -34,29 +34,38 @@ public class Song {
 	private String artist;
 	private int timesPlayed;
 	private String path;
-	private MediaPlayer player;
+	//private MediaPlayer player;
 	private ImageIcon image;
+	// song info
+	public final String album;
+		
+	// data paths
+	//public final String audioPath;
+	//public final String coverPath;
+	public final String metaPath;
 	/**
 	 * Constructs a new instance of the Song class
 	 * with the specified song title and artist
 	 * @param title
 	 * @param artist
 	 */
-	public Song(String title, String artist, String path, String image) {
+	public Song(String title, String artist, String path, String image, String metapath, String album) {
+		this.metaPath = "./metaData/" + title + ".txt";;
 		this.title = title;
+		this.album = album;
 		this.artist = artist;
 		this.path = path;
 		timesPlayed = 0; //spotify wrapped? >:)
-		this.player = new MediaPlayer(new Media(Paths.get(path).toUri().toString()));
+		//this.player = new MediaPlayer(new Media(Paths.get(path).toUri().toString()));
 		if(image.equals("")) {
 			image = "blank.png";
 		}
 		this.image = new ImageIcon(image);
 	}
 	
-	public MediaPlayer getPlayer() {
-		return player;
-	}
+//	public MediaPlayer getPlayer() {
+//		return player;
+//	}
 	/**
 	 * Returns the title of the song, which is a String
 	 * @return title
@@ -90,30 +99,34 @@ public class Song {
 		this.image = new ImageIcon(image);
 	}
 	
-	public String getCurTime() {
-		Duration current = player.getCurrentTime();
-		Duration total = player.getCycleDuration();
-		double amount = current.toSeconds() /total.toSeconds();
-		int curTime = (int)(amount * 172);
-		int curMin = (int)current.toMinutes();
-		int curSec = (int)(current.toSeconds() - curMin *60);
-		return String.format("%d:%02d", curMin, curSec);
+	public String getPath() {
+		return path;
 	}
 	
-	/**
-	 * play song
-	 */
-	public MediaPlayer play() {
-		player.play();
-		return player;
-	}
+//	public String getCurTime() {
+//		Duration current = player.getCurrentTime();
+//		Duration total = player.getCycleDuration();
+//		double amount = current.toSeconds() /total.toSeconds();
+//		int curTime = (int)(amount * 172);
+//		int curMin = (int)current.toMinutes();
+//		int curSec = (int)(current.toSeconds() - curMin *60);
+//		return String.format("%d:%02d", curMin, curSec);
+//	}
 	
-	/**
-	 * play song
-	 */
-	public void pause() {
-		player.pause();
-	}
+//	/**
+//	 * play song
+//	 */
+//	public void play() {
+//		player.play();
+//		//return player;
+//	}
+//	
+//	/**
+//	 * play song
+//	 */
+//	public void pause() {
+//		player.pause();
+//	}
 	
 	/**
 	 * returns a String representation of the song, with title, artists, and
