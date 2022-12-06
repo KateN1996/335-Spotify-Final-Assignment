@@ -266,5 +266,9 @@ public class BrazilBeatsUI {
 		accentColor = new Color(r - 20, g + 30, b + 30); // Brighter and bluer version of base
 		detailColor = new Color(255 - r, 255 - g, 255 - b); // Inverted color of base
 	}
+	
+	public void validateFrame() {
+		frame.validate();
+	}
 
 }

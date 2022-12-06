@@ -3,6 +3,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,15 +11,24 @@ import javax.swing.JTextField;
 
 public class SearchPanelUI extends Container {
 	private static final long serialVersionUID = 1L;
-	private SearchInterface searchInterface;
+	//private SearchInterface searchInterface;
+	
+	GridBagConstraints gbc;
 	
 	private JTextField searchField;
+	private Playlist searchResults;
+	private PlaylistManager playlistManager;
+	
+	private ListDisplayUI currentSearchResultsTable;
+	private BrazilBeatsUI gui;
 	
 	
 	SearchPanelUI(){
-		searchInterface = Main.searchInterface;
+		//searchInterface = Main.searchInterface;
+		playlistManager = Main.playlistManager;
+		gui = Main.gui;
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
+		gbc = new GridBagConstraints();
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
@@ -44,7 +54,21 @@ public class SearchPanelUI extends Container {
 		findButton.setBackground(BrazilBeatsUI.accentColor);
 		findButton.addActionListener(new SearchListener());
 		this.add(findButton, gbc);
+	
 		
+	}
+	
+	
+	public void updateResults() {
+		gbc.gridy = 3;
+		if (currentSearchResultsTable != null) {
+			this.remove(currentSearchResultsTable);
+		}
+		
+		currentSearchResultsTable = new ListDisplayUI(searchResults);
+		
+		this.add(currentSearchResultsTable);
+		gui.validateFrame();
 	}
 	class SearchListener implements ActionListener{
 
@@ -54,7 +78,9 @@ public class SearchPanelUI extends Container {
 			if (subject == null) {
 				return;
 			}
-			System.out.println(searchInterface.searchByAll(subject));
+			SearchInterface.searchByAll(subject);
+			searchResults = playlistManager.getSearchResults();
+			updateResults();
 		}
 	}
 }

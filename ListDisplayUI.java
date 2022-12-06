@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -63,12 +64,25 @@ public class ListDisplayUI extends Container {
 			tableData[i][0] = i;
 
 			// tableData[i][1] = curSongLabel;
+			tableData[i][1] = curSong.title;
 
 			tableData[i][2] = curSong.album;
 			tableData[i][3] = curSong.artist;
 		}
 
 		table = new JTable(tableData, columnNames);
+		
+		DefaultTableModel tableModel = new DefaultTableModel() {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+
+		table.setModel(tableModel);
+		
+		
 		table.setBackground(BrazilBeatsUI.barColor);
 		table.setForeground(BrazilBeatsUI.detailColor);
 
@@ -79,6 +93,8 @@ public class ListDisplayUI extends Container {
 		this.add(scrollPane, gbc);
 
 	}
+	
+	
 
 	class Renderer extends DefaultTableCellRenderer {
 
