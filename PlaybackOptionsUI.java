@@ -153,6 +153,10 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		this.add(buttonContainer, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		this.add(new VolumeSlider(), gbc);
 	}
 	private void updatePlayPause(boolean toggle) {
 		isPaused = toggle;

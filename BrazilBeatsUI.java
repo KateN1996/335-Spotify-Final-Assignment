@@ -1,13 +1,5 @@
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MouseInputListener;
 
 /**
  * 
@@ -61,7 +53,6 @@ public class BrazilBeatsUI {
 	public void initializeComponents() {
 		
 		recalculateColors(new Color(30, 35, 35));
-		//recalculateColors(new Color(150, 90, 30));
 		// Create Frame
 		frame = new JFrame("Brazil Beats Premium");
 
@@ -138,8 +129,15 @@ public class BrazilBeatsUI {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
+		//gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
 		beatsPanel.add((Container) brazilBeatsView, gbc);
+		
+		/*
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.SOUTHEAST;
+		panel.add(new VolumeSlider());
+		*/
 
 		// Playback Bar
 		Runnable playbackBar = new PlaybackOptionsUI();

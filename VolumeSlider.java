@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 /**
  *
  */
-public class VolumeSlider extends JPanel implements Runnable{
+public class VolumeSlider extends Container implements Runnable{
 	private BrazilBeatsUI gui;
 	/**
 	 * 
@@ -33,7 +33,7 @@ public class VolumeSlider extends JPanel implements Runnable{
 	private JProgressBar volumeChanger;
 	private JLabel volumeStampCurrent;
 	
-	private int volumeChangerSize = 400;
+	private int volumeChangerSize = 160;
 	private int curVolume; 
 	
 	
@@ -49,14 +49,11 @@ public class VolumeSlider extends JPanel implements Runnable{
 	 */
 	VolumeSlider() {
 		// Create main panel 
-		super(new GridBagLayout());
-		this.setPreferredSize(new Dimension(BrazilBeatsUI.IMG_RES_MAX *2, BrazilBeatsUI.IMG_RES_MAX *2));
+		this.setLayout(new GridBagLayout());
 		this.setFocusable(true);
 		
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
-		
-		this.setBackground(gui.appColor);
 		
 		curVolume = 50;
 
@@ -116,13 +113,6 @@ public class VolumeSlider extends JPanel implements Runnable{
 			// it always has the up to date volume
 			curVolume = (int) selectedVolume;
 			
-			try {
-				// set the volume in songPlayer
-				System.out.println("");
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			
 			updatevolumeChanger();
 			
