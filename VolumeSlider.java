@@ -72,9 +72,6 @@ public class VolumeSlider extends Container{
 		// Playback bar
 		volumeChanger = new JProgressBar(SwingConstants.HORIZONTAL);
 		volumeChanger.setPreferredSize(new Dimension(volumeChangerSize, 12));
-		volumeChanger.setMaximum(100);	
-		volumeChanger.setMinimum(0);								
-		volumeChanger.setValue(100);
 		volumeChanger.setBackground(BrazilBeatsUI.borderColor);
 		volumeChanger.setForeground(BrazilBeatsUI.detailColor);
 		volumeChanger.setStringPainted(true);
@@ -83,8 +80,11 @@ public class VolumeSlider extends Container{
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		this.add(volumeChanger, gbc);
-		gbc.fill = GridBagConstraints.NONE;
-
+		gbc.fill = GridBagConstraints.NONE;		
+		
+		volumeChanger.setMaximum(100);	
+		volumeChanger.setMinimum(0);								
+		volumeChanger.setValue(100);
 	}
 	
 	class volumeChangerListener implements MouseListener{
