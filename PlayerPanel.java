@@ -82,7 +82,6 @@ public class PlayerPanel extends JPanel{
 	 * name, and artist name
 	 */
 	public void updateSongPreview() {
-		System.out.println("updating player panel");
 		currentSong = songPlayer.getCurrentSong();
 		
 		File albumImageFile = new File(currentSong.coverPath);
@@ -103,6 +102,8 @@ public class PlayerPanel extends JPanel{
         songTitlePreview.setText(currentSong.title); // Match song names
         albumTitlePreview.setText(currentSong.album); // Match album name
         artistTitlePreview.setText(currentSong.artist); // Match artist name
+        
+        this.repaint();
     }
 
 	/**
