@@ -36,7 +36,7 @@ public class PlaylistManager {
 				continue;
 			}
 			if (playlistFileName.equals(searchResults.title)) {
-				
+				continue;
 			}
 			createPlaylist(playlistFileName);
 		}
