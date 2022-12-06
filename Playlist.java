@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -159,48 +158,25 @@ public class Playlist {
 	
 	
 	
-	/*
-	 * 
-	 */
-	/*
-	public ArrayList<Song> getSongsSortedByAttribute(){
-		HashMap<Song, Double> songMatchMap = new HashMap<Song, Double>();
-		for (Song song : songs) {
-			ArrayList<Double> matchPers = new ArrayList<Double>();
-			if (titleSearch) {
-				matchPers.add(StringComparator.computeSimilarityPercentage(song.title, searchText));
-			}
-			if (artistSearch) {
-				matchPers.add(StringComparator.computeSimilarityPercentage(song.artist, searchText));
-			}
-			if (albumSearch) {
-				matchPers.add(StringComparator.computeSimilarityPercentage(song.album, searchText));
-			}
-			Double matchPer = Collections.max(matchPers);
-			if (matchPer >= simFloor) {				
-				songMatchMap.put(song, matchPer);
-			}
-		}
-		
-		// sorting by match percentage
-		ArrayList<Song> results = new ArrayList<Song>();
-		while (songMatchMap.size() > 0) {
-			Double curMatchPer = -1.0;
-			Song curMatchSong = null;
-			for (Song song : songMatchMap.keySet()) {
-				if (songMatchMap.get(song) > curMatchPer) {
-					curMatchPer = songMatchMap.get(song);
-					curMatchSong = song;
-				}			
-			}
-			results.add(curMatchSong);
-			songMatchMap.remove(curMatchSong);
-		}
-		
-		// returning sorted song array
-		return results;
+	
+	
+	public ArrayList<Song> getSongsSortedByTitle(){
+		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
+		Collections.sort(sortedSongs, (o1, o2) -> (o1.getTitle().compareTo(o2.getTitle())));
+		return sortedSongs;
 	}
-	*/
+	
+	public ArrayList<Song> getSongsSortedByAlbum(){
+		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
+		Collections.sort(sortedSongs, (o1, o2) -> (o1.getAlbum().compareTo(o2.getAlbum())));
+		return sortedSongs;
+	}
+
+	public ArrayList<Song> getSongsSortedByArtist(){
+		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
+		Collections.sort(sortedSongs, (o1, o2) -> (o1.getArtist().compareTo(o2.getArtist())));
+		return sortedSongs;
+	}
 	
 }
 
