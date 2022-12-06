@@ -39,3 +39,8 @@
 /PlayQueue.class
 /ColorPicker.class
 /BeatsVisualizerUI$audioListener.class
+/VolumeSlider.class
+/SliderDemo2.class
+/VolumeSlider$playbackBarListener.class
+/VolumeSlider$playbackButtonListener.class
+/VolumeSlider$volumeChangerListener.class
