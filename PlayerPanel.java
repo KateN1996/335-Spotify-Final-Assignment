@@ -81,8 +81,6 @@ public class PlayerPanel extends JPanel{
 	 */
 	public void updateSongPreview() {
 		File albumImageFile = new File(currentSong.coverPath);
-		
- 
 		Image albumImage;
 		try {
 			albumImage = ImageIO.read(albumImageFile);
