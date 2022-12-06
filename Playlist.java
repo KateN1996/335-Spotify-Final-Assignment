@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -154,6 +156,52 @@ public class Playlist {
 		}
 		return null;
 	}
+	
+	
+	
+	/*
+	 * 
+	 */
+	/*
+	public ArrayList<Song> getSongsSortedByAttribute(){
+		HashMap<Song, Double> songMatchMap = new HashMap<Song, Double>();
+		for (Song song : songs) {
+			ArrayList<Double> matchPers = new ArrayList<Double>();
+			if (titleSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.title, searchText));
+			}
+			if (artistSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.artist, searchText));
+			}
+			if (albumSearch) {
+				matchPers.add(StringComparator.computeSimilarityPercentage(song.album, searchText));
+			}
+			Double matchPer = Collections.max(matchPers);
+			if (matchPer >= simFloor) {				
+				songMatchMap.put(song, matchPer);
+			}
+		}
+		
+		// sorting by match percentage
+		ArrayList<Song> results = new ArrayList<Song>();
+		while (songMatchMap.size() > 0) {
+			Double curMatchPer = -1.0;
+			Song curMatchSong = null;
+			for (Song song : songMatchMap.keySet()) {
+				if (songMatchMap.get(song) > curMatchPer) {
+					curMatchPer = songMatchMap.get(song);
+					curMatchSong = song;
+				}			
+			}
+			results.add(curMatchSong);
+			songMatchMap.remove(curMatchSong);
+		}
+		
+		// returning sorted song array
+		return results;
+	}
+	*/
+	
 }
 
 
