@@ -108,9 +108,12 @@ public class VolumeSlider extends Container implements Runnable{
 			double selectedVolume = (volumeChangerMax * selectionPercentage);
 			volumeChanger.setValue((int)selectedVolume);
 			
+			int lastVol = curVolume;
 			// this should change curVolume, so then when the update method is called,
 			// it always has the up to date volume
 			curVolume = (int) selectedVolume;
+			
+			songPlayer.incrementGain((float)(selectedVolume - lastVol));
 			
 			
 			updatevolumeChanger();
