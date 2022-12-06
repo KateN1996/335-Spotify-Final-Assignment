@@ -264,6 +264,13 @@ public class SongPlayer {
         return sample;
     }
     */
+    
+    public AudioInputStream getAudioInputStream(){
+    	return currentAudioInputStream;
+    }
+    public Clip getCurrentClip(){
+    	return currentClip;
+    }
 }
 
 

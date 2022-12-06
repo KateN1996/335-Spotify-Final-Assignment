@@ -9,6 +9,12 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MouseInputListener;
 
+
+/**
+ * 
+ * @author Kyle Walker
+ *
+ */
 public class BrazilBeatsUI{
 	private JFrame frame;
 	private JPanel panel;

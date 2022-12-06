@@ -11,6 +11,11 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+/**
+ * 
+ * @author Kyle Walker
+ *
+ */
 public class SongPreviewUI extends Container{
 	private BrazilBeatsUI gui;
 	/**

@@ -2,7 +2,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,6 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+/**
+ * This is the UI container containing all the playback controls for the current song. It has a playback bar with working time stamps
+ * and a progress bar that updates in real-time with its own thread. There are buttons used for playback controls including shuffle, 
+ * restart/play previous, play and pause, play next song, and save song to library. The playback bar also allows the user to select the
+ * exact time in the song by clicking anywhere on the progress bar.
+ * 
+ * @author Kyle Walker
+ *
+ */
 public class PlaybackOptionsUI extends Container implements Runnable{
 	private BrazilBeatsUI gui;
 	/**
@@ -46,15 +54,17 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 
 	/**
 	 * Creates the playback options menu on the bottom of the screen with the
-	 * playback timeBar and all playback buttons. Each button will later be wired to
-	 * methods which complete their respective functions, and the bar will later
-	 * update to match the song's timing.
+	 * playback timeBar and all playback buttons. Each button is wired to
+	 * methods which complete their respective functions, and the bar updates
+	 * to match the song's timing.
 	 * 
 	 * @return playbackContainer
 	 */
 	PlaybackOptionsUI() {
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
+		
+		// Gridbag layout of components
 		GridBagLayout rowLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(rowLayout);
@@ -62,13 +72,15 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.SOUTH;
 
-		timeStampCurrent = new JLabel("0:48");	
+		// Current song time stamp label
+		timeStampCurrent = new JLabel("0:00");	
 		timeStampCurrent.setFont(BrazilBeatsUI.captionFont);
 		timeStampCurrent.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		this.add(timeStampCurrent, gbc);
 
+		// Playback bar
 		playbackBar = new JProgressBar(SwingConstants.HORIZONTAL);
 		playbackBar.setPreferredSize(new Dimension(playbackBarSize, 12));
 		playbackBar.setMaximum(172);								// Max set to max length of song
@@ -82,7 +94,8 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		this.add(playbackBar, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 
-		timeStampEnd = new JLabel("2:52");
+		// default
+		timeStampEnd = new JLabel("0:00");
 		timeStampEnd.setFont(BrazilBeatsUI.captionFont);
 		timeStampEnd.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridx = 2;

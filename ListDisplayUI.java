@@ -15,6 +15,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+/**
+ * 
+ * @author Kyle Walker
+ *
+ */
 public class ListDisplayUI extends Container {
 	private JTable table;
 	private String[] columnNames = { "#", "Song Title", "Album", "Artist" };
@@ -31,6 +36,7 @@ public class ListDisplayUI extends Container {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.CENTER;
+
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		JLabel name = new JLabel(playlist.title);//.substring(0, playlist.title.length() - 5));
@@ -57,6 +63,8 @@ public class ListDisplayUI extends Container {
 		}
 
 		table = new JTable(tableData, columnNames);
+		table.setBackground(BrazilBeatsUI.barColor);
+		table.setForeground(BrazilBeatsUI.detailColor);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);

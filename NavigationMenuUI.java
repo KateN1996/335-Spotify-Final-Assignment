@@ -9,6 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+/**
+ * 
+ * @author Kyle Walker
+ *
+ */
 public class NavigationMenuUI extends Container{
 	/**
 	 * 
