@@ -39,7 +39,7 @@ public class ListDisplayUI extends Container {
 
 		//gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JLabel name = new JLabel(playlist.title);//.substring(0, playlist.title.length() - 5));
+		JLabel name = new JLabel(playlist.title);
 		gbc.weightx = 1f;
 		gbc.weighty = 1f;
 		gbc.gridy = 0;
