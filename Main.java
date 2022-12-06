@@ -15,12 +15,12 @@ public class Main {
     	
     	new SearchInterface();
     	songPlayer = new SongPlayer();
-    	
-    	System.out.println(Main.songPlayer);
-    	
+    	    	
     	// AUTOPLAY FOR TESTING
     	try {
-			songPlayer.play(new Song("test"));
+    		Song newSong = new Song("balogna");
+    		System.out.println(newSong.audioPath);
+			songPlayer.play(newSong);
 			songPlayer.pause();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			// TODO Auto-generated catch block
