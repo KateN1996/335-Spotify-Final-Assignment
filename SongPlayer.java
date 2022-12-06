@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -8,6 +9,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
@@ -40,7 +42,8 @@ public class SongPlayer {
 			restartCurrentSong();
 			return;
 		}
-		currentPlayer = song.play();
+		Media m = new Media(Paths.get(song.getPath()).toUri().toString());
+		currentPlayer = new MediaPlayer(m);
 		currentSong = song;
 	}
 	
@@ -57,10 +60,9 @@ public class SongPlayer {
 		if (paused) {
 			return;
 		}
-		currentSong.play();		
+		currentPlayer.pause();		
 		paused = true;
 	}
-	
 	
 	
 	/*
@@ -73,7 +75,7 @@ public class SongPlayer {
 		if (!paused) {
 			return;
 		}
-		currentSong.pause();
+		currentPlayer.pause();
 		paused = false;
 	}
 	
@@ -160,8 +162,7 @@ public class SongPlayer {
     	currentPlayer.setVolume(currentPlayer.getVolume() + increment);
     }
     
-    
-    
+       
     /*
      * 
      */
