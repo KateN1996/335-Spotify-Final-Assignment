@@ -14,6 +14,7 @@ public class SongQueue {
 	private ArrayList<Song> userQueue;
 	private ArrayList<Song> historyQueue;
 	private Song lastPolledSong;
+	private Song currSong; 
 	
 	// shuffle state for the current playList
 	private boolean shuffle;
@@ -29,6 +30,7 @@ public class SongQueue {
 		userQueue = new ArrayList<Song>();
 		shuffle = shuffleState;
 		lastPolledSong = null;
+		currSong = null;
 	}
 	
 	
@@ -118,6 +120,26 @@ public class SongQueue {
 			lastPolledSong = this.historyQueue.get(0);
 		}
 		return this.historyQueue.get(0);
+	}
+	
+	/**
+	 * Assumes that the playlist is already set
+	 * 
+	 * @param song
+	 */
+	public void setQueue(Song song) {
+		currSong = song;
+		
+		int idx = this.currentPlaylist.getIndexOfSong(song);
+		ArrayList<Song> playlist = this.currentPlaylist.getSongs();
+		int qIdx = 0;
+		
+		// build the queue starting from the current song
+		for (int i = idx; i < this.currentPlaylist.getSize(); i++) {
+			this.userQueue.set(qIdx, playlist.get(i));
+			qIdx++;
+		}
+		currentPlaylistIndex = idx;
 	}
 }
 
