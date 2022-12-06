@@ -178,6 +178,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 			playPauseButton.setText("||");
 			playPauseButton.setToolTipText("Pause");
 		}
+		gui.validateFrame();
 	}
 
 	/**
@@ -318,6 +319,14 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 			// Plays next song in queue
 			case "Next":
 				System.out.println("Skipping song");
+				Song next = Main.songQueue.dequeue();
+				try {
+					songPlayer.play(next);
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				gui.validateFrame();
 				// TODO: fast forward to next
 				updatePlayPause(false);
 				break;

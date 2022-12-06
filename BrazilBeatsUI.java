@@ -48,6 +48,8 @@ public class BrazilBeatsUI {
 	private Container navigationMenu;
 	private Container brazilBeatsView;
 	private Container viewContainer;
+	private Container playerViewPanel;
+	private Container searchPanel;
 
 	// References to music player
 	private PlaylistManager playlistManager;
@@ -188,7 +190,8 @@ public class BrazilBeatsUI {
 		switch (pane) {
 		// Add a song display to the main view
 		case "Song View":
-			newPane = new PlayerPanel(songPlayer.getCurrentSong());
+			playerViewPanel = new PlayerPanel(songPlayer.getCurrentSong());
+			newPane = playerViewPanel;
 			break;
 
 		// Switch to Library playlist
@@ -199,7 +202,8 @@ public class BrazilBeatsUI {
 
 		// Switch to Search bar
 		case "Search Page":
-			newPane = new SearchPanelUI();
+			searchPanel =  new SearchPanelUI();
+			newPane = searchPanel;
 			break;
 
 		default:
@@ -280,6 +284,17 @@ public class BrazilBeatsUI {
 	
 	public void validateFrame() {
 		((SongPreviewUI) songPreview).updateSongPreview();
+		if (playerViewPanel != null) {
+			((PlayerPanel)playerViewPanel).updateSongPreview();
+		}
+		
+		((NavigationMenuUI)navigationMenu).updatePlaylistsList();
+		//brazilBeatsView;
+		//viewContainer;
+		if (searchPanel != null) {
+			((SearchPanelUI)searchPanel).updateFields();
+		}
+		
 		frame.validate();
 	}
 

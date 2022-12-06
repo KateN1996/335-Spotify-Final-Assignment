@@ -79,7 +79,7 @@ public class PlayerPanel extends JPanel{
 	 * Updates the song preview view to match current song's Album art, title, album
 	 * name, and artist name
 	 */
-	private void updateSongPreview() {
+	public void updateSongPreview() {
 		File albumImageFile = new File(currentSong.coverPath);
 		
  

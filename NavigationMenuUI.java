@@ -54,7 +54,7 @@ public class NavigationMenuUI extends Container {
 		libraryButton.addActionListener(e -> gui.switchMainViewPane("Your Library")); // Action listener to switch to
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		this.add(libraryButton, gbc);
+		//this.add(libraryButton, gbc);
 
 		// Button for search page
 		JButton searchButton = new JButton("Search");
@@ -97,6 +97,7 @@ public class NavigationMenuUI extends Container {
 		});
 		
 		// Display playlists on interactable list
+		playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
 		updatePlaylistsList();
 		playlistsList.setBackground(BrazilBeatsUI.borderColor);
 		playlistsList.setForeground(BrazilBeatsUI.detailColor);
@@ -133,8 +134,6 @@ public class NavigationMenuUI extends Container {
 		for (int i = 0; i < allPlaylists.size(); i++) {
 			playlistData[i] = allPlaylists.get(i).title;
 		}
-		playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
-		// playlistsList.setListData(playlistData);
 		playlistsList.setListData(playlistData);
 	}
 	
@@ -145,7 +144,11 @@ public class NavigationMenuUI extends Container {
 		public void mouseClicked(MouseEvent e) {
 			System.out.println(playlistsList.getSelectedValue());
 			Playlist curPlaylist = playlistManager.getPlaylist(playlistsList.getSelectedValue());
-			gui.switchMainViewPane(new ListDisplayUI(curPlaylist));
+			
+			if (curPlaylist != null) {
+				gui.switchMainViewPane(new ListDisplayUI(curPlaylist));
+			}
+			
 			
 			
 		}

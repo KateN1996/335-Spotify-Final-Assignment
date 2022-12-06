@@ -51,36 +51,44 @@ public class SearchPanelUI extends Container {
 		this.add(searchTitle, gbc);
 		
 		gbc.gridy = 1;
-		
 		this.add(searchField, gbc);
 		
-		gbc.gridy = 2;
+		
 		JButton findButton = new JButton("Search");
 		findButton.setFont(BrazilBeatsUI.captionFont);
 		findButton.setForeground(BrazilBeatsUI.detailColor);
 		findButton.setBackground(BrazilBeatsUI.accentColor);
 		findButton.addActionListener(new SearchListener());
+		gbc.gridy = 2;
 		this.add(findButton, gbc);
 		
-		gbc.gridy = 4;
+		
 		JButton addToPlaylistButton = new JButton("Add to Playlist: ");
 		addToPlaylistButton.setFont(BrazilBeatsUI.captionFont);
 		addToPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
 		addToPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
 		addToPlaylistButton.addActionListener(new addToPlaylistListener());
+		gbc.gridy = 4;
 		this.add(addToPlaylistButton, gbc);
-	
 		
-		String[] playlistNames = new String[playlistManager.getPlaylists().size()];
-		int i = 0;
-		for (Playlist p : playlistManager.getPlaylists()) {
-			playlistNames[i] = p.title;
-			i++;
-		}
-		playlistSelection = new JComboBox(playlistNames);
-		
+		JButton removeFromPlaylistButton = new JButton("Remove From Playlist: ");
+		removeFromPlaylistButton.setFont(BrazilBeatsUI.captionFont);
+		removeFromPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
+		removeFromPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
+		removeFromPlaylistButton.addActionListener(new removeFromPlaylistListener());
 		gbc.gridy = 5;
-		this.add(playlistSelection);
+		this.add(removeFromPlaylistButton, gbc);
+		
+		JButton deletePlaylistButton = new JButton("Delete Playlist: ");
+		deletePlaylistButton.setFont(BrazilBeatsUI.captionFont);
+		deletePlaylistButton.setForeground(BrazilBeatsUI.detailColor);
+		deletePlaylistButton.setBackground(BrazilBeatsUI.accentColor);
+		deletePlaylistButton.addActionListener(new deletePlaylistListener());
+		gbc.gridy = 6;
+		this.add(deletePlaylistButton, gbc);
+	
+		updateFields();
+	
 	}
 	
 	
@@ -95,6 +103,24 @@ public class SearchPanelUI extends Container {
 		this.add(currentSearchResultsTable);
 		gui.validateFrame();
 	}
+	
+	
+	public void updateFields() {
+		String[] playlistNames = new String[playlistManager.getPlaylists().size()];
+		int i = 0;
+		for (Playlist p : playlistManager.getPlaylists()) {
+			playlistNames[i] = p.title;
+			i++;
+		}
+		if (playlistSelection != null) {
+			this.remove(playlistSelection);
+		}
+		playlistSelection = new JComboBox(playlistNames);
+		gbc.gridy = 6;
+		this.add(playlistSelection);
+	}
+	
+	
 	class SearchListener implements ActionListener{
 
 		@Override
@@ -120,6 +146,37 @@ public class SearchPanelUI extends Container {
 			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
 			curPlaylist.addSong(songPlayer.getCurrentSong());
 			System.out.println(curPlaylist.getSongs());
+			gui.validateFrame();
+		}
+		
+	}
+	
+	class removeFromPlaylistListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String playlistName = (String) playlistSelection.getSelectedItem();
+			if (playlistName == null) {
+				return;
+			}
+			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
+			curPlaylist.removeSong(songPlayer.getCurrentSong());
+			gui.validateFrame();
+		}
+		
+	}
+	
+	class deletePlaylistListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String playlistName = (String) playlistSelection.getSelectedItem();
+			if (playlistName == null) {
+				return;
+			}
+			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
+			playlistManager.deletePlaylist(curPlaylist);
+			gui.validateFrame();
 		}
 		
 	}

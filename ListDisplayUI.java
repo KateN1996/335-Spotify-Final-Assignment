@@ -40,6 +40,9 @@ public class ListDisplayUI extends Container {
 	private static final long serialVersionUID = 1L;
 	private SongPlayer songPlayer;
 	private BrazilBeatsUI gui;
+	private SongQueue songQueue;
+	
+	private Playlist curPlaylist;
 	
 	/**
 	 * Creates a new playlist table display Container.
@@ -49,6 +52,8 @@ public class ListDisplayUI extends Container {
 	ListDisplayUI(Playlist playlist) {
 		songPlayer = Main.songPlayer;
 		gui = Main.gui;
+		songQueue = Main.songQueue;
+		curPlaylist = playlist;
 		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -98,7 +103,6 @@ public class ListDisplayUI extends Container {
 		table.setRowSelectionAllowed (true);
 		table.addMouseListener(new rowSelectionListener());
 		
-		
 		table.setBackground(BrazilBeatsUI.barColor);
 		table.setForeground(BrazilBeatsUI.detailColor);
 
@@ -117,7 +121,11 @@ public class ListDisplayUI extends Container {
 			
 			String selectedSong = (String) table.getValueAt(table.getSelectedRow(), 1);
 			try {
-				songPlayer.play(SearchInterface.getSong(selectedSong));
+				Song curSong = SearchInterface.getSong(selectedSong);
+				songPlayer.play(curSong);
+				songQueue.setCurrentPlaylist(curPlaylist, curSong);
+				
+				
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -148,9 +156,6 @@ public class ListDisplayUI extends Container {
 			// TODO Auto-generated method stub
 			
 		}
-
-
-		
 	}
 
 }

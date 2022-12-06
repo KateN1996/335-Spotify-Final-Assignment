@@ -99,11 +99,16 @@ public class SongQueue {
 	
 	
 	
-	/*
+	/**
+	 * Sets the current song and playlist, immediately after this, also make sure
+	 * to set current playlist (it should have currSong in it), then 
+	 * that method by itself should set the queue
 	 * 
+	 * @param song
 	 */
-	public void setCurrentPlaylist(Playlist playlist) {
+	public void setCurrentPlaylist(Playlist playlist, Song song) {
 		this.currentPlaylist = playlist;
+		this.currSong = song;
 		setQueue();
 	}
 	
@@ -134,6 +139,7 @@ public class SongQueue {
 		int qIdx = 0;
 		this.userQueue.clear();
 		// build the queue starting from the current song
+		
 		for (int i = idx; i < this.currentPlaylist.getSize(); i++) {
 			this.userQueue.set(qIdx, playlist.get(i));
 			qIdx++;
@@ -141,16 +147,6 @@ public class SongQueue {
 		currentPlaylistIndex = idx;
 	}
 	
-	/**
-	 * Sets the current song, immediately after this, also make sure
-	 * to set current playlist (it should have currSong in it), then 
-	 * that method by itself should set the queue
-	 * 
-	 * @param song
-	 */
-	public void setCurrSong(Song song) {
-		currSong = song;
-	}
 }
 
 

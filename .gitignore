@@ -54,3 +54,5 @@
 /SearchPanelUI$addToPlaylistListener.class
 /NavigationMenuUI$newPlaylistButtonListener.class
 /NavigationMenuUI$playlistSelectionListener.class
+/SearchPanelUI$removeFromPlaylistListener.class
+/SearchPanelUI$deletePlaylistListener.class

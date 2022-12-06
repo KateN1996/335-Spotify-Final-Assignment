@@ -12,6 +12,7 @@ public class Main {
 	public static SongPlayer songPlayer;
 	public static PlaylistManager playlistManager;
 	public static SearchInterface searchInterface;
+	public static SongQueue songQueue;
     public static void main(String[] args) {  
     	
     	searchInterface = new SearchInterface();
@@ -28,52 +29,13 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+ 
     	
     	
-    	
-    	
-    	
-    	/*
-    	SongPlayer sp = new SongPlayer();
-    	Song song = SearchInterface.search("MF").get(0);
-    	
-    	
-    	
-    	try {	
-    		sp.play(song);
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}
-    	
-    	
-    	
-    	playlistManager.createPlaylist("testPlaylist");
-    	playlistManager.getPlaylist("testPlaylist").addSong(song);
-    	*/
-    	
-    	
-    	/*
-    	for (Song song : SearchInterface.getAllSongs()) {
-    		System.out.println(song.title);
-        	System.out.println(song.artist);
-        	System.out.println(song.album);
-    	}
-    	
-    	for (Song song : SearchInterface.search("MF")) {
-    		System.out.println(song.title);
-        	System.out.println(song.artist);
-        	System.out.println(song.album);
-    	}
-    	*/
-    	
-    	
-    	
+    	songQueue = new SongQueue(false);
     	gui = new BrazilBeatsUI();
     	gui.initializeComponents();
+    	
     }
 }
 
