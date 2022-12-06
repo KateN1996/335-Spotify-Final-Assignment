@@ -252,7 +252,25 @@ public class SongPlayer {
      * 
      */
     public void setGain(float gain) {
-    	this.currentGainControl.setValue(gain);
+    	this.currentGain = gain;
+    	this.currentGainControl.setValue(this.currentGain);
+    }
+    
+    
+    /*
+     * 
+     */
+    public float getGainMax() {
+    	return currentGainControl.getMaximum();
+    }
+    
+    
+    
+    /*
+     * 
+     */
+    public float getGainMin() {
+    	return currentGainControl.getMinimum();
     }
     
     

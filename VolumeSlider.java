@@ -22,8 +22,8 @@ import javax.swing.SwingConstants;
 /**
  *
  */
-public class VolumeSlider extends Container implements Runnable{
-	private BrazilBeatsUI gui;
+public class VolumeSlider extends Container{
+
 	/**
 	 * 
 	 */
@@ -33,8 +33,7 @@ public class VolumeSlider extends Container implements Runnable{
 	private JProgressBar volumeChanger;
 	private JLabel volumeStampCurrent;
 	
-	private int volumeChangerSize = 160;
-	private int curVolume; 
+	private int volumeChangerSize = 250;
 	
 	
 	private SongPlayer songPlayer;
@@ -52,11 +51,8 @@ public class VolumeSlider extends Container implements Runnable{
 		this.setLayout(new GridBagLayout());
 		this.setFocusable(true);
 		
-		gui = Main.gui;
 		songPlayer = Main.songPlayer;
 		
-		curVolume = 50;
-
 		// Gridbag layout of components
 		GridBagLayout rowLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -76,8 +72,9 @@ public class VolumeSlider extends Container implements Runnable{
 		// Playback bar
 		volumeChanger = new JProgressBar(SwingConstants.HORIZONTAL);
 		volumeChanger.setPreferredSize(new Dimension(volumeChangerSize, 12));
-		volumeChanger.setMaximum(100);								
-		volumeChanger.setValue(50);
+		volumeChanger.setMaximum(100);	
+		volumeChanger.setMinimum(0);								
+		volumeChanger.setValue(100);
 		volumeChanger.setBackground(BrazilBeatsUI.borderColor);
 		volumeChanger.setForeground(BrazilBeatsUI.detailColor);
 		volumeChanger.setStringPainted(true);
@@ -90,34 +87,26 @@ public class VolumeSlider extends Container implements Runnable{
 
 	}
 	
-	
-	private void updatevolumeChanger() {
-		volumeChanger.setValue(curVolume);	
-		volumeChanger.setMaximum(100); 
-	}
-	
 	class volumeChangerListener implements MouseListener{
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			double selectionX = e.getPoint().x;
+			float selectionX = e.getPoint().x;
+			float selectionPercentage = selectionX / volumeChangerSize;
+			float range = songPlayer.getGainMax() - songPlayer.getGainMin();
+			float gain = range * selectionPercentage;
+			gain += songPlayer.getGainMin();
 			
-			double selectionPercentage = selectionX / volumeChangerSize;
-						
+			songPlayer.setGain(gain);
+			
+			System.out.println(gain);
+			
+			//Math.log10(gain)
+			
 			int volumeChangerMax = volumeChanger.getMaximum();
-			double selectedVolume = (volumeChangerMax * selectionPercentage);
-			volumeChanger.setValue((int)selectedVolume);
-			
-			int lastVol = curVolume;
-			// this should change curVolume, so then when the update method is called,
-			// it always has the up to date volume
-			curVolume = (int) selectedVolume;
-			
-			songPlayer.incrementGain((float)(selectedVolume - lastVol));
-			
-			
-			updatevolumeChanger();
-			
+			int selectedVolume =(int) (volumeChangerMax * selectionPercentage);
+			volumeChanger.setValue(selectedVolume);	
+			volumeChanger.setMaximum(100); 
 		}
 
 		@Override
@@ -142,15 +131,6 @@ public class VolumeSlider extends Container implements Runnable{
 		public void mouseExited(MouseEvent e) {
 			volumeChanger.setForeground(BrazilBeatsUI.detailColor);
 			
-		}
-		
-	}
-	
-
-	@Override
-	public void run() {
-		while (true) {
-			updatevolumeChanger();
 		}
 		
 	}
