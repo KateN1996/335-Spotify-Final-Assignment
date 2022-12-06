@@ -26,7 +26,7 @@ public class BrazilBeatsUI {
 	protected static Font mainFont = new Font("Arial Bold", Font.PLAIN, 16);
 	protected static Font captionFont = new Font("Arial Bold", Font.PLAIN, 12);
 	protected static Font headerFont = new Font("Arial Bold", Font.BOLD, 28);
-	protected static Dimension defaultRes = new Dimension(1600, 800);
+	protected static Dimension defaultRes = new Dimension(1360, 740);
 
 	// App dimensions
 	static final int IMG_RES_MAX = 256;
