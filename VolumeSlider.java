@@ -98,11 +98,7 @@ public class VolumeSlider extends Container{
 			gain += songPlayer.getGainMin();
 			
 			songPlayer.setGain(gain);
-			
-			System.out.println(gain);
-			
-			//Math.log10(gain)
-			
+						
 			int volumeChangerMax = volumeChanger.getMaximum();
 			int selectedVolume =(int) (volumeChangerMax * selectionPercentage);
 			volumeChanger.setValue(selectedVolume);	
