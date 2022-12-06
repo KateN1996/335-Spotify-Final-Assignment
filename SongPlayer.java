@@ -244,6 +244,15 @@ public class SongPlayer {
     /*
      * 
      */
+    public void setGain(float gain) {
+    	this.currentGainControl.setValue(gain);
+    }
+    
+    
+    
+    /*
+     * 
+     */
     /*
     public int getSampleInt(int sampleNumber) {
 
