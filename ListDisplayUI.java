@@ -16,28 +16,34 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 /**
+ * Displays the contents of a playlist using a JTable allowing users to access
+ * all songs in the playlist. The playlist order can be changed by pressing one
+ * of the columns to sort by. Songs can be played individually by clicking on
+ * their row in the table. The table displays the song's index in the playlist,
+ * its image and title, album, and artist.
  * 
  * @author Kyle Walker
  *
  */
 public class ListDisplayUI extends Container {
+	// Table for view
 	private JTable table;
+	// Columns
 	private String[] columnNames = { "#", "Song Title", "Album", "Artist" };
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Creates a new playlist table display Container.
+	 * 
+	 * @param playlist Playlist that will be displayed within the table
+	 */
 	ListDisplayUI(Playlist playlist) {
 		this.setLayout(new GridBagLayout());
-		// this.setMinimumSize(BrazilBeatsUI.defaultRes);
-		// this.setFocusable(true);
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.CENTER;
 
-		//gbc.fill = GridBagConstraints.HORIZONTAL;
+		// gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		JLabel name = new JLabel(playlist.title);
 		gbc.weightx = 1f;
@@ -68,19 +74,20 @@ public class ListDisplayUI extends Container {
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
-		
+
 		gbc.gridy = 1;
 		this.add(scrollPane, gbc);
 
 	}
 
-	class Renderer extends DefaultTableCellRenderer{
+	class Renderer extends DefaultTableCellRenderer {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		Renderer(Song curSong){
+
+		Renderer(Song curSong) {
 			super();
 			JLabel curSongLabel = new JLabel(curSong.title);
 			curSongLabel.setFont(BrazilBeatsUI.mainFont);
@@ -89,14 +96,15 @@ public class ListDisplayUI extends Container {
 			Image albumImage;
 			try {
 				albumImage = ImageIO.read(albumImageFile);
-				albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MIN, BrazilBeatsUI.IMG_RES_MIN, Image.SCALE_DEFAULT);
+				albumImage = albumImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MIN, BrazilBeatsUI.IMG_RES_MIN,
+						Image.SCALE_DEFAULT);
 				ImageIcon albumIcon = new ImageIcon(albumImage);
 				curSongLabel.setIcon(albumIcon);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 }

@@ -22,34 +22,31 @@ import javax.swing.SwingConstants;
  * This is the UI container containing all the playback controls for the current song. It has a playback bar with working time stamps
  * and a progress bar that updates in real-time with its own thread. There are buttons used for playback controls including shuffle, 
  * restart/play previous, play and pause, play next song, and save song to library. The playback bar also allows the user to select the
- * exact time in the song by clicking anywhere on the progress bar.
+ * exact time in the song by clicking anywhere on the progress bar. There is a volume slider at the bottom as well.
  * 
  * @author Kyle Walker
  *
  */
 public class PlaybackOptionsUI extends Container implements Runnable{
 	private BrazilBeatsUI gui;
-	/**
-	 * 
-	 */
-	
 	private static final long serialVersionUID = 1L;
 	
-	private boolean isPaused = false;
-	
+	// Graphics components
+	// Playback bar and timestamps
 	private JProgressBar playbackBar;
+	private int playbackBarSize = 400;
 	private JLabel timeStampCurrent;
 	private JLabel timeStampEnd;
 	
+	// playback options buttons
 	private JButton playPauseButton;
+	private boolean isPaused = false;
 	private JButton shuffleButton;
 	private JButton restartButton;
 	private JButton skipButton;
 	private JButton saveButton;
 	
-	private int playbackBarSize = 400;
-	
-	
+	// Ref to songplayer
 	private SongPlayer songPlayer;
 
 	/**
@@ -58,17 +55,14 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 	 * methods which complete their respective functions, and the bar updates
 	 * to match the song's timing.
 	 * 
-	 * @return playbackContainer
 	 */
 	PlaybackOptionsUI() {
 		gui = Main.gui;
 		songPlayer = Main.songPlayer;
 		
 		// Gridbag layout of components
-		GridBagLayout rowLayout = new GridBagLayout();
+		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		this.setLayout(rowLayout);
-
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.SOUTH;
 
@@ -80,7 +74,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.gridy = 0;
 		this.add(timeStampCurrent, gbc);
 
-		// Playback bar
+		// Playback bar (progress bar)
 		playbackBar = new JProgressBar(SwingConstants.HORIZONTAL);
 		playbackBar.setPreferredSize(new Dimension(playbackBarSize, 12));
 		playbackBar.setMaximum(172);								// Max set to max length of song
@@ -94,7 +88,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		this.add(playbackBar, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 
-		// default
+		// default timestamp for song duration
 		timeStampEnd = new JLabel("0:00");
 		timeStampEnd.setFont(BrazilBeatsUI.captionFont);
 		timeStampEnd.setForeground(BrazilBeatsUI.detailColor);
@@ -102,10 +96,12 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.gridy = 0;
 		this.add(timeStampEnd, gbc);
 
+		// Container for playback options buttons
 		Container buttonContainer = new Container();
 		Dimension buttonSpacing = new Dimension(10, 0);
 		buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
 
+		// Shuffle button
 		shuffleButton = new JButton("$");
 		shuffleButton.setBackground(BrazilBeatsUI.accentColor);
 		shuffleButton.setForeground(BrazilBeatsUI.detailColor);
@@ -115,6 +111,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		buttonContainer.add(shuffleButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
+		// Restart song button
 		restartButton = new JButton("|<");
 		restartButton.setBackground(BrazilBeatsUI.accentColor);
 		restartButton.setForeground(BrazilBeatsUI.detailColor);
@@ -124,6 +121,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		buttonContainer.add(restartButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
+		// Play / pause button toggle
 		playPauseButton = new JButton("");
 		playPauseButton.setBackground(BrazilBeatsUI.accentColor);
 		playPauseButton.setForeground(BrazilBeatsUI.detailColor);
@@ -133,6 +131,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		buttonContainer.add(playPauseButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
+		// Skip song button
 		skipButton = new JButton(">|");
 		skipButton.setBackground(BrazilBeatsUI.accentColor);
 		skipButton.setForeground(BrazilBeatsUI.detailColor);
@@ -142,6 +141,7 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		buttonContainer.add(skipButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
+		// Save to library button
 		saveButton = new JButton(":)");
 		saveButton.setBackground(BrazilBeatsUI.accentColor);
 		saveButton.setForeground(BrazilBeatsUI.detailColor);
@@ -154,10 +154,16 @@ public class PlaybackOptionsUI extends Container implements Runnable{
 		gbc.gridy = 1;
 		this.add(buttonContainer, gbc);
 		
+		// Add volume slider below buttons
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		this.add(new VolumeSlider(), gbc);
 	}
+	
+	/**
+	 * Updates the state of the play/pause button. Uses tooltip name change to change functionality
+	 * @param toggle isPaused: is the button paused(true) or playing(false)
+	 */
 	private void updatePlayPause(boolean toggle) {
 		isPaused = toggle;
 		if (isPaused) {

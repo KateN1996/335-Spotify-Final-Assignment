@@ -33,8 +33,6 @@ public class PlayerPanel extends JPanel{
         // Create main panel 
 		super(new GridBagLayout());
 		this.setPreferredSize(new Dimension(BrazilBeatsUI.IMG_RES_MAX *2, BrazilBeatsUI.IMG_RES_MAX *2));
-		this.setFocusable(true);
-
 
 		currentSong = curSong;
 

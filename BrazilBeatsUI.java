@@ -1,9 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 
-/**This class is the main UI which holds the JFrame and all of the different UI components. It has the
- * static variables used across all UI components such as app colors and fonts. It serves as the main 
- * display for users to interact with and perform control in the app. It contains panels for navigation,
+/**
+ * This class is the main UI which holds the JFrame and all of the different UI
+ * components. It has the static variables used across all UI components such as
+ * app colors and fonts. It serves as the main display for users to interact
+ * with and perform control in the app. It contains panels for navigation,
  * current song display, playback options, main view, and the visualizer panel.
  * 
  * @author Kyle Walker
@@ -40,7 +42,7 @@ public class BrazilBeatsUI {
 	private JPanel navPanel;
 	private JPanel beatsPanel;
 	private JPanel playbackPanel;
-	
+
 	// UI Container classes
 	private Container songPreview;
 	private Container navigationMenu;
@@ -54,15 +56,22 @@ public class BrazilBeatsUI {
 	// Layout constraints
 	private GridBagConstraints gbc;
 
-	// Constructs 
+	/**
+	 * Constructs the UI and gets references to song player
+	 */
 	BrazilBeatsUI() {
 		playlistManager = Main.playlistManager;
 		songPlayer = Main.songPlayer;
 	}
 
+	/**
+	 * Creates and adds all UI components to the frame after getting references.
+	 */
 	public void initializeComponents() {
-		
+
+		// Sets the app's color scheme to match this color
 		recalculateColors(new Color(30, 35, 35));
+
 		// Create Frame
 		frame = new JFrame("Brazil Beats Premium");
 
@@ -79,6 +88,7 @@ public class BrazilBeatsUI {
 		// Parent containers to panel
 		gbc = new GridBagConstraints();
 
+		// Main center view panel
 		viewContainer = new JPanel();
 		viewContainer.setBackground(appColor);
 		gbc.anchor = GridBagConstraints.NORTH;
@@ -92,8 +102,8 @@ public class BrazilBeatsUI {
 		gbc.gridy = 0;
 		panel.add(viewContainer, gbc);
 
+		// Navigation panel (left side)
 		navPanel = new JPanel(new GridBagLayout());
-
 		navPanel.setBackground(borderColor);
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.anchor = GridBagConstraints.SOUTHWEST;
@@ -104,20 +114,20 @@ public class BrazilBeatsUI {
 		gbc.gridy = 0;
 		panel.add(navPanel, gbc);
 
-		// Current Song Preview and info
+		// Current Song Preview and info (bottom left)
 		songPreview = new SongPreviewUI();
 		gbc.insets = INSET_GAP;
 		gbc.fill = GridBagConstraints.NONE;
 		navPanel.add(songPreview, gbc);
 
-		// Navigation Menu
+		// Navigation Menu (top left)
 		navigationMenu = new NavigationMenuUI();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-
 		navPanel.add(navigationMenu, gbc);
 
+		// Beats panel (top right)
 		beatsPanel = new JPanel(new GridBagLayout());
 		beatsPanel.setBackground(borderColor);
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -130,7 +140,7 @@ public class BrazilBeatsUI {
 		gbc.gridy = 0;
 		panel.add(beatsPanel, gbc);
 
-		// BRAZIL BEATS DANCING CHARACTER CORNER!!!!! LETS GOOOOOOOO!!!!!
+		// BRAZIL BEATS DANCING CHARACTER CORNER (Visualizer)
 		Runnable brazilBeatsView = new BeatsVisualizerUI();
 		Thread visualizerThread = new Thread(brazilBeatsView);
 		visualizerThread.start();
@@ -139,11 +149,9 @@ public class BrazilBeatsUI {
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		//gbc.gridwidth = IMG_RES_MAX + (INSET_GAP.left * 2);
 		beatsPanel.add((Container) brazilBeatsView, gbc);
-	
 
-		// Playback Bar
+		// Playback Bar (Bottom middle)
 		Runnable playbackBar = new PlaybackOptionsUI();
 		Thread playbackThread = new Thread(playbackBar);
 		playbackThread.start();
@@ -152,13 +160,11 @@ public class BrazilBeatsUI {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		playbackPanel.add((Container) playbackBar, gbc);
-
 		gbc.anchor = GridBagConstraints.SOUTH;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 3;
-
 		panel.add(playbackPanel, gbc);
 
 		// Set and open frame
@@ -170,39 +176,50 @@ public class BrazilBeatsUI {
 		frame.setVisible(true); // Opens frame
 	}
 
+	/**
+	 * Switches the main center view to a new UI container as specified in the pane
+	 * argument.
+	 * 
+	 * @param pane The name of the view to switch to
+	 */
 	public void switchMainViewPane(String pane) {
-		// TODO: FIx this
 		Container newPane;
 
 		switch (pane) {
+		// Add a song display to the main view
 		case "Song View":
-			
 			newPane = new PlayerPanel(songPlayer.getCurrentSong());
-			
 			break;
 
+		// Switch to Library playlist
 		case "Your Library":
 			/// newPane = new LibraryPaneUI();
 			newPane = null;
 			break;
 
+		// Switch to Search bar
 		case "Search Page":
 			/// newPane = new SearchPaneUI();
 			newPane = null;
 			break;
 
+		// Switch to Playlist view
 		case "Playlists Page":
 			// newPane = new PlaylistsPaneUI();
+			// TODO: get actual playlist
 			newPane = new ListDisplayUI(playlistManager.getPlaylists().get(0));
 			break;
 
 		default:
 			newPane = null;
+			break;
+		}
+		if (newPane == null) {
 			return;
-
 		}
 
 		System.out.println("Switching to " + pane);
+		// Removes previous component from view
 		viewContainer.removeAll();
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.weightx = 1;
@@ -213,13 +230,20 @@ public class BrazilBeatsUI {
 		viewContainer.add(newPane, gbc);
 		frame.validate();
 		frame.pack();
-
 	}
-	
+
+	/**
+	 * Creates a set of themed colors based on the one base color so the UI will
+	 * automatically follow a theme with any chosen color.
+	 * 
+	 * @param base base color to set as the main theme for the UI which all other
+	 *             app colors will be based on
+	 */
 	public void recalculateColors(Color base) {
 		int r = base.getRed();
 		int g = base.getGreen();
 		int b = base.getBlue();
+		// ensures all color values will fit in 0-255 range
 		if (r < 30) {
 			r = 30;
 		}
@@ -235,15 +259,13 @@ public class BrazilBeatsUI {
 		}
 		if (b > 105)
 			b = 105;
-		
 
-		//appColor = new Color(50, 55, 50);		
-		appColor = new Color(r, g, b);			
-		borderColor = new Color(r - 20, g - 20, b - 20);			
-		barColor = new Color(r - 10, g - 10, b - 10);			
-		accentColor = new Color(r-20, g + 30, b + 30);			
-		detailColor = new Color(255 - r, 255 - g, 255 - b);	
+		// appColor = new Color(50, 55, 50); // Brazil color scheme
+		appColor = new Color(r, g, b);
+		borderColor = new Color(r - 20, g - 20, b - 20); // Darker version of base
+		barColor = new Color(r - 10, g - 10, b - 10); // Slightly darker version of base
+		accentColor = new Color(r - 20, g + 30, b + 30); // Brighter and bluer version of base
+		detailColor = new Color(255 - r, 255 - g, 255 - b); // Inverted color of base
 	}
-	
 
 }
