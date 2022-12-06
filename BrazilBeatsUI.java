@@ -291,9 +291,6 @@ public class BrazilBeatsUI {
 		((NavigationMenuUI)navigationMenu).updatePlaylistsList();
 		//brazilBeatsView;
 		//viewContainer;
-		if (searchPanel != null) {
-			((SearchPanelUI)searchPanel).updateFields();
-		}
 		
 		frame.validate();
 	}

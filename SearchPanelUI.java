@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class SearchPanelUI extends Container {
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,10 @@ public class SearchPanelUI extends Container {
 	private Playlist searchResults;
 	private PlaylistManager playlistManager;
 	private JComboBox playlistSelection;
+	private JButton findButton;
+	
+	Container playlistSelectionContainer;
+	private Container searchContainer;
 	
 	private SongPlayer songPlayer;
 	
@@ -34,12 +40,15 @@ public class SearchPanelUI extends Container {
 		songPlayer = Main.songPlayer;
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
+		
+		searchContainer = new Container();
+		searchContainer.setLayout(new GridBagLayout());
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		
-		searchField = new JTextField();
+		
 		
 		JLabel searchTitle = new JLabel("Search");
 		searchTitle.setFont(BrazilBeatsUI.headerFont);
@@ -48,59 +57,83 @@ public class SearchPanelUI extends Container {
 		gbc.gridy = 0;
 		gbc.weightx =1;
 		gbc.weighty = 1;
-		this.add(searchTitle, gbc);
+		searchContainer.add(searchTitle, gbc);
 		
+		searchField = new JTextField();
+		searchField.getDocument().addDocumentListener(new searchTextListener());
 		gbc.gridy = 1;
-		this.add(searchField, gbc);
+		searchContainer.add(searchField, gbc);
 		
-		
-		JButton findButton = new JButton("Search");
+		findButton = new JButton("Search");
 		findButton.setFont(BrazilBeatsUI.captionFont);
 		findButton.setForeground(BrazilBeatsUI.detailColor);
 		findButton.setBackground(BrazilBeatsUI.accentColor);
+		findButton.setEnabled(false);
 		findButton.addActionListener(new SearchListener());
 		gbc.gridy = 2;
-		this.add(findButton, gbc);
+		searchContainer.add(findButton, gbc);
+		
+		playlistSelectionContainer = new Container();
+		playlistSelectionContainer.setLayout(new GridBagLayout());
+		
+		JLabel playlistLabel = new JLabel("Playlist:");
+		playlistLabel.setFont(BrazilBeatsUI.mainFont);
+		playlistLabel.setForeground(BrazilBeatsUI.detailColor);
+		gbc.gridy = 0;
+		gbc.gridx = 0;
+		playlistSelectionContainer.add(playlistLabel, gbc);
+		updateFields();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		searchContainer.add(playlistSelectionContainer, gbc);
 		
 		
-		JButton addToPlaylistButton = new JButton("Add to Playlist: ");
+		
+		
+
+		
+		
+		JButton addToPlaylistButton = new JButton("Add to Playlist");
 		addToPlaylistButton.setFont(BrazilBeatsUI.captionFont);
 		addToPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
 		addToPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
 		addToPlaylistButton.addActionListener(new addToPlaylistListener());
 		gbc.gridy = 4;
-		this.add(addToPlaylistButton, gbc);
+		searchContainer.add(addToPlaylistButton, gbc);
 		
-		JButton removeFromPlaylistButton = new JButton("Remove From Playlist: ");
+		JButton removeFromPlaylistButton = new JButton("Remove From Playlist");
 		removeFromPlaylistButton.setFont(BrazilBeatsUI.captionFont);
 		removeFromPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
 		removeFromPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
 		removeFromPlaylistButton.addActionListener(new removeFromPlaylistListener());
 		gbc.gridy = 5;
-		this.add(removeFromPlaylistButton, gbc);
+		searchContainer.add(removeFromPlaylistButton, gbc);
 		
-		JButton deletePlaylistButton = new JButton("Delete Playlist: ");
+		JButton deletePlaylistButton = new JButton("Delete Playlist");
 		deletePlaylistButton.setFont(BrazilBeatsUI.captionFont);
 		deletePlaylistButton.setForeground(BrazilBeatsUI.detailColor);
 		deletePlaylistButton.setBackground(BrazilBeatsUI.accentColor);
 		deletePlaylistButton.addActionListener(new deletePlaylistListener());
 		gbc.gridy = 6;
-		this.add(deletePlaylistButton, gbc);
+		searchContainer.add(deletePlaylistButton, gbc);
 	
-		updateFields();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		this.add(searchContainer, gbc);
 	
 	}
 	
 	
 	public void updateResults() {
-		gbc.gridy = 3;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
 		if (currentSearchResultsTable != null) {
 			this.remove(currentSearchResultsTable);
 		}
-		
 		currentSearchResultsTable = new ListDisplayUI(searchResults);
 		
-		this.add(currentSearchResultsTable);
+		this.add(currentSearchResultsTable, gbc);
 		gui.validateFrame();
 	}
 	
@@ -113,19 +146,31 @@ public class SearchPanelUI extends Container {
 			i++;
 		}
 		if (playlistSelection != null) {
-			this.remove(playlistSelection);
+			playlistSelectionContainer.remove(playlistSelection);
 		}
 		playlistSelection = new JComboBox(playlistNames);
-		gbc.gridy = 6;
-		this.add(playlistSelection);
+		playlistSelection.setFont(BrazilBeatsUI.captionFont);
+		playlistSelection.setBackground(BrazilBeatsUI.accentColor);
+		playlistSelection.setForeground(BrazilBeatsUI.detailColor);
+	
+		gbc.gridy = 0;
+		gbc.gridx = 1;
+		playlistSelectionContainer.add(playlistSelection, gbc);
+		
+		gui.validateFrame();
 	}
 	
-	
+	/**
+	 * Listens to button press on Search button to search using the string from the search text field.
+	 * @author Kyle Walker
+	 *
+	 */
 	class SearchListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String subject = searchField.getText();
+			System.out.println(subject);
 			if (subject == null) {
 				return;
 			}
@@ -177,6 +222,30 @@ public class SearchPanelUI extends Container {
 			Playlist curPlaylist = playlistManager.getPlaylist(playlistName);
 			playlistManager.deletePlaylist(curPlaylist);
 			gui.validateFrame();
+		}
+		
+	}
+	
+	class searchTextListener implements DocumentListener{
+
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			findButton.setEnabled(true);
+			
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			if (searchField.getText().length() <= 0) {
+				findButton.setEnabled(false);
+			}
+			
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
