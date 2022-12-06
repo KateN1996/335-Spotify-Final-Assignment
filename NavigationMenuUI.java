@@ -1,6 +1,8 @@
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 /**
  * This is the UI component for the user navigation panel, which allows users to
@@ -22,6 +25,9 @@ public class NavigationMenuUI extends Container {
 	// gui reference
 	private BrazilBeatsUI gui;
 	private PlaylistManager playlistManager;
+	
+	private JTextField playlistTextField;
+	private JList<String> playlistsList;
 
 	/**
 	 * Creates the graphics container with navigation buttons and playlist tab.
@@ -89,11 +95,14 @@ public class NavigationMenuUI extends Container {
 			public void mouseExited(MouseEvent e) {
 			}
 		});
+		
 
 		// TODO: Change this to actual playlist object array
 
+		/*
 		String[] examplePlaylists = new String[] { "Drake playlist", "Logic isn't that bad", "6ix9ine hidden gems",
 				"YEAT's greatest hits", "Wolfgang Amadeus Mozart", "Dababy sleep playlist 2" };
+				*/
 
 		ArrayList<Playlist> allPlaylists = playlistManager.getPlaylists();
 
@@ -103,9 +112,9 @@ public class NavigationMenuUI extends Container {
 		for (int i = 0; i < allPlaylists.size(); i++) {
 			playlistData[i] = allPlaylists.get(i).title;
 		}
-		JList<String> playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
+		playlistsList = new JList<String>(); // Store an arrayList of Playlist Objects
 		// playlistsList.setListData(playlistData);
-		playlistsList.setListData(examplePlaylists);
+		playlistsList.setListData(playlistData);
 
 		// Display playlists on interactable list
 		playlistsList.setBackground(BrazilBeatsUI.borderColor);
@@ -118,6 +127,32 @@ public class NavigationMenuUI extends Container {
 		// JList<Playlist> playlistsList = new JList<Playlist>();
 		gbc.gridy = 3;
 		this.add(playlistScroll, gbc);
+		
+		gbc.gridy = 4;
+		playlistTextField = new JTextField();
+		this.add(playlistTextField,gbc);
+		
+		gbc.gridy = 5;
+		JButton newPlaylistButton = new JButton("Add Playlist");
+		newPlaylistButton.setFont(BrazilBeatsUI.captionFont);
+		newPlaylistButton.setForeground(BrazilBeatsUI.detailColor);
+		newPlaylistButton.setBackground(BrazilBeatsUI.accentColor);
+		newPlaylistButton.addActionListener(new newPlaylistListener());
+		this.add(newPlaylistButton, gbc);
+	}
+	
+	
+	class newPlaylistListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String playlistName = playlistTextField.getText();
+			if (playlistName == null) {
+				return;
+			}
+			playlistManager.createPlaylist(playlistName);
+		}
+		
 	}
 
 }
