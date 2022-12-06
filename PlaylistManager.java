@@ -10,7 +10,6 @@ public class PlaylistManager {
 	
 	//
 	private ArrayList<Playlist> playlists;
-	private Library library;
 	private SearchResults searchResults;
 	
 	
@@ -21,7 +20,6 @@ public class PlaylistManager {
 	public PlaylistManager() {
 		// initializing playlist array
 		playlists = new ArrayList<Playlist>();
-		library = new Library();
 		searchResults = new SearchResults();
 		
 		// getting existing playlist files
@@ -32,23 +30,11 @@ public class PlaylistManager {
 		// populating available song list
 		for (File file : playlistFiles){
 			String playlistFileName = file.getName().replace(".txt", "");
-			if (playlistFileName.equals(library.title)){
-				continue;
-			}
 			if (playlistFileName.equals(searchResults.title)) {
 				continue;
 			}
 			createPlaylist(playlistFileName);
 		}
-	}
-	
-	
-	
-	/*
-	 * 
-	 */
-	public Library getLibrary() {
-		return this.library;
 	}
 	
 	
@@ -111,9 +97,6 @@ public class PlaylistManager {
 	 * 
 	 */
 	private boolean playlistExists(String title) {
-		if (title.equals(library.title)) {
-			return true;
-		}
 		if (title.equals(searchResults.title)) {
 			return true;
 		}
