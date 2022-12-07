@@ -129,7 +129,8 @@ public class SearchInterface {
 	
 	
 	/*
-	 * 
+	 * returns a list of songs from all available songs,
+	 * matched and sorted by song title
 	 */
 	public static ArrayList<Song> searchByTitle(String searchText){
 		return searchByAttributes(searchText, true, false, false);
@@ -138,7 +139,8 @@ public class SearchInterface {
 	
 	
 	/*
-	 * 
+	 * returns a list of songs from all available songs,
+	 * matched and sorted by song artist
 	 */
 	public static ArrayList<Song> searchByArtist(String searchText){
 		return searchByAttributes(searchText, false, true, false);
@@ -147,7 +149,8 @@ public class SearchInterface {
 	
 	
 	/*
-	 * 
+	 * returns a list of songs from all available songs,
+	 * matched and sorted by song album
 	 */
 	public static ArrayList<Song> searchByAlbum(String searchText){
 		return searchByAttributes(searchText, false, false, true);

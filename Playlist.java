@@ -9,7 +9,9 @@ import java.util.Scanner;
 
 
 /**
- * 
+ * Single playlist instance based around list of songs.
+ * Handled by PlaylistManager.
+ * NOTE - this requires SearchInterface to be initialized
  * 
  * @author Ryan Pecha
  */
@@ -23,18 +25,20 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * Contstructor
 	 * NOTE - this requires SearchInterface to be initialized
 	 */
 	public Playlist(String playlistTitle) {
+		
+		// setting playlist fields
 		title = playlistTitle;
 		playlistPath = "./playlists/" + playlistTitle + ".txt";
+		
+		// initializing song array
 		songs = new ArrayList<Song>();
 		
+		// checking for playlist file, and creating new if nonexistent
 		File file = new File(playlistPath);
-		
-		//System.out.println(file.getAbsolutePath());
-		
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -43,6 +47,7 @@ public class Playlist {
 			}
 		}
 		
+		// gettings songs from playlist file via SearchInterface song instances
 		try {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNextLine()) {
@@ -59,13 +64,14 @@ public class Playlist {
 			e.printStackTrace();
 		}
 		
+		// updating file system
 		updateFile();
 	}
 	
 	
 	
 	/*
-	 * 
+	 * returns all songs in this playlist
 	 */
 	public ArrayList<Song> getSongs(){
 		return songs;
@@ -74,7 +80,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * adds a song to this playlist and updates file system 
 	 */
 	public void addSong(Song song) {
 		if (!songs.contains(song)) {
@@ -86,7 +92,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * removes a song from this playlist and updates file system 
 	 */
 	public void removeSong(Song song) {
 		if (songs.contains(song)) {
@@ -98,7 +104,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * rewrites the playlist system file to match this objects current songs
 	 */
 	private void updateFile() {
 		try {
@@ -115,7 +121,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * removes this playlist from the file system
 	 */
 	public void deletePlaylist() {
 		File file = new File(playlistPath);
@@ -127,7 +133,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * returns the quantity of songs in this playlist
 	 */
 	public Integer getSize() {
 		return this.songs.size();
@@ -136,7 +142,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * returns the song at the given index in this playlist
 	 */
 	public Song getSongAtIndex(Integer index) {
 		return this.songs.get(index);
@@ -145,7 +151,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * returns the index of the given song in this playlist.
 	 */
 	public Integer getIndexOfSong(Song song) {
 		Integer index = 0;
@@ -162,7 +168,7 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * returns all songs sorted by title
 	 */
 	public ArrayList<Song> getSongsSortedByTitle(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
@@ -171,7 +177,7 @@ public class Playlist {
 	}
 	
 	/*
-	 * 
+	 * returns all songs sorted by album
 	 */
 	public ArrayList<Song> getSongsSortedByAlbum(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
@@ -180,7 +186,7 @@ public class Playlist {
 	}
 	
 	/*
-	 * 
+	 * returns all songs sorted by artist
 	 */
 	public ArrayList<Song> getSongsSortedByArtist(){
 		ArrayList<Song> sortedSongs = new ArrayList<Song>(this.getSongs());		
@@ -191,11 +197,12 @@ public class Playlist {
 	
 	
 	/*
-	 * 
+	 * sets the song array field of this playlist
 	 */
 	public void setSongs(ArrayList<Song> songs) {
 		this.songs.clear();
 		this.songs = songs;
+		this.updateFile();
 	}
 }
 
