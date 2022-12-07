@@ -13,7 +13,7 @@ import java.util.Scanner;
  * Handled by PlaylistManager.
  * NOTE - this requires SearchInterface to be initialized
  * 
- * @author Ryan Pecha
+ * @author Kate Nixon
  */
 public class Playlist {
 
@@ -22,11 +22,10 @@ public class Playlist {
 	private String playlistPath;
 	private ArrayList<Song> songs;
 	
-	
-	
-	/*
+	/**
 	 * Contstructor
 	 * NOTE - this requires SearchInterface to be initialized
+	 * @param String playlistTitle, title of playlist
 	 */
 	public Playlist(String playlistTitle) {
 		
@@ -68,19 +67,16 @@ public class Playlist {
 		updateFile();
 	}
 	
-	
-	
-	/*
+	/**
 	 * returns all songs in this playlist
 	 */
 	public ArrayList<Song> getSongs(){
 		return songs;
 	}
 	
-	
-	
-	/*
+	/**
 	 * adds a song to this playlist and updates file system 
+	 * @param Song song, song to be added
 	 */
 	public void addSong(Song song) {
 		if (!songs.contains(song)) {
@@ -89,9 +85,7 @@ public class Playlist {
 		}
 	}
 	
-	
-	
-	/*
+	/**
 	 * removes a song from this playlist and updates file system 
 	 */
 	public void removeSong(Song song) {
@@ -101,26 +95,23 @@ public class Playlist {
 		}
 	}
 	
-	
-	
-	/*
+	/**
 	 * rewrites the playlist system file to match this objects current songs
 	 */
 	private void updateFile() {
 		try {
-            FileWriter writerObj = new FileWriter(playlistPath, false);
-            for (Song song : songs) {
-            	writerObj.write(song.title + '\n');
-            }
-            writerObj.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            		FileWriter writerObj = new FileWriter(playlistPath, false);
+            		for (Song song : songs) {
+            			writerObj.write(song.title + '\n');
+            		}
+            		writerObj.close();
+        	} catch (IOException e) {
+            		e.printStackTrace();
+        	}
 	}
 	
 	
-	
-	/*
+	/**
 	 * removes this playlist from the file system
 	 */
 	public void deletePlaylist() {
@@ -132,7 +123,7 @@ public class Playlist {
 	
 	
 	
-	/*
+	/**
 	 * returns the quantity of songs in this playlist
 	 */
 	public Integer getSize() {
@@ -141,7 +132,7 @@ public class Playlist {
 	
 	
 	
-	/*
+	/**
 	 * returns the song at the given index in this playlist
 	 */
 	public Song getSongAtIndex(Integer index) {
@@ -150,7 +141,7 @@ public class Playlist {
 	
 	
 	
-	/*
+	/**
 	 * returns the index of the given song in this playlist.
 	 */
 	public Integer getIndexOfSong(Song song) {
@@ -164,10 +155,7 @@ public class Playlist {
 		return null;
 	}
 	
-	
-	
-	
-	/*
+	/**
 	 * returns all songs sorted by title
 	 */
 	public ArrayList<Song> getSongsSortedByTitle(){
@@ -176,7 +164,7 @@ public class Playlist {
 		return sortedSongs;
 	}
 	
-	/*
+	/**
 	 * returns all songs sorted by album
 	 */
 	public ArrayList<Song> getSongsSortedByAlbum(){
@@ -185,7 +173,7 @@ public class Playlist {
 		return sortedSongs;
 	}
 	
-	/*
+	/**
 	 * returns all songs sorted by artist
 	 */
 	public ArrayList<Song> getSongsSortedByArtist(){
@@ -194,9 +182,7 @@ public class Playlist {
 		return sortedSongs;
 	}
 	
-	
-	
-	/*
+	/**
 	 * sets the song array field of this playlist
 	 */
 	public void setSongs(ArrayList<Song> songs) {
@@ -205,5 +191,3 @@ public class Playlist {
 		this.updateFile();
 	}
 }
-
-
