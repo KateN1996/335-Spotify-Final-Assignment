@@ -8,7 +8,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-/**
+/**Container for the visualizer UI and components
  * 
  * @author Kyle Walker
  *
@@ -16,11 +16,12 @@ import javax.swing.JLabel;
 public class BeatsVisualizerUI extends Container{
 	private static final long serialVersionUID = 1L;
 	private JLabel beatsDanceView;
-
-
 	private SongPlayer songPlayer;
 
 
+	/**
+	 * Creates the Components for the visualizer
+	 */
 	BeatsVisualizerUI() {
 		songPlayer = Main.songPlayer;
 		GridBagLayout colLayout = new GridBagLayout();
@@ -49,9 +50,11 @@ public class BeatsVisualizerUI extends Container{
 	}
 
 	/**
-	 * Set Image/GIF
+	 * Updates the dancing character to dance while music is playing and to idly stand when music stops.
+	 * (Unable to efficiently get wav byte data per frame for real visualization)
 	 */
 	public void updateBeatsView() {
+		// Dance when song is playing
 		if(songPlayer.getCurrentClip().isRunning()) {
 			URL url;
 			url = getClass().getResource("brazilBeatsDancer.gif");
@@ -59,6 +62,7 @@ public class BeatsVisualizerUI extends Container{
 
 			beatsDanceView.setIcon(icon);
 		}
+		// Otherwise stand in idle pose
 		else {
 			URL url;
 			url = getClass().getResource("brazilBeatsDancerIdle.gif");

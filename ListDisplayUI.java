@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -27,7 +28,7 @@ public class ListDisplayUI extends Container {
 	// Table for view
 	private JTable table;
 	// Columns
-	private String[] columnNames = { "#", "Song Title", "Album", "Artist" };
+	private String[] columnNames = { "#", "Song Title", "Album", "Artist", "Duration" };
 	private static final long serialVersionUID = 1L;
 	private SongPlayer songPlayer;
 	private BrazilBeatsUI gui;
@@ -75,6 +76,10 @@ public class ListDisplayUI extends Container {
 
 			tableData[i][2] = curSong.album;
 			tableData[i][3] = curSong.artist;
+			
+			int songLength = (int) songPlayer.getSongLength(curSong);
+			String endTime = (songLength / 60 + ":" + (new DecimalFormat("00").format((songLength % 60))));
+			tableData[i][4] = endTime;
 		}
 
 		table = new JTable(tableData, columnNames);

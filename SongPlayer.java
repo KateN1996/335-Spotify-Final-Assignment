@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -210,6 +211,30 @@ public class SongPlayer {
     		return 0;
     	}
     	return currentClip.getMicrosecondLength();
+    }
+    
+    /**
+     * Calculates and returns the duration of the given song in seconds
+     * @param song Song to check duration of
+     * @return song's duration in seconds
+     */
+    public float getSongLength(Song song) {
+    //	Clip tempClip = 		
+    	File tempFile = new File(song.audioPath).getAbsoluteFile();
+        AudioInputStream ais;
+		try {
+			ais = AudioSystem.getAudioInputStream(tempFile);
+			AudioFormat format = ais.getFormat();
+	        long audioFileLength = tempFile.length();
+	        int frameSize = format.getFrameSize();
+	        float frameRate = format.getFrameRate();
+	        float durationInSeconds = (audioFileLength / (frameSize * frameRate));
+	        return durationInSeconds;
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0.0f;
     }
     
     /**
