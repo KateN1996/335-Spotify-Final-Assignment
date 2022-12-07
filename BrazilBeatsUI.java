@@ -144,10 +144,7 @@ public class BrazilBeatsUI {
 		panel.add(beatsPanel, gbc);
 
 		// BRAZIL BEATS DANCING CHARACTER CORNER (Visualizer)
-		Runnable brazilBeatsVisualizer = new BeatsVisualizerUI();
-		Thread visualizerThread = new Thread(brazilBeatsVisualizer);
-		brazilBeatsView = (Container)brazilBeatsVisualizer;
-		visualizerThread.start();
+		brazilBeatsView = new BeatsVisualizerUI();
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
 		gbc.fill = GridBagConstraints.NONE;
@@ -231,8 +228,11 @@ public class BrazilBeatsUI {
 		frame.pack();
 	}
 	
+	/**
+	 * Overload for paneSwitch method that allows changes to an already created pane.
+	 * @param panel	Pre instantiated Continaer to display in the main view
+	 */
 	public void switchMainViewPane(Container panel) {
-		
 		Container newPane;
 		newPane = panel;
 
@@ -285,12 +285,19 @@ public class BrazilBeatsUI {
 		detailColor = new Color(255 - r, 255 - g, 255 - b); // Inverted color of base
 	}
 	
+	/**
+	 * Updates and validates all main UI components in the frame in response to changes made to data.
+	 * Called by UI components whenever a change is made to the UI so the entire frame will be updated.
+	 * 
+	 */
 	public void validateFrame() {
+		// Updates the song preview to always match current song
 		((SongPreviewUI) songPreview).updateSongPreview();
 		if (playerViewPanel != null) {
 			((PlayerPanel)playerViewPanel).updateSongPreview();
 		}
 		
+		// Updates the navigation bar to always show correct list of playlists
 		((NavigationMenuUI)navigationMenu).updatePlaylistsList();
 			
 		if (searchPanel != null) {

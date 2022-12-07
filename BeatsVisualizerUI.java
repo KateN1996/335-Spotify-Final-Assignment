@@ -31,28 +31,19 @@ import javax.swing.JLabel;
  * @author Kyle Walker
  *
  */
-public class BeatsVisualizerUI extends Container implements Runnable {
+public class BeatsVisualizerUI extends Container{
 	private BrazilBeatsUI gui;
 	private static final long serialVersionUID = 1L;
 	private JLabel beatsDanceView;
-	private float lastAmp;
-	private float threshold = 0.4f;
+
 
 	private SongPlayer songPlayer;
-	private AudioInputStream audioInput;
-	private AudioFormat audioFormat;
-	private int sampleSize;
-	private long frameCount;
-	private int sampleRate;
-	private int channels;
-	private byte[] buffer;
 
-	private Clip currentClip;
 
 	BeatsVisualizerUI() {
 		songPlayer = Main.songPlayer;
 		
-		lastAmp = 0.5f;
+
 		gui = Main.gui;
 		GridBagLayout colLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -77,26 +68,6 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		// Initialize audio compnents
 		songPlayer = Main.songPlayer;
 
-		updateAudioData();
-
-	}
-
-	private void updateAudioData() {
-		currentClip = songPlayer.getCurrentClip();
-		audioInput = songPlayer.getAudioInputStream();
-		audioFormat = audioInput.getFormat();
-		frameCount = audioInput.getFrameLength();
-		sampleRate = (int) audioFormat.getSampleRate();
-		sampleSize = audioFormat.getSampleSizeInBits();
-		channels = audioFormat.getChannels();
-		long dataLength = frameCount * sampleSize * channels;
-		buffer = new byte[(int) dataLength];
-		try {
-			audioInput.read(buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -117,30 +88,7 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 
 			beatsDanceView.setIcon(icon);
 		}
-		
 
-		/*
-		 * try {
-		 * 
-		 * danceImage = ImageIO.read(danceImageFile); danceImage =
-		 * danceImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX,
-		 * BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT); ImageIcon albumIcon = new
-		 * ImageIcon(danceImage); } catch (IOException e) { e.printStackTrace(); }
-		 */
-
-	}
-
-	@Override
-
-	/**
-	 * Runnable, always checks the current amplitude of the song, if it falls in
-	 * between the range of threshold, it should advance the gif to the next frame.
-	 */
-	public void run() {
-		// TODO Auto-generated method stub
-
-		while (true) {
-		}
 	}
 
 }
