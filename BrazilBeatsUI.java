@@ -51,20 +51,8 @@ public class BrazilBeatsUI {
 	private Container playerViewPanel;
 	private Container searchPanel;
 
-	// References to music player
-	private PlaylistManager playlistManager;
-	private SongPlayer songPlayer;
-
 	// Layout constraints
 	private GridBagConstraints gbc;
-
-	/**
-	 * Constructs the UI and gets references to song player
-	 */
-	BrazilBeatsUI() {
-		playlistManager = Main.playlistManager;
-		songPlayer = Main.songPlayer;
-	}
 
 	/**
 	 * Creates and adds all UI components to the frame after getting references.

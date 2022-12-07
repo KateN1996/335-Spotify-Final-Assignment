@@ -2,26 +2,8 @@
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.TargetDataLine;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,7 +14,6 @@ import javax.swing.JLabel;
  *
  */
 public class BeatsVisualizerUI extends Container{
-	private BrazilBeatsUI gui;
 	private static final long serialVersionUID = 1L;
 	private JLabel beatsDanceView;
 
@@ -42,9 +23,6 @@ public class BeatsVisualizerUI extends Container{
 
 	BeatsVisualizerUI() {
 		songPlayer = Main.songPlayer;
-		
-
-		gui = Main.gui;
 		GridBagLayout colLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(colLayout);
