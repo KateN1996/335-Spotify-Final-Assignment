@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Class used to store a single song,
  * its attributes, and its data paths
  * 
- * @author Ryan Pecha
+ * @author Kate Nixon
  */
 public class Song {
 	
