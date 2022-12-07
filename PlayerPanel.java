@@ -9,18 +9,14 @@
 import java.awt.*;
 
 import java.io.File;
-import java.awt.image.BufferedImage;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
 public class PlayerPanel extends JPanel{   
-    private JLabel albumCoverPreview;
+	private static final long serialVersionUID = 1L;
+	private JLabel albumCoverPreview;
     private JLabel songTitlePreview;
 	private JLabel albumTitlePreview;
 	private JLabel artistTitlePreview;
