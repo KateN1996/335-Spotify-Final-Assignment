@@ -1,5 +1,4 @@
 
-
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -21,6 +22,7 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -48,13 +50,15 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	private Clip currentClip;
 
 	BeatsVisualizerUI() {
+		songPlayer = Main.songPlayer;
+		
 		lastAmp = 0.5f;
 		gui = Main.gui;
 		GridBagLayout colLayout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(colLayout);
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
-		
+
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -69,7 +73,6 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		gbc.gridy = 1;
 		updateBeatsView();
 		this.add(beatsDanceView, gbc);
-	
 
 		// Initialize audio compnents
 		songPlayer = Main.songPlayer;
@@ -96,24 +99,35 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		}
 	}
 
-
 	/**
 	 * Set Image/GIF
 	 */
-	private void updateBeatsView() {
-		File danceImageFile = new File("brazilDance.jpg");
-		Image danceImage;
-		try {
-			danceImage = ImageIO.read(danceImageFile);
-			danceImage = danceImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX, BrazilBeatsUI.IMG_RES_MAX,
-					Image.SCALE_DEFAULT);
-			ImageIcon albumIcon = new ImageIcon(danceImage);
+	public void updateBeatsView() {
+		if(songPlayer.getCurrentClip().isRunning()) {
+			URL url;
+			url = getClass().getResource("brazilBeatsDancer.gif");
+			Icon icon = new ImageIcon(url);
 
-			beatsDanceView.setIcon(albumIcon);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			beatsDanceView.setIcon(icon);
 		}
+		else {
+			URL url;
+			url = getClass().getResource("brazilBeatsDancerIdle.gif");
+			Icon icon = new ImageIcon(url);
+
+			beatsDanceView.setIcon(icon);
+		}
+		
+
+		/*
+		 * try {
+		 * 
+		 * danceImage = ImageIO.read(danceImageFile); danceImage =
+		 * danceImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX,
+		 * BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT); ImageIcon albumIcon = new
+		 * ImageIcon(danceImage); } catch (IOException e) { e.printStackTrace(); }
+		 */
+
 	}
 
 	@Override

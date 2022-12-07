@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 /**
- * 
+ * Global playlist manager for a given spotify instance
  * 
  * @author Ryan Pecha
  */
@@ -17,7 +17,7 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * Constructor
 	 */
 	public PlaylistManager() {
 		// initializing playlist array
@@ -32,9 +32,11 @@ public class PlaylistManager {
 		// populating available song list
 		for (File file : playlistFiles){
 			String playlistFileName = file.getName().replace(".txt", "");
+			// ignoring searchResults playlist
 			if (playlistFileName.equals(searchResults.title)) {
 				continue;
 			}
+			// creating a playlist in memory for each one in the file system
 			createPlaylist(playlistFileName);
 		}
 	}
@@ -42,7 +44,7 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * returns the special searchResults PlayList
 	 */
 	public SearchResults getSearchResults() {
 		return this.searchResults;
@@ -51,7 +53,7 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * returns all playlists excluding searchResults playlist
 	 */
 	public ArrayList<Playlist> getPlaylists() {
 		return this.playlists;
@@ -60,7 +62,8 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * gets a playlist by name.
+	 * null if nonexistent
 	 */
 	public Playlist getPlaylist(String title) {
 		for (Playlist playlist : playlists) {
@@ -74,7 +77,7 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * creates a playlist by name.
 	 */
 	public void createPlaylist(String title) {
 		if (playlistExists(title)) {
@@ -86,7 +89,7 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * deletes a playlist from memory and filespace
 	 */
 	public void deletePlaylist(Playlist playlist) {
 		playlist.deletePlaylist();
@@ -96,7 +99,9 @@ public class PlaylistManager {
 	
 	
 	/*
-	 * 
+	 * returns true if playlist is existent in memory
+	 * or is the searchResults playlist.
+	 * else false
 	 */
 	private boolean playlistExists(String title) {
 		if (title.equals(searchResults.title)) {

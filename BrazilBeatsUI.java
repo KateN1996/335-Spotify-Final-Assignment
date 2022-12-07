@@ -144,8 +144,9 @@ public class BrazilBeatsUI {
 		panel.add(beatsPanel, gbc);
 
 		// BRAZIL BEATS DANCING CHARACTER CORNER (Visualizer)
-		Runnable brazilBeatsView = new BeatsVisualizerUI();
-		Thread visualizerThread = new Thread(brazilBeatsView);
+		Runnable brazilBeatsVisualizer = new BeatsVisualizerUI();
+		Thread visualizerThread = new Thread(brazilBeatsVisualizer);
+		brazilBeatsView = (Container)brazilBeatsVisualizer;
 		visualizerThread.start();
 		gbc.insets = INSET_GAP;
 		gbc.anchor = GridBagConstraints.NORTHEAST;
@@ -296,6 +297,9 @@ public class BrazilBeatsUI {
 			((SearchPanelUI)searchPanel).updateFields();
 		}
 		
+		if (brazilBeatsView != null) {
+			((BeatsVisualizerUI)brazilBeatsView).updateBeatsView();
+		}
 		frame.validate();
 	}
 
