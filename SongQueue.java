@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * 
- * @author Kevin
+ * @author Kevin Nisterenko
  */
 public class SongQueue {
 	

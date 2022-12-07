@@ -19,6 +19,12 @@ public class ColorPicker {
 	Image img;
 	BufferedImage image;
 	
+	/**
+	 * A color picker instance.
+	 * 
+	 * @param albumImage, Image containing the image we want to pick 
+	 * the color from
+	 */
 	public ColorPicker(Image albumImage) {
 		img = albumImage;
 	    image = toBufferedImage();
@@ -27,8 +33,8 @@ public class ColorPicker {
 	/**
      * Dominant Color Picker, inspired by the algorithm from jittagornp
      * from https://gist.github.com/jittagornp/6c7fcdab388fe4863c34
-     * @param image
-     * @return
+     * 
+     * @return Color, color based on the image's most prominent colors
      */
 	public Color getColor() {
         // setup the colorMap to store the rgb value and the count of each rgb value
@@ -61,7 +67,7 @@ public class ColorPicker {
     /**
      *  Gets Color Array from integer map
      *  
-     *  @param 
+     *  @param map, map of integer, integer, contains the the colors list
      *  @return int array with the rgb values of a color
      */
     private int[] getColorArray(Map<Integer, Integer> map) {
@@ -98,7 +104,7 @@ public class ColorPicker {
      * Checks if a pixel is grayscale
      * 
      * @param rgbArr (array of rgb value)
-     * @return boolean
+     * @return boolean true/false indicating grayscale
      */
     private boolean isGrayScale(int[] rgbArr) {
         // get the difference between red and green and red and blue, will 

@@ -20,13 +20,12 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
 /**
- *
+ * Container for the volume slider of the song player. Implemented
+ * using a progress bar and mouse listeners. 
+ * 
+ *@author Kevin Nisterenko
  */
 public class VolumeSlider extends Container{
-
-	/**
-	 * 
-	 */
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,12 +38,8 @@ public class VolumeSlider extends Container{
 	private SongPlayer songPlayer;
 
 	/**
-	 * Creates the playback options menu on the bottom of the screen with the
-	 * playback timeBar and all playback buttons. Each button is wired to
-	 * methods which complete their respective functions, and the bar updates
-	 * to match the song's timing.
+	 * Creates the volume bar for the UI. 
 	 * 
-	 * @return playbackContainer
 	 */
 	VolumeSlider() {
 		// Create main panel 
@@ -61,7 +56,7 @@ public class VolumeSlider extends Container{
 		gbc.insets = BrazilBeatsUI.INSET_GAP;
 		gbc.anchor = GridBagConstraints.SOUTH;
 
-		// Current song time stamp label
+		// Current song volume stamp label
 		volumeStampCurrent = new JLabel("<))");	
 		volumeStampCurrent.setFont(BrazilBeatsUI.captionFont);
 		volumeStampCurrent.setForeground(BrazilBeatsUI.detailColor);
@@ -69,7 +64,7 @@ public class VolumeSlider extends Container{
 		gbc.gridy = 0;
 		this.add(volumeStampCurrent, gbc);
 
-		// Playback bar
+		// volume bar
 		volumeChanger = new JProgressBar(SwingConstants.HORIZONTAL);
 		volumeChanger.setPreferredSize(new Dimension(volumeChangerSize, 12));
 		volumeChanger.setBackground(BrazilBeatsUI.borderColor);
@@ -87,8 +82,23 @@ public class VolumeSlider extends Container{
 		volumeChanger.setValue(100);
 	}
 	
+	/**
+	 * Inner class for the volume change listener, which implements
+	 * a MouseListener so that it can update the song's volume level.
+	 * 
+	 * @author Kevin Nisterenko
+	 *
+	 */
 	class volumeChangerListener implements MouseListener{
 		
+		/**
+		 * Gets the selection position from the mouse's position on 
+		 * the bar, calculates the new gain/volume based on the
+		 * range of the song, and sets the song's gain to that 
+		 * level. 
+		 * 
+		 * @param e, MouseEvent representing a mouse click
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			float selectionX = e.getPoint().x;
@@ -105,28 +115,33 @@ public class VolumeSlider extends Container{
 			volumeChanger.setMaximum(100); 
 		}
 
+		// Overrides due to interface implementation
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mousePressed(MouseEvent e) {}
 
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void mouseReleased(MouseEvent e) {}
 
+		/**
+		 * Sets bar color back to accent color when mouse 
+		 * enters volume bar.
+		 * 
+		 * @param e, MouseEvent representing a mouse click
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			volumeChanger.setForeground(BrazilBeatsUI.accentColor);
-			
 		}
-
+		
+		/**
+		 * Resets bar color back to original after mouse leaves 
+		 * the volume bar.
+		 * 
+		 * @param e, MouseEvent representing a mouse exit
+		 */
 		@Override
 		public void mouseExited(MouseEvent e) {
 			volumeChanger.setForeground(BrazilBeatsUI.detailColor);
-			
 		}
 		
 	}

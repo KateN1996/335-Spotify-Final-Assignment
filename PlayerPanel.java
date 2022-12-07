@@ -1,7 +1,9 @@
 /**
- * Panel for the album cover/big player view. 
+ * Panel for the album cover/big player view. It displays
+ * the album cover and also sets the reactive/color picked 
+ * background. Also has a gradient background.
  * 
- * Author: Kevin Nisterenko
+ * @author: Kevin Nisterenko
  */
 
 import java.awt.*;
@@ -27,7 +29,11 @@ public class PlayerPanel extends JPanel{
 
     private Color textColor = new Color(255, 255, 255);
     private Color backgroundColor;
-
+    
+    /**
+     * Initializes the player panel with the album cover and gradient/
+     * reactive background.
+     */
     PlayerPanel() {
         // Create main panel 
 		super(new GridBagLayout());
@@ -108,6 +114,8 @@ public class PlayerPanel extends JPanel{
 
 	/**
 	 * Override the paintComponent in order to have a gradient background for the JPanel
+	 * 
+	 * @author g, Graphics object so that it can access the paint component
 	 */
 	@Override
     protected void paintComponent(Graphics g) {
@@ -120,7 +128,7 @@ public class PlayerPanel extends JPanel{
         int width = getWidth();
 		int height = getHeight();
 
-		// set the gradient paint going from the dominat color to black
+		// set the gradient paint going from the dominant color to black
         GradientPaint gp = new GradientPaint(0, 0, backgroundColor, width, height, Color.BLACK);
 		// paint the background
         Object2D.setPaint(gp);
