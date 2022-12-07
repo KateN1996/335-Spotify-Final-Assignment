@@ -22,8 +22,8 @@ import javax.swing.SwingConstants;
  * This is the UI container containing all the playback controls for the current
  * song. It has a playback bar with working time stamps and a progress bar that
  * updates in real-time with its own thread. There are buttons used for playback
- * controls including shuffle, restart/play previous, play and pause, play next
- * song, and save song to library. The playback bar also allows the user to
+ * controls including  restart/play previous, play and pause, play next
+ * song. The playback bar also allows the user to
  * select the exact time in the song by clicking anywhere on the progress bar.
  * There is a volume slider at the bottom as well.
  * 
@@ -44,10 +44,11 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 	// playback options buttons
 	private JButton playPauseButton;
 	private boolean isPaused = false;
-	private JButton shuffleButton;
+	
+	//private JButton shuffleButton;
 	private JButton restartButton;
 	private JButton skipButton;
-	private JButton saveButton;
+	//private JButton saveButton;
 
 	// Ref to songplayer
 	private SongPlayer songPlayer;
@@ -105,6 +106,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
 
 		// Shuffle button
+		/*
 		shuffleButton = new JButton("$");
 		shuffleButton.setBackground(BrazilBeatsUI.accentColor);
 		shuffleButton.setForeground(BrazilBeatsUI.detailColor);
@@ -113,6 +115,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		shuffleButton.addActionListener(new playbackButtonListener());
 		//buttonContainer.add(shuffleButton);
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
+		*/
 
 		// Restart song button
 		restartButton = new JButton("|<");
@@ -145,6 +148,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		buttonContainer.add(Box.createRigidArea(buttonSpacing));
 
 		// Save to library button
+		/*
 		saveButton = new JButton(":)");
 		saveButton.setBackground(BrazilBeatsUI.accentColor);
 		saveButton.setForeground(BrazilBeatsUI.detailColor);
@@ -152,6 +156,7 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 		saveButton.setToolTipText("Save to Library");
 		saveButton.addActionListener(new playbackButtonListener());
 		//buttonContainer.add(saveButton);
+		 */
 
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -229,35 +234,23 @@ public class PlaybackOptionsUI extends Container implements Runnable {
 			}
 
 			updatePlaybackBar();
-
+ 
 		}
 
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
+		public void mousePressed(MouseEvent e) {}
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
+		public void mouseReleased(MouseEvent e) {}
 
 		// Changes the color of the bar when the mouse hovers over it to indicate
 		// interactivity.
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			playbackBar.setForeground(BrazilBeatsUI.accentColor);
-
-		}
+			playbackBar.setForeground(BrazilBeatsUI.accentColor);}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			playbackBar.setForeground(BrazilBeatsUI.detailColor);
-
-		}
-
+			playbackBar.setForeground(BrazilBeatsUI.detailColor);}
 	}
 
 	/**

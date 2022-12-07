@@ -130,6 +130,7 @@ public class BrazilBeatsUI {
 		navPanel.add(navigationMenu, gbc);
 
 		// Beats panel (top right)
+		
 		beatsPanel = new JPanel(new GridBagLayout());
 		beatsPanel.setBackground(borderColor);
 		gbc.insets = new Insets(0, 0, 0, 0);
@@ -152,6 +153,7 @@ public class BrazilBeatsUI {
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		beatsPanel.add((Container) brazilBeatsView, gbc);
+		
 
 		// Playback Bar (Bottom middle)
 		Runnable playbackBar = new PlaybackOptionsUI();

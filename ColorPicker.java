@@ -3,7 +3,7 @@
  * This class is used to grab the average color out of a given image, the 
  * interface allows only the getColor method to be used outside. 
  * 
- * Author: Kevin Nisterenko
+ * @author: Kevin Nisterenko
  */
 
 import java.awt.Color;
@@ -60,6 +60,9 @@ public class ColorPicker {
 
     /**
      *  Gets Color Array from integer map
+     *  
+     *  @param 
+     *  @return int array with the rgb values of a color
      */
     private int[] getColorArray(Map<Integer, Integer> map) {
         // setup a list of each key value pair in the map so we can sort it
