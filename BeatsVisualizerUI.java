@@ -27,6 +27,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
+ * BeatsVisualizer, provides an animated gif that plays together
+ * with the song for an added WOW factor. It is a runnable so that
+ * it can run separately from other actions (volume changing etc) and so
+ * that we can match it with the song player.
  * 
  * @author Kyle Walker
  *
@@ -37,7 +41,8 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	private JLabel beatsDanceView;
 	private float lastAmp;
 	private float threshold = 0.4f;
-
+	
+	// song info from the audio sampler
 	private SongPlayer songPlayer;
 	private AudioInputStream audioInput;
 	private AudioFormat audioFormat;
@@ -48,7 +53,13 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	private byte[] buffer;
 
 	private Clip currentClip;
-
+	
+	/**
+	 * Constructor for the container that stores the beat 
+	 * visualizer. Sets up the gif and is a runnable, so it
+	 * can continuously work on its thread and keep moving/stop depending
+	 * on song status.
+	 */
 	BeatsVisualizerUI() {
 		songPlayer = Main.songPlayer;
 		
@@ -62,25 +73,32 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
-
+		
+		// Set up Visualizer text label
 		JLabel brazilBeatsLabel = new JLabel("Beats Visualizer");
 		brazilBeatsLabel.setFont(BrazilBeatsUI.headerFont);
 		brazilBeatsLabel.setForeground(BrazilBeatsUI.detailColor);
 		gbc.gridy = 0;
 		this.add(brazilBeatsLabel, gbc);
-
+		
+		// add the dance viewers
 		beatsDanceView = new JLabel("");
 		gbc.gridy = 1;
 		updateBeatsView();
 		this.add(beatsDanceView, gbc);
 
-		// Initialize audio compnents
+		// Initialize audio components
 		songPlayer = Main.songPlayer;
 
 		updateAudioData();
 
 	}
-
+	
+	/**
+	 * Updates the audio data based on the currently playing
+	 * song. Provides access to information about the song 
+	 * such as frame count, sample rate and channels.
+	 */
 	private void updateAudioData() {
 		currentClip = songPlayer.getCurrentClip();
 		audioInput = songPlayer.getAudioInputStream();
@@ -91,10 +109,10 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 		channels = audioFormat.getChannels();
 		long dataLength = frameCount * sampleSize * channels;
 		buffer = new byte[(int) dataLength];
+		// reads the buffer of the audio
 		try {
 			audioInput.read(buffer);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -103,6 +121,7 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 	 * Set Image/GIF
 	 */
 	public void updateBeatsView() {
+		// if the song is currently playing, we set the gif
 		if(songPlayer.getCurrentClip().isRunning()) {
 			URL url;
 			url = getClass().getResource("brazilBeatsDancer.gif");
@@ -110,6 +129,7 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 
 			beatsDanceView.setIcon(icon);
 		}
+		// otherwise we idle the gif, since no song is playing
 		else {
 			URL url;
 			url = getClass().getResource("brazilBeatsDancerIdle.gif");
@@ -117,16 +137,6 @@ public class BeatsVisualizerUI extends Container implements Runnable {
 
 			beatsDanceView.setIcon(icon);
 		}
-		
-
-		/*
-		 * try {
-		 * 
-		 * danceImage = ImageIO.read(danceImageFile); danceImage =
-		 * danceImage.getScaledInstance(BrazilBeatsUI.IMG_RES_MAX,
-		 * BrazilBeatsUI.IMG_RES_MAX, Image.SCALE_DEFAULT); ImageIcon albumIcon = new
-		 * ImageIcon(danceImage); } catch (IOException e) { e.printStackTrace(); }
-		 */
 
 	}
 
