@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 
 /**
  * Container for the volume slider of the song player. Implemented
- * using a progress bar and mouse listeners. 
+ * using a progress bar and mouse listeners.  
  * 
  *@author Kevin Nisterenko
  */
@@ -77,6 +77,7 @@ public class VolumeSlider extends Container{
 		this.add(volumeChanger, gbc);
 		gbc.fill = GridBagConstraints.NONE;		
 		
+		// set the bounds of the volume changer
 		volumeChanger.setMaximum(100);	
 		volumeChanger.setMinimum(0);								
 		volumeChanger.setValue(100);

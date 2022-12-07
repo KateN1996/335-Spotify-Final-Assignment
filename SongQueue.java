@@ -1,91 +1,68 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
-
 /**
+ * Implementation of a song queue to keep track of the 
+ * playlist order. A wrapper for an index of a playlist.
  * 
- * @author Kevin Nisterenko
+ * @author Kevin Nisterenko 
  */
 public class SongQueue {
 	
 	// current state fields
 	private Playlist currentPlaylist;
 	private Integer currentPlaylistIndex;
-	//private ArrayList<Song> userQueue;
 	private Song currSong; 
 
 	
 	
-	/*
-	 * 
+	/**
+	 * Initializes a songQueue, the current playlist is 
+	 * set later.
 	 */
 	public SongQueue() {
 		currentPlaylist = null;
 		currentPlaylistIndex = 0;
-		//userQueue = new ArrayList<Song>();
 		currSong = null;
 	}
 	
 	
 	
-	/*
+	/**
+	 * Dequeue method, returns the song that was "popped" from 
+	 * the queue (i.e next song).
 	 * 
+	 * @return currSong, Song object representing next song
 	 */
 	public Song dequeue() {
 		
+		// if we still have not set the playlist, ignore this
+		// call
 		if (currentPlaylist == null) {
 			return null;
 		}
 		
+		// return currSong if we are at the end/new playlist
 		if (currentPlaylist.getSize() <= 0) {
 			return currSong;
 		}
 		
+		
+		// increment index
 		this.currentPlaylistIndex += 1;
 		
+		// reset queue to start/wrap around
 		if (currentPlaylistIndex >= currentPlaylist.getSize()) {
 			// hit end of playlist
 			this.currentPlaylistIndex = 0;
 		}
 		
+		// returns the actual next song based on index
 		currSong = this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
 		
-		//System.out.println(this.currentPlaylist.title);
 		System.out.println(this.currSong.title);
 		
 		return currSong;
-		
-		
-		/*
-		// user queue
-		if (this.userQueue.size() > 0) {
-			Song song = this.userQueue.remove(0);
-			return song;
-		}
-		
-		// current playlist
-		if (this.currentPlaylist != null) {
-			if (this.currentPlaylist.getSize() == 0) {
-				return null;
-			}
-			
-			// next index in playlist
-			if (currentPlaylistIndex >= this.currentPlaylist.getSize() - 1) {
-				currentPlaylistIndex = 0;
-			}
-			else {
-				currentPlaylistIndex += 1;
-			}
-			
-			// returning song at new index
-			Song song = this.currentPlaylist.getSongAtIndex(currentPlaylistIndex);
-			return song;
-		}
-		
-		// no user queue or playlist selected
-		return null;
-		*/
 	}
 	
 	
@@ -95,35 +72,12 @@ public class SongQueue {
 	 * to set current playlist (it should have currSong in it), then 
 	 * that method by itself should set the queue
 	 * 
-	 * @param song
+	 * @param song. Song object representing the current starting song
+	 * @param playlist, Playlist that the queue will start playing
 	 */
 	public void setCurrentPlaylist(Playlist playlist, Song song) {
 		this.currentPlaylist = playlist;
 		this.currentPlaylistIndex = playlist.getIndexOfSong(song);
-		//this.currSong = song;
-		//setQueue();
-	}
-	
-	
-	
-	/**
-	 * Assumes that the playlist is already set
-	 * 
-	 * @param song
-	 */
-	public void setQueue() {
-		/*
-		int idx = this.currentPlaylist.getIndexOfSong(currSong);
-		ArrayList<Song> playlist = this.currentPlaylist.getSongs();
-		this.userQueue.clear();
-		// build the queue starting from the current song
-		
-		for (int i = idx; i < this.currentPlaylist.getSize(); i++) {
-			Song song = playlist.get(i);
-			this.userQueue.add(song);
-		}
-		currentPlaylistIndex = idx;
-		*/
 	}
 	
 }

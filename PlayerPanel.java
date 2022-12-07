@@ -1,7 +1,7 @@
 /**
  * Panel for the album cover/big player view. It displays
  * the album cover and also sets the reactive/color picked 
- * background. Also has a gradient background.
+ * background. Also has a gradient background. 
  * 
  * @author: Kevin Nisterenko
  */

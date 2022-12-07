@@ -1,7 +1,7 @@
 /**
  * 
  * This class is used to grab the average color out of a given image, the 
- * interface allows only the getColor method to be used outside. 
+ * interface allows only the getColor method to be used outside.  
  * 
  * @author: Kevin Nisterenko
  */
